@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bigsize_management_staff">
    <application
-        android:label="bigsize_management_staff"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Bigsize management staff"
+        android:name="Bigsize staff"
+        android:icon="@mipmap/ic_launcher"
+        android:exported="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
