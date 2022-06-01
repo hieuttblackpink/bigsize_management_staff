@@ -3,8 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import 'deals.dart';
+import 'package:bigsize_management_staff/model/module/deals.dart';
 
 class GraphsData extends Equatable {
   List<int> money;

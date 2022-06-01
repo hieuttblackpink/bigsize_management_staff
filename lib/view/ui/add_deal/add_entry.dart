@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:bigsize_management_staff/model/module/deals.dart';
 
-import '../../../model/module/deals.dart';
 import '../../../model/repository/dates_repository.dart';
-import '../../../resources/styles_manager.dart';
+import '../../resources/styles_manager.dart';
 import 'widgets/add_box.dart';
 import 'widgets/old_entries.dart';
 

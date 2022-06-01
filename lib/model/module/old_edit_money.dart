@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../repository/database_repo.dart';
+import 'package:bigsize_management_staff/model/repository/database_repo.dart';
 
 enum EditType { add, remove }
 

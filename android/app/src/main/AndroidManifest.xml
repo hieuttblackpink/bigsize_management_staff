@@ -2,7 +2,6 @@
     package="com.example.bigsize_management_staff">
    <application
         android:label="Bigsize management staff"
-        android:name="Bigsize staff"
         android:icon="@mipmap/ic_launcher"
         android:exported="true">
         <activity

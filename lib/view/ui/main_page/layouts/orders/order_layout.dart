@@ -19,7 +19,7 @@ class OrderLayout extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text("Total Orders ${entries.maxNumber}",
+                Text("Tong don hang ${entries.maxNumber}",
                     style: Theme.of(context).textTheme.headline4),
                 const SizedBox(
                   width: 10,

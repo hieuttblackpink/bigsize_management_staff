@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bigsize_management_staff/model/module/product.dart';
 
-import '../../../../../model/module/product.dart';
 import '../../../../../model/module/ui_models.dart';
-import '../../../../../resources/styles_manager.dart';
 import '../../../../../view_model/app_provider.dart';
+import '../../../../resources/styles_manager.dart';
 
 class ProductLayout extends StatelessWidget {
   const ProductLayout({Key? key}) : super(key: key);

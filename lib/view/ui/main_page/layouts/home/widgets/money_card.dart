@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
+import 'package:bigsize_management_staff/view_model/app_provider.dart';
 
-import '../../../../../../resources/routes_manger.dart';
-import '../../../../../../resources/styles_manager.dart';
-import '../../../../../../view_model/app_provider.dart';
+import '../../../../../resources/routes_manger.dart';
 
 class MoneyCard extends StatelessWidget {
   const MoneyCard({Key? key}) : super(key: key);
@@ -39,23 +39,23 @@ class MoneyCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "Money",
+                  "Doanh thu",
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 divider(),
                 Selector<AppProvider, int>(
                   selector: (_, val) => val.moneyInBox,
                   builder: (context, val, _) => Text(
-                    val == -1 ? '-' : "$val EGP",
-                    style: Theme.of(context).textTheme.subtitle1,
+                    val == -1 ? '1000000' : "$val",
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ),
                 divider(),
                 Selector<AppProvider, int>(
                   selector: (_, val) => val.revenue,
                   builder: (context, val, _) => Text(
-                    "Revenue ${val == -1 ? '-' : val} EGP",
-                    style: Theme.of(context).textTheme.subtitle2,
+                    "VND",
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
               ],
@@ -63,13 +63,14 @@ class MoneyCard extends StatelessWidget {
             verticalLine(context),
             Column(
               children: [
-                Text("Orders", style: Theme.of(context).textTheme.subtitle1),
+                Text("Don dat hang",
+                    style: Theme.of(context).textTheme.subtitle1),
                 divider(),
                 Selector<AppProvider, int>(
                   selector: (_, val) => val.orders,
                   builder: (context, val, _) => Text(
-                    val == -1 ? '-' : val.toString(),
-                    style: Theme.of(context).textTheme.subtitle1,
+                    val == -1 ? '100' : val.toString(),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ),
               ],
@@ -82,7 +83,7 @@ class MoneyCard extends StatelessWidget {
         height: 60.0,
         width: 1.0,
         color: Theme.of(context).colorScheme.onPrimary,
-        margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+        margin: const EdgeInsets.only(left: 5.0, right: 5.0),
       );
 
   Widget divider() => const SizedBox(
@@ -105,11 +106,11 @@ class MoneyCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Show more info",
+                "Thong tin chi tiet",
                 style: Theme.of(context).textTheme.headline3,
               ),
               Icon(
-                Icons.arrow_right,
+                Icons.arrow_right_sharp,
                 color: Theme.of(context).colorScheme.onSecondary,
               )
             ],

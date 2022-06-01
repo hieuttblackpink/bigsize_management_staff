@@ -1,10 +1,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:bigsize_management_staff/model/module/product.dart';
+import 'package:bigsize_management_staff/model/repository/database_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
-import '../repository/database_repo.dart';
 
 class Deal {
   int id;

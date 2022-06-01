@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:bigsize_management_staff/model/repository/dates_repository.dart';
+import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
 
 import '../../../../model/module/old_edit_money.dart';
-import '../../../../model/repository/dates_repository.dart';
-import '../../../../resources/styles_manager.dart';
+import '../../../resources/styles_manager.dart';
 import '../../../shared/functions/dialog.dart';
-import '../../../shared/widgets/form_field.dart';
 import '../../../shared/widgets/numeric_field.dart';
 
 // ignore: must_be_immutable

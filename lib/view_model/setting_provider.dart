@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-//import 'package:shop/model/repository/database_repo.dart';
-//import '../model/local/pref_repository.dart';
+import 'package:bigsize_management_staff/model/repository/database_repo.dart';
+import '../model/local/pref_repository.dart';
 
 class SettingProvider with ChangeNotifier {
+  late int minimumAmount = PreferenceRepository.getDataFromSharedPreference(
+        key: PreferenceKey.minimumAmount,
+      ) ??
+      15;
+
+  final DbFileHandling _fileHandling = DbFileHandling();
+
+  Future<void> clearDataBase() async {
+    EasyLoading.show(status: "Deleting database");
+    try {
+      await DataBaseRepository.instance.delete();
+      EasyLoading.showSuccess("Database deleted successfully");
+    } catch (err) {
+      EasyLoading.showError("An error accrued,Please try again");
+    }
+  }
+
   void hidePrice() {
     EasyLoading.showToast("Not yet");
   }
 
-/*
   void changeMinimumAmount(int value) {
     minimumAmount = value;
     PreferenceRepository.putDataInSharedPreference(
@@ -110,5 +126,4 @@ class SettingProvider with ChangeNotifier {
       EasyLoading.showError("Ann error accrued,Please try again");
     }
   }
-  */
 }

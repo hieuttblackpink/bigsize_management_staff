@@ -7,11 +7,11 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:bigsize_management_staff/model/module/deals.dart';
+import 'package:bigsize_management_staff/model/module/old_edit_money.dart';
+import 'package:bigsize_management_staff/model/module/product.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../module/deals.dart';
-import '../module/old_edit_money.dart';
-import '../module/product.dart';
 import '../module/ui_models.dart';
 
 part '../contstants/database_schema.dart';
@@ -76,7 +76,7 @@ class DataBaseRepository {
       limit: old.end,
       offset: old.start,
     );
-    //old.data.addAll(maps.map((e) => EntryModel.fromJson(e)).toList());
+    old.data.addAll(maps.map((e) => EntryModel.fromJson(e)).toList());
     return old..isLoading = false;
   }
 
@@ -112,13 +112,12 @@ class DataBaseRepository {
     return data.map((e) => Product.fromJson(e)).toList();
   }
 
-/*
   Future<List<EntryModel>> searchEntries(String search) async {
     ReturnedData data = await _database.query(EntryTable.tableName,
         where: "${EntryTable.name} LIKE '%$search%'");
     return data.map((e) => EntryModel.fromJson(e)).toList();
   }
-*/
+
   Future<List<OrderModel>> searchOrders(String search) async {
     ReturnedData data = await _database.query(OrderTable.tableName,
         where: "${OrderTable.name} LIKE '%$search%'");
@@ -133,12 +132,11 @@ class DataBaseRepository {
         ProductsTable.tableName, product.toJson.remove(ProductsTable));
   }
 
-/*
   Future<void> insertEntry(EntryModel entry) async {
     await _database.insert(
         EntryTable.tableName, entry.toJson.remove(EntryTable.id));
   }
-*/
+
   Future<void> insertOrder(OrderModel order) async {
     await _database.insert(
         OrderTable.tableName, order.toJson.remove(OrderTable.id));
@@ -156,13 +154,12 @@ class DataBaseRepository {
         where: '${ProductsTable.id} = ?', whereArgs: [product.id]);
   }
 
-/*
   Future<void> editEntry(EntryModel entry) async {
     await _database.update(
         EntryTable.tableName, entry.toJson.remove(EntryTable.id),
         where: '${EntryTable.id} = ?', whereArgs: [entry.id]);
   }
-*/
+
   Future<void> editOrder(OrderModel order) async {
     await _database.update(
         OrderTable.tableName, order.toJson.remove(OrderTable.id),

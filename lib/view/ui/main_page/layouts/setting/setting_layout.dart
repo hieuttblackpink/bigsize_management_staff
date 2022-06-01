@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bigsize_management_staff/view/shared/widgets/numeric_field.dart';
+import 'package:bigsize_management_staff/view_model/setting_provider.dart';
 
-import '../../../../../resources/styles_manager.dart';
-import '../../../../../view_model/setting_provider.dart';
-import '../../../../shared/widgets/numeric_field.dart';
+import '../../../../resources/styles_manager.dart';
 
 class SettingLayout extends StatelessWidget {
   const SettingLayout({Key? key}) : super(key: key);
@@ -14,39 +14,15 @@ class SettingLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          _title(context, "Database sector"),
-          const Divider(
-            height: 10,
-            thickness: 0,
-          ),
-          database(context),
-          const Divider(
-            height: 10,
-            thickness: 0,
-          ),
-          _title(context, "Product sector"),
-          const Divider(
-            height: 10,
-            thickness: 0,
-          ),
-          product(context),
-          const Divider(
-            height: 10,
-            thickness: 0,
-          ),
-          _title(context, "Reports sector"),
-          const Divider(
-            height: 10,
-            thickness: 0,
-          ),
-          //reports(context),
-        ],
-      ),
-    );
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              child: Text("Setting"),
+            ),
+          ],
+        ));
   }
 
   Widget database(BuildContext context) => Container(
@@ -56,8 +32,15 @@ class SettingLayout extends StatelessWidget {
             boxShadow: StyleManager.shadow),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(),
+          children: [
+            _button(context, 'Import database',
+                () => settingProvider(context).importDataBase()),
+            _divider(context),
+            _button(context, 'Export database',
+                () => settingProvider(context).exportDataBase()),
+            _divider(context),
+            _button(context, 'Clear database',
+                () => settingProvider(context).clearDataBase()),
           ],
         ),
       );
@@ -78,6 +61,16 @@ class SettingLayout extends StatelessWidget {
                     'Minimum amount',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
+                  SizedBox(
+                      width: 120,
+                      child: NumericField(
+                        TextEditingController(
+                            text: settingProvider(context)
+                                .minimumAmount
+                                .toString()),
+                        onChange: (v) => settingProvider(context)
+                            .changeMinimumAmount(int.parse(v)),
+                      ))
                 ],
               ),
             ),
@@ -90,7 +83,7 @@ class SettingLayout extends StatelessWidget {
           ],
         ),
       );
-/*
+
   Widget reports(BuildContext context) => Container(
         decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.onSecondary,
@@ -133,7 +126,7 @@ class SettingLayout extends StatelessWidget {
           ),
         ),
       );
-*/
+
   Widget _button(BuildContext context, String text, Function() onPressed) =>
       TextButton(
         onPressed: onPressed,

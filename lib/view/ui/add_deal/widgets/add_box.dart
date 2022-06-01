@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../resources/styles_manager.dart';
-import '../../../shared/widgets/form_field.dart';
+import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
+
+import '../../../resources/styles_manager.dart';
 import '../../../shared/widgets/numeric_field.dart';
 
 class AddBox extends StatelessWidget {

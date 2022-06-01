@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/entry/entry_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/home/home_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/order_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/setting_layout.dart';
 
-import '../../../resources/routes_manger.dart';
 import '../../../view_model/layout_provider.dart';
-import 'layouts/home/home_layout.dart';
-import 'layouts/orders/order_layout.dart';
-import 'layouts/products/product_layout.dart';
-import 'layouts/setting/setting_layout.dart';
-/*
-import 'package:shop/view/ui/main_page/layouts/entry/entry_layout.dart';
-import 'package:shop/view/ui/main_page/layouts/home/home_layout.dart';
-import 'package:shop/view/ui/main_page/layouts/orders/order_layout.dart';
-import 'package:shop/view/ui/main_page/layouts/products/product_layout.dart';
-import 'package:shop/view/ui/main_page/layouts/setting/setting_layout.dart';
-*/
+import '../../resources/routes_manger.dart';
 
-const List<String> appBarTitles = ["Home", "Products", "Order", "Profile"];
+const List<String> appBarTitles = [
+  "Trang chu",
+  "Don dat hang",
+  "Entry",
+  "Products",
+  "Profile"
+];
 
 class MainView extends StatelessWidget {
   const MainView({Key? key}) : super(key: key);
@@ -35,6 +35,7 @@ class MainView extends StatelessWidget {
         body: [
           HomeLayout(),
           const OrderLayout(),
+          const EntryLayout(),
           const ProductLayout(),
           const SettingLayout(),
         ][value],
@@ -43,7 +44,7 @@ class MainView extends StatelessWidget {
   }
 
   List<Widget> getRightAction(int activeLayout, BuildContext context) {
-    if (activeLayout > 0 && activeLayout < 4) {
+    if (activeLayout > 0 && activeLayout < 3) {
       return [
         IconButton(
             onPressed: () {
@@ -103,9 +104,10 @@ class MainView extends StatelessWidget {
           (index) => GButton(
                 icon: [
                   Icons.home_outlined,
-                  Icons.local_offer_outlined,
+                  Icons.local_mall,
+                  Icons.shopping_cart_outlined,
                   Icons.storefront_outlined,
-                  Icons.settings,
+                  Icons.account_circle,
                 ][index],
                 text: appBarTitles[index],
               )));

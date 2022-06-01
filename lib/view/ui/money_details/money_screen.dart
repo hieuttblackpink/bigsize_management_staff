@@ -1,8 +1,7 @@
-import 'package:bigsize_management_staff/screen/ui/money_details/widgets/edit_box.dart';
-import 'package:bigsize_management_staff/screen/ui/money_details/widgets/old_edits.dart';
 import 'package:flutter/material.dart';
-
-import '../../../resources/styles_manager.dart';
+import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
+import 'package:bigsize_management_staff/view/ui/money_details/widgets/edit_box.dart';
+import 'package:bigsize_management_staff/view/ui/money_details/widgets/old_edits.dart';
 
 class MoneyDetailsView extends StatelessWidget {
   MoneyDetailsView({Key? key}) : super(key: key);
