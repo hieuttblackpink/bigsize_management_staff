@@ -1,3 +1,4 @@
+import 'package:bigsize_management_staff/model/module/deals.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';

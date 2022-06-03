@@ -22,7 +22,7 @@ Future<void> main() async {
   EasyLoading.instance
     ..toastPosition = EasyLoadingToastPosition.bottom
     ..displayDuration = const Duration(seconds: 1);
-*/
+  */
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => LayoutProvider()),
     ChangeNotifierProvider(create: (_) => AppProvider()),

@@ -16,7 +16,6 @@ class AppProvider with ChangeNotifier {
   Future<void> startApp() async {
     graphData = await DataBaseRepository.instance.getGraphData();
     graphData.orders = [1, 2, 3];
-
     notifyListeners();
   }
 

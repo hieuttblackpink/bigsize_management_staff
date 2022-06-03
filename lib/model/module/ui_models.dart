@@ -66,7 +66,8 @@ class ShowData<T> extends Equatable {
   factory ShowData.empty() => ShowData(data: const [], maxNumber: 0);
 
   bool get isEmpty => data.isEmpty;
-  bool get isEnd => (start + data.length) == maxNumber;
+  //bool get isEnd => (start + data.length) == maxNumber;
+  bool get isEnd => (start + data.length) == data.length;
 
   void getNext() {
     end = start + data.length;
