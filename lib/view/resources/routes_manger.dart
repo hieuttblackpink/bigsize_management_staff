@@ -1,3 +1,4 @@
+import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bigsize_management_staff/model/module/deals.dart';
 
@@ -9,6 +10,8 @@ import '../ui/money_details/money_screen.dart';
 
 class Routes {
   static const String mainRoute = "/";
+  static const String homeRoute = "/Home";
+  static const String loginRoute = "/Login";
   static const String moneyRoute = "/Money";
   static const String addProductRoute = "/Product";
   static const String addEntryRoute = "/Entry";
@@ -19,6 +22,11 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainRoute:
+        return MaterialPageRoute(
+            builder: (_) => const /*MainView()*/ SignInScreen());
+      case Routes.loginRoute:
+        return MaterialPageRoute(builder: (_) => const SignInScreen());
+      case Routes.homeRoute:
         return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.moneyRoute:
         return MaterialPageRoute(builder: (_) => MoneyDetailsView());
