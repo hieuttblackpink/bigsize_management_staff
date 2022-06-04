@@ -1,4 +1,6 @@
+import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,9 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  final StorageService _storageService = StorageService();
+  late StorageItem _storageItem;
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -95,12 +100,20 @@ class _SignFormState extends State<SignForm> {
                 ),
               ),
             ),
-            onPressed: () => {
-              if (_formKey.currentState!.validate())
-                {
-                  _formKey.currentState!.save(),
-                  Navigator.pushNamed(context, Routes.homeRoute),
+            onPressed: () async {
+              if (_formKey.currentState!.validate()) {
+                if (remember == true) {
+                  _storageService.deleteAllSecureData();
+                  _storageItem =
+                      StorageItem(email.toString(), password.toString());
+                  _storageService.writeSecureData(_storageItem);
+                  _formKey.currentState!.save();
+                  Navigator.pushNamed(context, Routes.homeRoute);
+                } else {
+                  _formKey.currentState!.save();
+                  Navigator.pushNamed(context, Routes.homeRoute);
                 }
+              }
             },
           ),
         ],

@@ -56,6 +56,8 @@ dependencies:
   path_provider: ^2.0.10
   file_picker: ^4.6.0
   flutter_image_compress: ^1.1.0
+  #secure
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

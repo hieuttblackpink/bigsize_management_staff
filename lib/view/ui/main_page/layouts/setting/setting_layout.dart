@@ -1,3 +1,6 @@
+import 'package:bigsize_management_staff/model/module/storage_item.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bigsize_management_staff/view/shared/widgets/numeric_field.dart';
@@ -5,21 +8,67 @@ import 'package:bigsize_management_staff/view_model/setting_provider.dart';
 
 import '../../../../resources/styles_manager.dart';
 
-class SettingLayout extends StatelessWidget {
+class SettingLayout extends StatefulWidget {
   const SettingLayout({Key? key}) : super(key: key);
 
+  @override
+  State<SettingLayout> createState() => _SettingLayout();
+}
+
+class _SettingLayout extends State<SettingLayout> {
   SettingProvider settingProvider(BuildContext context) =>
       context.read<SettingProvider>();
+
+  final StorageService _storageService = StorageService();
+  late List<StorageItem> _items;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initList();
+  }
+
+  void initList() async {
+    _items = await _storageService.readAllSecureData();
+    _loading = false;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Row(
+        child: Column(
           children: <Widget>[
             Container(
               alignment: Alignment.center,
-              child: Text("Setting"),
+              child: const Text("Setting"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: _loading
+                  ? const CircularProgressIndicator()
+                  : _items.isEmpty
+                      ? const Text("Empty secure storage!")
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _items.length,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          itemBuilder: (_, index) {
+                            return Dismissible(
+                              key: Key(_items[index].toString()),
+                              child: VaultCard(item: _items[index]),
+                              onDismissed: (direction) async {
+                                await _storageService
+                                    .deleteSecureData(_items[index])
+                                    .then((value) => _items.removeAt(index));
+                                initList();
+                              },
+                            );
+                          }),
             ),
           ],
         ));
