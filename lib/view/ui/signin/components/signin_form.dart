@@ -2,6 +2,7 @@ import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignForm extends StatefulWidget {
@@ -44,9 +45,9 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           buildEmailFormField(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           buildPasswordFormField(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           Row(
             children: [
               Checkbox(
@@ -73,7 +74,7 @@ class _SignFormState extends State<SignForm> {
             ],
           ),
           FormError(errors: errors),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           ElevatedButton(
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
@@ -103,12 +104,15 @@ class _SignFormState extends State<SignForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 if (remember == true) {
-                  _storageService.deleteAllSecureData();
+                  //print(email.toString() + " - " + password.toString());
                   _storageItem =
                       StorageItem(email.toString(), password.toString());
                   _storageService.writeSecureData(_storageItem);
                   _formKey.currentState!.save();
-                  Navigator.pushNamed(context, Routes.homeRoute);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MainView()),
+                      ((route) => false));
                 } else {
                   _formKey.currentState!.save();
                   Navigator.pushNamed(context, Routes.homeRoute);
@@ -131,6 +135,7 @@ class _SignFormState extends State<SignForm> {
         } else if (value.length >= 8) {
           removeError(error: "Password qua ngan");
         }
+        password = value;
         //return null;
       },
       validator: (value) {
@@ -143,13 +148,54 @@ class _SignFormState extends State<SignForm> {
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Password",
-        hintText: "Enter your password",
-        // If  you are using latest version of flutter then lable text and hint text shown like this
-        // if you r using flutter less then 1.20.* then maybe this is not working properly
+      style: const TextStyle(
+        fontSize: 20,
+        fontFamily: "QuicksandMedium",
+      ),
+      decoration: InputDecoration(
+        labelText: "Mat khau",
+        labelStyle: const TextStyle(
+          fontFamily: "QuicksandMedium",
+          fontSize: 20,
+        ),
+        hintText: "Nhập mat khau của bạn",
+        hintStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color.fromARGB(50, 0, 0, 0),
+        ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.lock),
+        contentPadding:
+            const EdgeInsets.only(left: 25, top: 20, bottom: 20, right: 10),
+        suffixIcon: const Icon(Icons.lock),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.black,
+            width: 0.5,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.blue,
+            width: 1.5,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 0.5,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 0.5,
+          ),
+        ),
       ),
     );
   }
@@ -164,6 +210,7 @@ class _SignFormState extends State<SignForm> {
         } /*else if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }*/
+        email = value;
         //return null;
       },
       validator: (value) {
@@ -208,6 +255,20 @@ class _SignFormState extends State<SignForm> {
           borderSide: const BorderSide(
             color: Colors.blue,
             width: 1.5,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 0.5,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 0.5,
           ),
         ),
       ),

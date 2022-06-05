@@ -1,6 +1,9 @@
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/setting_menu.dart';
+import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bigsize_management_staff/view/shared/widgets/numeric_field.dart';
@@ -44,6 +47,37 @@ class _SettingLayout extends State<SettingLayout> {
             Container(
               alignment: Alignment.center,
               child: const Text("Setting"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const SettingMenu(
+                text: "Profile", icon: Icons.account_circle_rounded),
+            const SizedBox(
+              height: 0.5,
+            ),
+            const SettingMenu(text: "Setting", icon: Icons.settings),
+            const SizedBox(
+              height: 0.5,
+            ),
+            const SettingMenu(text: "Help center", icon: Icons.help),
+            const SizedBox(
+              height: 0.5,
+            ),
+            const SettingMenu(text: "About app", icon: Icons.info_rounded),
+            const SizedBox(
+              height: 0.5,
+            ),
+            SettingMenu(
+              text: "Logout",
+              icon: Icons.logout,
+              press: () async {
+                _storageService.deleteAllSecureData();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SignInScreen()),
+                    (route) => false);
+              },
             ),
             const SizedBox(
               height: 20,

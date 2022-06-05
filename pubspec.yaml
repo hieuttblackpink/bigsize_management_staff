@@ -58,6 +58,8 @@ dependencies:
   flutter_image_compress: ^1.1.0
   #secure
   flutter_secure_storage: ^5.0.2
+  #device_info
+  device_info_plus: ^3.2.3
 
 dev_dependencies:
   flutter_test:
