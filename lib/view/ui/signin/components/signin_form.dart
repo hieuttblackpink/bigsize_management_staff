@@ -115,7 +115,10 @@ class _SignFormState extends State<SignForm> {
                       ((route) => false));
                 } else {
                   _formKey.currentState!.save();
-                  Navigator.pushNamed(context, Routes.homeRoute);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MainView()),
+                      ((route) => false));
                 }
               }
             },

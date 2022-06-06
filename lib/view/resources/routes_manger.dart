@@ -1,3 +1,4 @@
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bigsize_management_staff/model/module/deals.dart';
@@ -16,6 +17,7 @@ class Routes {
   static const String addProductRoute = "/Product";
   static const String addEntryRoute = "/Entry";
   static const String addOrderRoute = "/Order";
+  //static const String OrderDetailRoute = "/OrderDetail";
 }
 
 class RouteGenerator {
@@ -41,6 +43,8 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) =>
                 AddDealView(false, deal: settings.arguments as OrderModel?));
+      //case Routes.OrderDetailRoute:
+      //return MaterialPageRoute(builder: (_) => const OrderDetail());
       default:
         return unDefinedRoute();
     }

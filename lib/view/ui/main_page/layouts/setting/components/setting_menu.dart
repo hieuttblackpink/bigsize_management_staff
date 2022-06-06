@@ -23,6 +23,7 @@ class SettingMenu extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          shadowColor: Colors.grey,
         ),
         onPressed: press,
         child: Row(

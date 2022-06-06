@@ -1,3 +1,5 @@
+import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +21,16 @@ OrderModel order1 = OrderModel(
     time: "9:00",
     profit: 50);
 
+OrderModel order2 = OrderModel(
+    items: [],
+    id: 2,
+    type: PaymentType.not,
+    totalMoney: 10000,
+    name: "Trieu Yen Nhi",
+    date: "01/01/2022",
+    time: "10:00",
+    profit: 60);
+
 class OrderLayout extends StatelessWidget {
   const OrderLayout({Key? key}) : super(key: key);
 
@@ -26,6 +38,7 @@ class OrderLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     if (orderL.isEmpty) {
       orderL.add(order1);
+      orderL.add(order2);
     }
     test.data = orderL;
     return Padding(
@@ -60,9 +73,9 @@ class OrderLayout extends StatelessWidget {
               shrinkWrap: true,
               itemBuilder: (context, index) => index == entries.data.length
                   ? entries.lastItem
-                  : listItem(context, entries.data[index]),
+                  : listItem(context, entries.data[index], index),
               separatorBuilder: (_, __) => const SizedBox(
-                height: 7,
+                height: 10,
               ),
               itemCount: entries.data.length + 1,
             )
@@ -72,84 +85,86 @@ class OrderLayout extends StatelessWidget {
     );
   }
 
-  Widget listItem(BuildContext context, OrderModel item) => ListTile(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "#" + item.id.toString(),
-              textAlign: TextAlign.left,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: "QuicksandBold",
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.lightBlue,
-              ),
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-            Text(
-              item.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: "QuicksandBold",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(
-              height: 7,
-            ),
-          ],
-        ),
-        isThreeLine: false,
-        subtitle: Container(
-          color: Colors.pinkAccent,
-          margin: const EdgeInsets.only(bottom: 10),
-          child: Text("${item.date} | ${item.itemsCount} items"),
-        ),
-        trailing: FittedBox(
-          fit: BoxFit.fill,
-          child: Tooltip(
-            message: "Profit is ${item.profit}",
-            child: Column(
+  Widget listItem(BuildContext context, OrderModel item, int index) =>
+      Container(
+          //height: 70,
+          color: Colors.white,
+          child: ListTile(
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "${item.totalMoney} VND",
-                  style: const TextStyle(fontSize: 17),
+                  "#" + item.id.toString(),
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: "QuicksandBold",
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.lightBlue,
+                  ),
                 ),
                 const SizedBox(
                   height: 7,
                 ),
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      item.type.icon,
-                      size: 20,
-                      color: item.type.color,
-                    ),
-                    Text(item.type.text,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(color: item.type.color))
-                  ],
+                Text(
+                  item.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: "QuicksandBold",
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(
-                  height: 5,
-                ),
-                /**/
-                GestureDetector(
-                  child: const Text(">"),
+                  height: 7,
                 ),
               ],
             ),
-          ),
-        ),
-      );
+            isThreeLine: false,
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => OrderDetail(order: orderL[index])))
+            },
+            subtitle: Text("${item.date} | ${item.itemsCount} items"),
+            trailing: FittedBox(
+              fit: BoxFit.fill,
+              child: Tooltip(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.black),
+                message: "Profit is ${item.profit}",
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "${item.totalMoney} VND",
+                      style: const TextStyle(fontSize: 17),
+                    ),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          item.type.icon,
+                          size: 20,
+                          color: item.type.color,
+                        ),
+                        Text(item.type.text,
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(color: item.type.color))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ));
 }
