@@ -1,3 +1,5 @@
+import 'package:bigsize_management_staff/model/module/storage_item.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:bigsize_management_staff/model/repository/database_repo.dart';
@@ -23,18 +25,35 @@ Future<void> main() async {
     ..toastPosition = EasyLoadingToastPosition.bottom
     ..displayDuration = const Duration(seconds: 1);
   */
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => LayoutProvider()),
-    ChangeNotifierProvider(create: (_) => AppProvider()),
-    ChangeNotifierProvider(create: (_) => SettingProvider()),
-  ], child: const MyApp()));
+  WidgetsFlutterBinding.ensureInitialized();
+  final StorageService _storageService = StorageService();
+  List<StorageItem> _storageItem;
+
+  _storageItem = await _storageService.readAllSecureData();
+
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LayoutProvider()),
+        ChangeNotifierProvider(create: (_) => AppProvider()),
+        ChangeNotifierProvider(create: (_) => SettingProvider()),
+      ],
+      child: MyApp(
+        storageItem: _storageItem,
+      )));
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  List<StorageItem> storageItem;
+  MyApp({Key? key, required this.storageItem}) : super(key: key);
+
+  late String loadScreen = Routes.mainRoute;
 
   @override
   Widget build(BuildContext context) {
+    if (storageItem.length == 1) {
+      loadScreen = Routes.homeRoute;
+    }
     return MaterialApp(
       builder: EasyLoading.init(),
       title: 'Bigsize Staff',
@@ -42,7 +61,7 @@ class MyApp extends StatelessWidget {
       theme: lightThemeData,
       themeMode: ThemeMode.light,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: Routes.mainRoute,
+      initialRoute: loadScreen,
     );
   }
 }

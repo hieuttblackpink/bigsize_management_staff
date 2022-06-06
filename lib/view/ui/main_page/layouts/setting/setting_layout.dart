@@ -2,6 +2,7 @@ import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/userprofile_screen.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/setting_menu.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,15 @@ class _SettingLayout extends State<SettingLayout> {
             const SizedBox(
               height: 20,
             ),
-            const SettingMenu(
-                text: "Profile", icon: Icons.account_circle_rounded),
+            SettingMenu(
+                text: "Profile",
+                icon: Icons.account_circle_rounded,
+                press: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const UserProfileScreen()))
+                    }),
             const SizedBox(
               height: 0.5,
             ),
