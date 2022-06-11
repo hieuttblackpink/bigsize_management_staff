@@ -1,16 +1,41 @@
+import 'dart:collection';
+
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/about_app/about_app_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/userprofile_screen.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/setting_menu.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bigsize_management_staff/view/shared/widgets/numeric_field.dart';
 import 'package:bigsize_management_staff/view_model/setting_provider.dart';
 
 import '../../../../resources/styles_manager.dart';
+
+class GetInfo {
+  Future<HashMap<String, String>> getInfo() async {
+    var androidInfo = await DeviceInfoPlugin().androidInfo;
+    var release = androidInfo.version.release;
+    var sdkInt = androidInfo.version.sdkInt;
+    var manufacturer = androidInfo.manufacturer;
+    var model = androidInfo.model;
+    //print('Android $release (SDK $sdkInt), $manufacturer $model');
+    HashMap<String, String> info = HashMap();
+    Map<String, String> info1 = {
+      'osVer': release.toString(),
+      'sdkVer': sdkInt.toString(),
+      'manuInfo': manufacturer.toString(),
+      'modelInfo': model.toString()
+    };
+    info.addAll(info1);
+    //print(info);
+    return info;
+  }
+}
 
 class SettingLayout extends StatefulWidget {
   const SettingLayout({Key? key}) : super(key: key);
@@ -26,6 +51,8 @@ class _SettingLayout extends State<SettingLayout> {
   final StorageService _storageService = StorageService();
   late List<StorageItem> _items;
   bool _loading = true;
+  GetInfo g = GetInfo();
+  HashMap<String, String> info = new HashMap();
 
   @override
   void initState() {
@@ -41,6 +68,7 @@ class _SettingLayout extends State<SettingLayout> {
 
   @override
   Widget build(BuildContext context) {
+    g.getInfo().then((value) => info = value);
     return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -72,7 +100,15 @@ class _SettingLayout extends State<SettingLayout> {
             const SizedBox(
               height: 0.5,
             ),
-            const SettingMenu(text: "About app", icon: Icons.info_rounded),
+            SettingMenu(
+                text: "About app",
+                icon: Icons.info_rounded,
+                press: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => AppInfo(info2: info))),
+                    }),
             const SizedBox(
               height: 0.5,
             ),

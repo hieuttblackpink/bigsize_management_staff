@@ -12,6 +12,7 @@ class AddBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    amountController.text = "1";
     return Form(
       key: formKey,
       child: Container(
@@ -22,9 +23,9 @@ class AddBox extends StatelessWidget {
               borderRadius: StyleManager.border),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Container(
-                height: 40,
+                height: 50,
                 decoration: BoxDecoration(
                   borderRadius: StyleManager.border,
                   color: Theme.of(context).colorScheme.background,
@@ -33,12 +34,12 @@ class AddBox extends StatelessWidget {
                   border: true,
                   controller: TextEditingController(),
                   title: "Search Product",
-                  prefix: Icons.text_fields_outlined,
+                  prefix: Icons.search,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text("Laser Bag", style: Theme.of(context).textTheme.subtitle1),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
@@ -56,10 +57,10 @@ class AddBox extends StatelessWidget {
                   )),
                 ],
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
-                    onPressed: () async {}, child: const Text("Add")),
+                    onPressed: () async {}, child: const Text("Them")),
               )
             ],
           )),

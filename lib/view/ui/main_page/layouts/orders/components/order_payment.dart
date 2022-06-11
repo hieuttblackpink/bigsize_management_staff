@@ -1,4 +1,5 @@
 import 'package:bigsize_management_staff/model/module/deals.dart';
+import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class OrderPayment extends StatelessWidget {
@@ -16,9 +17,10 @@ class OrderPayment extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        boxShadow: StyleManager.shadow,
       ),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -31,6 +33,9 @@ class OrderPayment extends StatelessWidget {
                   size: 20,
                   color: order.type.color,
                 ),
+                const SizedBox(
+                  width: 5,
+                ),
                 Text(paid,
                     style: Theme.of(context)
                         .textTheme
@@ -39,7 +44,7 @@ class OrderPayment extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 2,
+              height: 10,
             ),
             const Text(
               "Thanh toan bang vi Momo **4597",

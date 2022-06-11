@@ -50,6 +50,30 @@ class OrderInfo extends StatelessWidget {
                 fontFamily: "QuicksandMedium",
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1,
+            ),
+            const Text(
+              "Ban boi: ",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: "QuicksandMedium",
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "Tai chi nhanh: ",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: "QuicksandMedium",
+              ),
+            ),
           ]),
     );
   }

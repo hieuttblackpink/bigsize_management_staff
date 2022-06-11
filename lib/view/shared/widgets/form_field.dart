@@ -36,7 +36,11 @@ class DefaultFormField extends StatelessWidget {
         autofillHints: fillHint == null ? null : [fillHint!],
         keyboardType: keyboardType,
         validator: validator,
+        style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+              borderRadius: BorderRadius.circular(10)),
           enabledBorder: border
               ? OutlineInputBorder(
                   borderSide: BorderSide(
@@ -47,7 +51,7 @@ class DefaultFormField extends StatelessWidget {
           suffixIcon: suffix,
           prefixIcon: Icon(
             prefix,
-            size: 18,
+            size: 20,
             color: ColorManager.lightGrey,
           ),
           labelText: title,

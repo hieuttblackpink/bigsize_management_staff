@@ -21,11 +21,12 @@ class Routes {
 }
 
 class RouteGenerator {
-  static Route<dynamic> getRoute(RouteSettings settings) {
+  static Route<dynamic>? getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainRoute:
-        return MaterialPageRoute(
-            builder: (_) => const /*MainView()*/ SignInScreen());
+        return null;
+      //return MaterialPageRoute(
+      //builder: (_) => const /*MainView()*/ SignInScreen());
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case Routes.homeRoute:

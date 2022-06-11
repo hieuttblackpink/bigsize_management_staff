@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
   List<StorageItem> storageItem;
   MyApp({Key? key, required this.storageItem}) : super(key: key);
 
-  late String loadScreen = Routes.mainRoute;
+  late String loadScreen = Routes.loginRoute;
 
   @override
   Widget build(BuildContext context) {
