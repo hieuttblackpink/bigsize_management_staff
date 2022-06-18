@@ -30,7 +30,7 @@ class RouteGenerator {
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case Routes.homeRoute:
-        return MaterialPageRoute(builder: (_) => const MainView());
+        return MaterialPageRoute(builder: (_) => MainView());
       case Routes.moneyRoute:
         return MaterialPageRoute(builder: (_) => MoneyDetailsView());
       case Routes.addProductRoute:

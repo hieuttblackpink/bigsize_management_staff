@@ -1,4 +1,9 @@
+// ignore_for_file: avoid_print, no_logic_in_create_state
+
+import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
 import 'package:bigsize_management_staff/model/module/deals.dart';
+import 'package:bigsize_management_staff/models/user_profile.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +20,22 @@ const List<String> appBarTitles = [
   "Trang chu",
   "Don dat hang",
   "Entry",
-  "Products",
-  "Profile"
+  "San pham",
+  "Tai khoan"
 ];
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
+
+  @override
+  _MainView createState() => _MainView();
+}
+
+class _MainView extends State<MainView> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +49,7 @@ class MainView extends StatelessWidget {
         ),
         bottomNavigationBar: bottomNavigationBar(value, context),
         body: [
-          HomeLayout(),
+          const HomeLayout(),
           const OrderLayout(),
           const EntryLayout(),
           const ProductLayout(),

@@ -16,6 +16,8 @@ class StorageService {
   Future<String?> readSecureData(String key) async {
     var readData =
         await _secureStorage.read(key: key, aOptions: _getAndroidOptions());
+    // ignore: avoid_print
+    print(readData);
     return readData;
   }
 

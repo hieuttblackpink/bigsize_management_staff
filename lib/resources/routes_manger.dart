@@ -24,7 +24,7 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_) => const MainView());
+        return MaterialPageRoute(builder: (_) => MainView());
       case Routes.moneyRoute:
         return MaterialPageRoute(builder: (_) => MoneyDetailsView());
       case Routes.addOrderRoute:

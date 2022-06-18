@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_print
+
+import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
+import 'package:bigsize_management_staff/models/user.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
+import 'package:bigsize_management_staff/view/ui/forgot_password/forgot_password.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +19,14 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final StorageService _storageService = StorageService();
-  late StorageItem _storageItem;
+  final StaffBloc _staffBloc = StaffBloc();
+  late StaffLogin _staffLogin;
+  late StorageItem _storageItemUser;
+  late StorageItem _storageItemToken;
+  bool loginSuccess = false;
 
   final _formKey = GlobalKey<FormState>();
-  String? email;
+  String? username;
   String? password;
   bool? remember = false;
   final List<String?> errors = [];
@@ -44,7 +53,7 @@ class _SignFormState extends State<SignForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
+          buildusernameFormField(),
           const SizedBox(height: 30),
           buildPasswordFormField(),
           const SizedBox(height: 30),
@@ -61,16 +70,18 @@ class _SignFormState extends State<SignForm> {
               ),
               const Text("Remember me"),
               const Spacer(),
-              /*
               GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),
-                child: Text(
+                onTap: () => {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ForgotPassword()))
+                },
+                child: const Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontFamily: "QuicksandMedium"),
                 ),
               ),
-              */
             ],
           ),
           FormError(errors: errors),
@@ -104,21 +115,44 @@ class _SignFormState extends State<SignForm> {
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 if (remember == true) {
-                  //print(email.toString() + " - " + password.toString());
-                  _storageItem =
-                      StorageItem(email.toString(), password.toString());
-                  _storageService.writeSecureData(_storageItem);
-                  _formKey.currentState!.save();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const MainView()),
-                      ((route) => false));
+                  _staffLogin = await _staffBloc.getLogin(
+                      username.toString(), password.toString());
+                  print(_staffLogin.isSuccess.toString());
+                  loginSuccess = _staffLogin.isSuccess!;
+                  print("Login Success: " + loginSuccess.toString());
+                  if (loginSuccess) {
+                    print("Token: " + _staffLogin.content!.token.toString());
+                    _storageItemUser =
+                        StorageItem("Username", username.toString());
+                    _storageItemToken = StorageItem(
+                        "UserToken", _staffLogin.content!.token.toString());
+                    _storageService.writeSecureData(_storageItemUser);
+                    _storageService.writeSecureData(_storageItemToken);
+                    _formKey.currentState!.save();
+                    removeError(
+                        error: "Sai thông tin tài khoản hoặc mật khẩu.");
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => MainView()),
+                        ((route) => false));
+                  } else {
+                    addError(error: "" + _staffLogin.error!.message.toString());
+                  }
                 } else {
-                  _formKey.currentState!.save();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const MainView()),
-                      ((route) => false));
+                  _staffLogin = await _staffBloc.getLogin(
+                      username.toString(), password.toString());
+                  loginSuccess = _staffLogin.isSuccess!;
+                  if (loginSuccess) {
+                    _formKey.currentState!.save();
+                    removeError(
+                        error: "Sai thông tin tài khoản hoặc mật khẩu.");
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => MainView()),
+                        ((route) => false));
+                  } else {
+                    addError(error: "" + _staffLogin.error!.message.toString());
+                  }
                 }
               }
             },
@@ -203,25 +237,25 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField buildusernameFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => username = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: "Email khong de trong");
-        } /*else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          removeError(error: "Username khong de trong");
+        } /*else if (usernameValidatorRegExp.hasMatch(value)) {
+          removeError(error: kInvalidusernameError);
         }*/
-        email = value;
+        username = value;
         //return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: "Email khong de trong");
+          addError(error: "Username khong de trong");
           return "";
-        } /*else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
+        } /*else if (!usernameValidatorRegExp.hasMatch(value)) {
+          addError(error: kInvalidusernameError);
           return "";
         }*/
         return null;
@@ -231,12 +265,12 @@ class _SignFormState extends State<SignForm> {
         fontFamily: "QuicksandMedium",
       ),
       decoration: InputDecoration(
-        labelText: "Email",
+        labelText: "Username",
         labelStyle: const TextStyle(
           fontFamily: "QuicksandMedium",
           fontSize: 20,
         ),
-        hintText: "Nhập email của bạn",
+        hintText: "Nhập uid của bạn",
         hintStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -245,7 +279,7 @@ class _SignFormState extends State<SignForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding:
             const EdgeInsets.only(left: 25, top: 20, bottom: 20, right: 10),
-        suffixIcon: const Icon(Icons.mail),
+        suffixIcon: const Icon(Icons.account_circle_sharp),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: const BorderSide(

@@ -9,7 +9,7 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("Tai khoan"),
       ),
       body: const Body(),
     );

@@ -1,5 +1,9 @@
+//import 'dart:_http';
+import 'dart:io';
+
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:bigsize_management_staff/model/repository/database_repo.dart';
@@ -11,6 +15,15 @@ import 'package:bigsize_management_staff/view_model/layout_provider.dart';
 import 'package:bigsize_management_staff/view_model/setting_provider.dart';
 
 import 'model/local/pref_repository.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 Future<void> main() async {
   /*
@@ -26,6 +39,7 @@ Future<void> main() async {
     ..displayDuration = const Duration(seconds: 1);
   */
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   final StorageService _storageService = StorageService();
   List<StorageItem> _storageItem;
 
@@ -51,7 +65,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (storageItem.length == 1) {
+    HttpOverrides.global = MyHttpOverrides();
+    // ignore: prefer_is_empty
+    if (storageItem.length >= 1) {
       loadScreen = Routes.homeRoute;
     }
     return MaterialApp(

@@ -5,6 +5,7 @@ import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/about_app/about_app_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/change_password/change_password.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/userprofile_screen.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/setting_menu.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
@@ -69,19 +70,23 @@ class _SettingLayout extends State<SettingLayout> {
   @override
   Widget build(BuildContext context) {
     g.getInfo().then((value) => info = value);
-    return Padding(
+    return SingleChildScrollView(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
+            const SizedBox(
+              height: 5,
+            ),
             Container(
               alignment: Alignment.center,
-              child: const Text("Setting"),
+              height: 90,
+              child: Image.asset("assets/images/Profile Image.png"),
             ),
             const SizedBox(
-              height: 20,
+              height: 15,
             ),
             SettingMenu(
-                text: "Profile",
+                text: "Ho so",
                 icon: Icons.account_circle_rounded,
                 press: () => {
                       Navigator.push(
@@ -92,16 +97,22 @@ class _SettingLayout extends State<SettingLayout> {
             const SizedBox(
               height: 0.5,
             ),
-            const SettingMenu(text: "Setting", icon: Icons.settings),
+            SettingMenu(
+                text: "Cai dat",
+                icon: Icons.settings,
+                press: () => {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ChangePassword()))
+                    }),
             const SizedBox(
               height: 0.5,
             ),
-            const SettingMenu(text: "Help center", icon: Icons.help),
+            const SettingMenu(text: "Trung tam tro giup", icon: Icons.help),
             const SizedBox(
               height: 0.5,
             ),
             SettingMenu(
-                text: "About app",
+                text: "Ve ung dung",
                 icon: Icons.info_rounded,
                 press: () => {
                       Navigator.push(
@@ -113,7 +124,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 0.5,
             ),
             SettingMenu(
-              text: "Logout",
+              text: "Dang xuat",
               icon: Icons.logout,
               press: () async {
                 _storageService.deleteAllSecureData();

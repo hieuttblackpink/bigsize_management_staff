@@ -1,9 +1,14 @@
+import 'package:bigsize_management_staff/models/user_profile.dart';
 import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 
 class UserProfileEditScreen extends StatelessWidget {
-  const UserProfileEditScreen({Key? key}) : super(key: key);
+  final String userToken;
+  final StaffProfile? staffProfile;
+  const UserProfileEditScreen(
+      {Key? key, required this.staffProfile, required this.userToken})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,10 @@ class UserProfileEditScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Sua thong tin ca nhan"),
       ),
-      body: const Body(),
+      body: Body(
+        userToken: userToken,
+        staffProfile: staffProfile,
+      ),
     );
   }
 }
