@@ -6,6 +6,7 @@ import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/resources/theme_manager.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile_edit/profileedit_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class UserProfileInfo extends StatefulWidget {
   final String userToken;
@@ -133,7 +134,74 @@ class _UserProfileInfo extends State<UserProfileInfo> {
                 );
               }
 
-              return const CircularProgressIndicator();
+              return Container(
+                alignment: Alignment.center,
+                height: 500.0,
+                width: 450,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: ColorManager.backGroundBlue,
+                  //boxShadow: StyleManager.shadow,
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 225, 225, 225),
+                      highlightColor: Colors.white,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: Colors.white,
+                          boxShadow: StyleManager.shadow,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 225, 225, 225),
+                      highlightColor: Colors.white,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: Colors.white,
+                          boxShadow: StyleManager.shadow,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: const Color.fromARGB(255, 225, 225, 225),
+                      highlightColor: Colors.white,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50.0),
+                          color: Colors.white,
+                          boxShadow: StyleManager.shadow,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              );
             })
       ],
     );

@@ -1,13 +1,10 @@
 import 'package:bigsize_management_staff/blocs/product_bloc.dart';
 import 'package:bigsize_management_staff/models/product.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:bigsize_management_staff/model/module/product.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../../model/module/ui_models.dart';
-import '../../../../../view_model/app_provider.dart';
 import '../../../../resources/styles_manager.dart';
 
 class ProductLayout extends StatefulWidget {
@@ -80,10 +77,16 @@ class _ProductLayout extends State<ProductLayout> {
                                     crossAxisCount: 2,
                                     childAspectRatio: 0.9,
                                   ),
-                                  itemBuilder: (context, index) => index ==
-                                          entries.data!.length
-                                      ? listItem(context, entries.data!.last)
-                                      : listItem(context, entries.data![index]),
+                                  itemBuilder: (context, index) =>
+                                      index == entries.data!.length
+                                          ? listItem(
+                                              context,
+                                              entries.data!.last,
+                                              token.data.toString())
+                                          : listItem(
+                                              context,
+                                              entries.data![index],
+                                              token.data.toString()),
                                   itemCount: entries.data!.length,
                                 )
                               ],
@@ -226,72 +229,86 @@ class _ProductLayout extends State<ProductLayout> {
     );
   }
 
-  Widget listItem(BuildContext context, Content item) => Container(
-        margin: const EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.onSecondary,
-            borderRadius: StyleManager.border,
-            boxShadow: StyleManager.shadow),
-        child: LayoutBuilder(
-          builder: (context, constraints) => Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget listItem(BuildContext context, Content item, String token) =>
+      GestureDetector(
+          onTap: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProductDetail(
+                              userToken: token,
+                              productID: item.productId,
+                            )))
+              },
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onSecondary,
+                borderRadius: StyleManager.border,
+                boxShadow: StyleManager.shadow),
+            child: LayoutBuilder(
+              builder: (context, constraints) => Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: StyleManager.border, // Image border
-                    child: Image.network(
-                      item.imageUrl.toString(),
-                      height: constraints.maxHeight * .6,
-                      width: double.infinity,
-                      fit: BoxFit.fill,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: StyleManager.border, // Image border
+                        child: Image.network(
+                          item.imageUrl.toString(),
+                          height: constraints.maxHeight * .6,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.productName.toString().length <= 12
+                                  ? item.productName.toString()
+                                  : item.productName!.substring(0, 12) + "...",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontFamily: "QuicksandBold",
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Tooltip(
+                              message: "Real price ${item.price} VND",
+                              child: Text(
+                                "${item.promotionPrice} VND",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                            ),
+                            Text(
+                              "Promotion: " + item.promotionValue.toString(),
+                              style: Theme.of(context).textTheme.headline4,
+                            )
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.productName.toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontFamily: "QuicksandBold",
-                            fontSize: 18,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Tooltip(
-                          message: "Real price ${item.price} VND",
-                          child: Text(
-                            "${item.promotionPrice} VND",
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                        ),
-                        Text(
-                          "Promotion: " + item.promotionValue.toString(),
-                          style: Theme.of(context).textTheme.headline4,
-                        )
-                      ],
+                  Positioned(
+                    right: 10,
+                    top: constraints.maxHeight * .58 - 10,
+                    child: CircleAvatar(
+                      radius: 20,
+                      foregroundColor:
+                          Theme.of(context).colorScheme.onSecondary,
+                      backgroundColor: Theme.of(context).colorScheme.onSurface,
+                      child: Text(item.quantity.toString()),
                     ),
                   )
                 ],
               ),
-              Positioned(
-                right: 10,
-                top: constraints.maxHeight * .58 - 10,
-                child: CircleAvatar(
-                  radius: 20,
-                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                  backgroundColor: Theme.of(context).colorScheme.onSurface,
-                  child: Text(item.quantity.toString()),
-                ),
-              )
-            ],
-          ),
-        ),
-      );
+            ),
+          ));
 }

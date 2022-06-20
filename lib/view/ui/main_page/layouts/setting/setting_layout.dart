@@ -101,8 +101,10 @@ class _SettingLayout extends State<SettingLayout> {
                 text: "Cai dat",
                 icon: Icons.settings,
                 press: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ChangePassword()))
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ChangePassword()))
                     }),
             const SizedBox(
               height: 0.5,
@@ -135,8 +137,17 @@ class _SettingLayout extends State<SettingLayout> {
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
+            const Text(
+              "3.9.3",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: "QuicksandLight",
+                fontSize: 20,
+              ),
+            ),
+            /*
             Container(
               child: _loading
                   ? const CircularProgressIndicator()
@@ -159,6 +170,7 @@ class _SettingLayout extends State<SettingLayout> {
                             );
                           }),
             ),
+            */
           ],
         ));
   }
