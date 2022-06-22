@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/components/userprofile_header.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/components/userprofile_info.dart';
@@ -15,35 +17,47 @@ class _Body extends State<Body> {
   final StorageService _storageService = StorageService();
 
   Future<String?> getUserToken() async {
-    return await _storageService.readSecureData("UserToken");
+    try {
+      return await _storageService.readSecureData("UserToken");
+    } catch (e) {
+      print("Exception: " + e.toString());
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 20),
+      physics: const AlwaysScrollableScrollPhysics(),
       child: Column(
         children: <Widget>[
           FutureBuilder<String?>(
               future: getUserToken(),
               builder: (context, token) {
                 if (token.hasData) {
-                  return Column(
-                    children: <Widget>[
-                      UserProfileHeader(
-                        userToken: token.data.toString(),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      UserProfileInfo(
-                        userToken: token.data.toString(),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  );
+                  return RefreshIndicator(
+                      onRefresh: () async {
+                        setState(() {});
+                      },
+                      child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            children: <Widget>[
+                              UserProfileHeader(
+                                userToken: token.data.toString(),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              UserProfileInfo(
+                                userToken: token.data.toString(),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          )));
                 }
 
                 return const CircularProgressIndicator();

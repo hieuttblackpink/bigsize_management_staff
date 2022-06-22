@@ -1,3 +1,10 @@
+// ignore_for_file: avoid_print
+
+import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
+import 'package:bigsize_management_staff/models/user_password.dart';
+import 'package:bigsize_management_staff/resources/form_error.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/change_password/change_success.dart';
 import 'package:flutter/material.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -10,9 +17,39 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePassword extends State<ChangePassword> {
+  final StorageService _storageService = StorageService();
+  final StaffBloc _staffBloc = StaffBloc();
+  late UserPassword _userPassword;
+  late String? userToken;
+  bool isChange = false;
+
   TextEditingController oldPass = TextEditingController();
   TextEditingController newPass = TextEditingController();
   TextEditingController confirmPass = TextEditingController();
+
+  final List<String?> errors = [];
+
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  void removeAllError() {
+    setState(() {
+      errors.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +66,9 @@ class _ChangePassword extends State<ChangePassword> {
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
+                onTap: () {
+                  removeAllError();
+                },
                 controller: oldPass,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -53,6 +93,9 @@ class _ChangePassword extends State<ChangePassword> {
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
+                onTap: () {
+                  removeAllError();
+                },
                 controller: newPass,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -77,6 +120,9 @@ class _ChangePassword extends State<ChangePassword> {
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
               child: TextField(
+                onTap: () {
+                  removeAllError();
+                },
                 controller: confirmPass,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -96,13 +142,51 @@ class _ChangePassword extends State<ChangePassword> {
                 ),
               ),
             ),
+            SizedBox(height: size.height * 0.02),
+            FormError(errors: errors),
             SizedBox(height: size.height * 0.05),
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
               child: RaisedButton(
-                onPressed: () => {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()))
+                onPressed: () async {
+                  if (newPass.text.length < 8) {
+                    addError(error: "Mat khau moi qua ngan");
+                  } else {
+                    removeError(error: "Mat khau moi qua ngan");
+                    userToken =
+                        await _storageService.readSecureData("UserToken");
+                    _userPassword = await _staffBloc.changePassword(
+                        userToken.toString(),
+                        oldPass.text,
+                        newPass.text,
+                        confirmPass.text);
+                    print(_userPassword.isSuccess.toString());
+                    if (_userPassword.isSuccess == null) {
+                      addError(
+                          error: _userPassword.errors!.confirmNewPassword!.first
+                                  .substring(0, 12) +
+                              "\n" +
+                              _userPassword.errors!.confirmNewPassword!.first
+                                  .substring(
+                                      13,
+                                      _userPassword.errors!.confirmNewPassword!
+                                          .first.length));
+                    } else if (!_userPassword.isSuccess!) {
+                      addError(error: "Sai mật khẩu");
+                    } else {
+                      removeError(error: "Sai mật khẩu");
+                      removeError(
+                          error:
+                              "New password and confirmation new password do not match.");
+                      print("Doi mat khau thanh cong");
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const ChangePasswordSuccess()));
+                      //Navigator.pop(context);
+                    }
+                  }
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(80.0)),

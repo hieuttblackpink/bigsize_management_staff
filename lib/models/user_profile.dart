@@ -57,7 +57,7 @@ class Content {
   String? _phoneNumber;
   String? _email;
   String? _birthday;
-  String? _storeAddress;
+  int? _storeId;
   String? _role;
 
   Content(
@@ -66,7 +66,7 @@ class Content {
       String? phoneNumber,
       String? email,
       String? birthday,
-      String? storeAddress,
+      int? storeId,
       String? role}) {
     if (uid != null) {
       _uid = uid;
@@ -83,8 +83,8 @@ class Content {
     if (birthday != null) {
       _birthday = birthday;
     }
-    if (storeAddress != null) {
-      _storeAddress = storeAddress;
+    if (storeId != null) {
+      _storeId = storeId;
     }
     if (role != null) {
       _role = role;
@@ -101,8 +101,8 @@ class Content {
   set email(String? email) => _email = email;
   String? get birthday => _birthday;
   set birthday(String? birthday) => _birthday = birthday;
-  String? get storeAddress => _storeAddress;
-  set storeAddress(String? storeAddress) => _storeAddress = storeAddress;
+  int? get storeId => _storeId;
+  set storeId(int? storeId) => _storeId = storeId;
   String? get role => _role;
   set role(String? role) => _role = role;
 
@@ -112,7 +112,7 @@ class Content {
     _phoneNumber = json['phone_number'];
     _email = json['email'];
     _birthday = json['birthday'];
-    _storeAddress = json['store_address'];
+    _storeId = json['store_id'];
     _role = json['role'];
   }
 
@@ -123,7 +123,7 @@ class Content {
     data['phone_number'] = _phoneNumber;
     data['email'] = _email;
     data['birthday'] = _birthday;
-    data['store_address'] = _storeAddress;
+    data['store_id'] = _storeId;
     data['role'] = _role;
     return data;
   }

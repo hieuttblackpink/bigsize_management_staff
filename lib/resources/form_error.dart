@@ -25,6 +25,8 @@ class FormError extends StatelessWidget {
         ),
         Text(
           error,
+          softWrap: true,
+          maxLines: 2,
           style: const TextStyle(
             fontFamily: "QuickSandMedium",
             fontSize: 15,

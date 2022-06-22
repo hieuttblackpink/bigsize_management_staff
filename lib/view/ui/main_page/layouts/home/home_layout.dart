@@ -3,6 +3,8 @@
 import 'dart:math';
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
+import 'package:bigsize_management_staff/blocs/store_bloc.dart';
+import 'package:bigsize_management_staff/models/store.dart';
 import 'package:bigsize_management_staff/models/user_profile.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
@@ -23,6 +25,7 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayout extends State<HomeLayout> {
   final StorageService _storageService = StorageService();
   final StaffBloc _staffBloc = StaffBloc();
+  final StoreBloc _storeBloc = StoreBloc();
 
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
@@ -30,6 +33,10 @@ class _HomeLayout extends State<HomeLayout> {
 
   Future<StaffProfile?> getStaffProfile(String token) async {
     return await _staffBloc.getProfile(token);
+  }
+
+  Future<Store?> getStore(String token, String id) async {
+    return await _storeBloc.getStore(token, id);
   }
 
   final rng = Random();
@@ -50,68 +57,274 @@ class _HomeLayout extends State<HomeLayout> {
               future: getUserToken(),
               builder: (context, shot) {
                 if (shot.hasData) {
-                  print("Snap token:" + shot.data.toString());
+                  //print("Snap token:" + shot.data.toString());
                   return FutureBuilder<StaffProfile?>(
                       future: getStaffProfile(shot.data.toString()),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          print("Snap staff profile: " +
-                              snapshot.data.toString());
-                          return Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.only(
-                              top: 5,
-                            ),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    style: BorderStyle.solid,
-                                    color: Colors.black,
-                                    width: 0.25)),
-                            height: 50,
-                            padding: const EdgeInsets.only(left: 15),
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {});
-                              },
-                              child: Text(
-                                "Xin chao, " +
-                                    snapshot.data!.content!.fullname.toString(),
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "QuicksandBold",
-                                  fontWeight: FontWeight.bold,
+                          return Column(children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.only(
+                                top: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      style: BorderStyle.solid,
+                                      color: Colors.black,
+                                      width: 0.25)),
+                              height: 50,
+                              padding: const EdgeInsets.only(left: 15),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {});
+                                },
+                                child: Text(
+                                  "Xin chao, " +
+                                      snapshot.data!.content!.fullname
+                                          .toString(),
+                                  textAlign: TextAlign.left,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: "QuicksandBold",
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          );
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            FutureBuilder<Store?>(
+                                future: getStore(shot.data.toString(),
+                                    snapshot.data!.content!.storeId.toString()),
+                                builder: (context, store) {
+                                  if (store.hasData) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        boxShadow: StyleManager.shadow,
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                      ),
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Row(
+                                            children: const <Widget>[
+                                              Icon(
+                                                Icons.location_pin,
+                                                color: Colors.blue,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Chi nhanh cua hang",
+                                                style: TextStyle(
+                                                  fontFamily: "QuicksandBold",
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              const Icon(
+                                                Icons.store,
+                                                color: Colors.blue,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Chi nhanh: " +
+                                                    store.data!.content!
+                                                        .storeAddress
+                                                        .toString(),
+                                                style: const TextStyle(
+                                                  fontFamily: "QuicksandBold",
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: <Widget>[
+                                              const Icon(
+                                                Icons.phone,
+                                                color: Colors.blue,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                store.data!.content!.storePhone
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  fontFamily: "QuicksandBold",
+                                                  fontSize: 20,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+
+                                  return Container(
+                                    width: double.maxFinite,
+                                    decoration: BoxDecoration(
+                                      boxShadow: StyleManager.shadow,
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Shimmer.fromColors(
+                                          baseColor: const Color.fromARGB(
+                                              255, 200, 200, 200),
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            height: 30,
+                                            width: double.maxFinite,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Shimmer.fromColors(
+                                          baseColor: const Color.fromARGB(
+                                              255, 200, 200, 200),
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            height: 30,
+                                            width: double.maxFinite,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Shimmer.fromColors(
+                                          baseColor: const Color.fromARGB(
+                                              255, 200, 200, 200),
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                            height: 30,
+                                            width: double.maxFinite,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ]);
                         }
 
-                        return Container(
-                          alignment: Alignment.centerLeft,
-                          margin: const EdgeInsets.only(
-                            top: 5,
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  style: BorderStyle.solid,
-                                  color: Colors.black,
-                                  width: 0.25)),
-                          height: 50,
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Shimmer.fromColors(
-                            baseColor: Colors.black.withOpacity(0.5),
-                            highlightColor: Colors.white,
-                            child: const Text(
-                              "Xin chao",
-                              style: TextStyle(
-                                fontFamily: "QuicksandBold",
-                                fontSize: 20,
+                        return Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.only(
+                                top: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      style: BorderStyle.solid,
+                                      color: Colors.black,
+                                      width: 0.25)),
+                              height: 50,
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Shimmer.fromColors(
+                                baseColor: Colors.black.withOpacity(0.5),
+                                highlightColor: Colors.white,
+                                child: const Text(
+                                  "Xin chao",
+                                  style: TextStyle(
+                                    fontFamily: "QuicksandBold",
+                                    fontSize: 20,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              width: double.maxFinite,
+                              decoration: BoxDecoration(
+                                boxShadow: StyleManager.shadow,
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 200, 200, 200),
+                                    highlightColor: Colors.white,
+                                    child: Container(
+                                      height: 30,
+                                      width: double.maxFinite,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 200, 200, 200),
+                                    highlightColor: Colors.white,
+                                    child: Container(
+                                      height: 30,
+                                      width: double.maxFinite,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Shimmer.fromColors(
+                                    baseColor: const Color.fromARGB(
+                                        255, 200, 200, 200),
+                                    highlightColor: Colors.white,
+                                    child: Container(
+                                      height: 30,
+                                      width: double.maxFinite,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         );
                       });
                 }
@@ -152,84 +365,6 @@ class _HomeLayout extends State<HomeLayout> {
           ),
           const SizedBox(
             height: 10,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              boxShadow: StyleManager.shadow,
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-            ),
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.location_pin,
-                      color: Colors.blue,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Chi nhanh cua hang",
-                      style: TextStyle(
-                        fontFamily: "QuicksandBold",
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.store,
-                      color: Colors.blue,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Chi nhanh: ", //+
-                      //_staffProfile.content!.storeAddress.toString(),
-                      style: TextStyle(
-                        fontFamily: "QuicksandBold",
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.phone,
-                      color: Colors.blue,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "0912345678",
-                      style: TextStyle(
-                        fontFamily: "QuicksandBold",
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
           ),
         ],
       ),

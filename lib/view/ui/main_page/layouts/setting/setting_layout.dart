@@ -140,7 +140,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 10,
             ),
             const Text(
-              "3.9.3",
+              "4.1.5",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "QuicksandLight",

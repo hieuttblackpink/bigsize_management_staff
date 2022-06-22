@@ -242,6 +242,7 @@ class _ProductLayout extends State<ProductLayout> {
               },
           child: Container(
             margin: const EdgeInsets.all(5.0),
+            height: 300,
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onSecondary,
                 borderRadius: StyleManager.border,

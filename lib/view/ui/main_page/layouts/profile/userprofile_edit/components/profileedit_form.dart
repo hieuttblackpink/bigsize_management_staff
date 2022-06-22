@@ -386,7 +386,7 @@ class _EditProfile extends State<EditProfileForm> {
                   phoneNumber: phoneP.text,
                   email: emailP.text,
                   birthday: birthDay.text,
-                  storeAddress: "",
+                  storeId: 1,
                   role: "Staff");
               StaffProfile profileUpdate = StaffProfile(content: content);
               bool isUpdate =
