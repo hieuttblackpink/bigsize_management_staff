@@ -73,7 +73,7 @@ class _UserProfileHeader extends State<UserProfileHeader> {
                   baseColor: Colors.black.withOpacity(0.5),
                   highlightColor: Colors.white,
                   child: const Text(
-                    "Loading",
+                    "Tên của bạn",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "QuickSandBold",

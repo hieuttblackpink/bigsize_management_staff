@@ -81,7 +81,7 @@ class _HomeLayout extends State<HomeLayout> {
                                   setState(() {});
                                 },
                                 child: Text(
-                                  "Xin chao, " +
+                                  "Xin chào, " +
                                       snapshot.data!.content!.fullname
                                           .toString(),
                                   textAlign: TextAlign.left,
@@ -124,7 +124,7 @@ class _HomeLayout extends State<HomeLayout> {
                                                 width: 10,
                                               ),
                                               Text(
-                                                "Chi nhanh cua hang",
+                                                "Chi nhánh cửa hàng",
                                                 style: TextStyle(
                                                   fontFamily: "QuicksandBold",
                                                   fontSize: 20,
@@ -145,17 +145,19 @@ class _HomeLayout extends State<HomeLayout> {
                                               const SizedBox(
                                                 width: 10,
                                               ),
-                                              Text(
-                                                "Chi nhanh: " +
-                                                    store.data!.content!
-                                                        .storeAddress
-                                                        .toString(),
-                                                style: const TextStyle(
-                                                  fontFamily: "QuicksandBold",
-                                                  fontSize: 20,
-                                                  color: Colors.black,
+                                              Flexible(
+                                                child: Text(
+                                                  store.data!.content!
+                                                      .storeAddress!
+                                                      .toString(),
+                                                  softWrap: true,
+                                                  style: const TextStyle(
+                                                    fontFamily: "QuicksandBold",
+                                                    fontSize: 20,
+                                                    color: Colors.black,
+                                                  ),
                                                 ),
-                                              )
+                                              ),
                                             ],
                                           ),
                                           const SizedBox(
@@ -207,7 +209,11 @@ class _HomeLayout extends State<HomeLayout> {
                                           child: Container(
                                             height: 30,
                                             width: double.maxFinite,
-                                            color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(
@@ -220,7 +226,11 @@ class _HomeLayout extends State<HomeLayout> {
                                           child: Container(
                                             height: 30,
                                             width: double.maxFinite,
-                                            color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(
@@ -233,7 +243,11 @@ class _HomeLayout extends State<HomeLayout> {
                                           child: Container(
                                             height: 30,
                                             width: double.maxFinite,
-                                            color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -262,7 +276,7 @@ class _HomeLayout extends State<HomeLayout> {
                                 baseColor: Colors.black.withOpacity(0.5),
                                 highlightColor: Colors.white,
                                 child: const Text(
-                                  "Xin chao",
+                                  "Xin chào",
                                   style: TextStyle(
                                     fontFamily: "QuicksandBold",
                                     fontSize: 20,
@@ -292,7 +306,10 @@ class _HomeLayout extends State<HomeLayout> {
                                     child: Container(
                                       height: 30,
                                       width: double.maxFinite,
-                                      color: Colors.white,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -305,7 +322,10 @@ class _HomeLayout extends State<HomeLayout> {
                                     child: Container(
                                       height: 30,
                                       width: double.maxFinite,
-                                      color: Colors.white,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -318,7 +338,10 @@ class _HomeLayout extends State<HomeLayout> {
                                     child: Container(
                                       height: 30,
                                       width: double.maxFinite,
-                                      color: Colors.white,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -339,7 +362,7 @@ class _HomeLayout extends State<HomeLayout> {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
-              Text("Tinh hinh kinh doanh hom nay",
+              Text("Tình hình kinh doanh hôm nay",
                   style: Theme.of(context).textTheme.headline4),
               const SizedBox(
                 height: 10,

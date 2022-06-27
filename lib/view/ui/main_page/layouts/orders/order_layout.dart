@@ -1,91 +1,123 @@
-import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
+import 'package:bigsize_management_staff/blocs/order_bloc.dart';
+import 'package:bigsize_management_staff/models/order_list.dart';
+import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../model/module/deals.dart';
-import '../../../../../model/module/ui_models.dart';
-import '../../../../../view_model/app_provider.dart';
-
-ShowData<OrderModel> test = ShowData.empty();
-
-List<OrderModel> orderL = [];
-
-OrderModel order1 = OrderModel(
-    items: [],
-    id: 1,
-    type: PaymentType.paid,
-    totalMoney: 5000,
-    name: "Tran Trong Hieu",
-    date: "01/01/2022",
-    time: "9:00",
-    profit: 50);
-
-OrderModel order2 = OrderModel(
-    items: [],
-    id: 2,
-    type: PaymentType.not,
-    totalMoney: 10000,
-    name: "Trieu Yen Nhi",
-    date: "01/01/2022",
-    time: "10:00",
-    profit: 60);
-
-class OrderLayout extends StatelessWidget {
+class OrderLayout extends StatefulWidget {
   const OrderLayout({Key? key}) : super(key: key);
 
   @override
+  _OrderLayout createState() => _OrderLayout();
+}
+
+class _OrderLayout extends State<OrderLayout> {
+  final StorageService _storageService = StorageService();
+  final OrderBloc _orderBloc = OrderBloc();
+
+  Future<String?> getToken() async {
+    return _storageService.readSecureData("UserToken");
+  }
+
+  Future<OrderList?> getListOrder(String token) async {
+    return await _orderBloc.getListOrder(token);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (orderL.isEmpty) {
-      orderL.add(order1);
-      orderL.add(order2);
-    }
-    test.data = orderL;
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Selector<AppProvider, ShowData<OrderModel>>(
-        selector: (context, appProvider) => test,
-        builder: (context, entries, _) => ListView(
-          physics: const BouncingScrollPhysics(),
-          children: [
-            Row(
-              children: [
-                Text("Tong don hang ${entries.data.length}",
-                    style: Theme.of(context).textTheme.headline4),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Divider(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    // thickness: 10,
-                    height: 10,
-                  ),
-                ),
-              ],
-            ),
-            const Divider(
-              height: 10,
-              thickness: 0,
-            ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) => index == entries.data.length
-                  ? entries.lastItem
-                  : listItem(context, entries.data[index], index),
-              separatorBuilder: (_, __) => const SizedBox(
-                height: 10,
-              ),
-              itemCount: entries.data.length + 1,
-            )
-          ],
-        ),
+      child: Column(
+        children: <Widget>[
+          FutureBuilder<String?>(
+              future: getToken(),
+              builder: (context, token) {
+                if (token.hasData) {
+                  return Column(
+                    children: <Widget>[
+                      FutureBuilder<OrderList?>(
+                          future: getListOrder(token.data.toString()),
+                          builder: (context, orderList) {
+                            if (orderList.hasData) {
+                              return Column(
+                                children: <Widget>[
+                                  ListView(
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                              "Tong don hang ${orderList.data!.content!.length}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Divider(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onBackground,
+                                              // thickness: 10,
+                                              height: 10,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(
+                                        height: 10,
+                                        thickness: 0,
+                                      ),
+                                      ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            index ==
+                                                    orderList
+                                                        .data!.content!.length
+                                                ? listItem(
+                                                    context,
+                                                    orderList
+                                                        .data!.content!.last,
+                                                    index,
+                                                    token.toString())
+                                                : listItem(
+                                                    context,
+                                                    orderList
+                                                        .data!.content![index],
+                                                    index,
+                                                    token.toString()),
+                                        separatorBuilder: (_, __) =>
+                                            const SizedBox(
+                                          height: 10,
+                                        ),
+                                        itemCount:
+                                            orderList.data!.content!.length,
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }
+
+                            return const CircularProgressIndicator();
+                          })
+                    ],
+                  );
+                }
+
+                return const CircularProgressIndicator();
+              }),
+        ],
       ),
     );
   }
 
-  Widget listItem(BuildContext context, OrderModel item, int index) =>
+  Widget listItem(
+          BuildContext context, Content item, int index, String token) =>
       Container(
           //height: 70,
           color: Colors.white,
@@ -95,7 +127,7 @@ class OrderLayout extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "#" + item.id.toString(),
+                  "#" + item.orderId.toString(),
                   textAlign: TextAlign.left,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -109,11 +141,11 @@ class OrderLayout extends StatelessWidget {
                 const SizedBox(
                   height: 7,
                 ),
-                Text(
-                  item.name,
+                const Text(
+                  "", //item.,//ten khach hang
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: "QuicksandBold",
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -129,20 +161,23 @@ class OrderLayout extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => OrderDetail(order: orderL[index])))
+                      builder: (_) => OrderDetail(
+                            id: item.orderId.toString(),
+                            userToken: token,
+                          )))
             },
-            subtitle: Text("${item.date} | ${item.itemsCount} items"),
+            //subtitle: Text("${item.date} | ${item.itemsCount} items"), //ngay tao + so san pham
             trailing: FittedBox(
               fit: BoxFit.fill,
               child: Tooltip(
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: Colors.black),
-                message: "Profit is ${item.profit}",
+                message: "Tong tien",
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "${item.totalMoney} VND",
+                      "${item.totalPriceAfterDiscount} VND",
                       style: const TextStyle(fontSize: 17),
                     ),
                     const SizedBox(
@@ -151,15 +186,24 @@ class OrderLayout extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Icon(
-                          item.type.icon,
+                          item.status.toString() == "Đã nhận hàng"
+                              ? Icons.check
+                              : Icons.cancel,
                           size: 20,
-                          color: item.type.color,
+                          color: item.status.toString() == "Đã nhận hàng"
+                              ? Colors.green
+                              : Colors.red,
                         ),
-                        Text(item.type.text,
+                        Text(item.status.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle1!
-                                .copyWith(color: item.type.color))
+                                .copyWith(
+                                  color:
+                                      item.status.toString() == "Đã nhận hàng"
+                                          ? Colors.green
+                                          : Colors.red,
+                                ))
                       ],
                     ),
                   ],

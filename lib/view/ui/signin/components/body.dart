@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
               children: const <Widget>[
                 SizedBox(height: 90),
                 Text(
-                  "WELCOME",
+                  "BIGSIZE",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 50,

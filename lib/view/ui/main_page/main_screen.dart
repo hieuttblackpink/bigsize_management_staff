@@ -17,11 +17,11 @@ import '../../../view_model/layout_provider.dart';
 import '../../resources/routes_manger.dart';
 
 const List<String> appBarTitles = [
-  "Trang chu",
-  "Don dat hang",
-  "Entry",
-  "San pham",
-  "Tai khoan"
+  "Trang chủ",
+  "Đơn đặt hàng",
+  "--",
+  "Sản phẩm",
+  "Tài khoản"
 ];
 
 class MainView extends StatefulWidget {

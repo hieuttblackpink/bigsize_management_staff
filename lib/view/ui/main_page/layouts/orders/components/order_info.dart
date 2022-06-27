@@ -1,10 +1,11 @@
 import 'package:bigsize_management_staff/model/module/deals.dart';
+import 'package:bigsize_management_staff/models/order_detail.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class OrderInfo extends StatelessWidget {
-  final OrderModel order;
-  const OrderInfo({Key? key, required this.order}) : super(key: key);
+  final Content orderInfo;
+  const OrderInfo({Key? key, required this.orderInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class OrderInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Khach hang: " + order.name,
+              "Khách hàng: " + orderInfo.customerName.toString(),
               textAlign: TextAlign.left,
               style: const TextStyle(
                   color: Colors.black,
@@ -31,11 +32,11 @@ class OrderInfo extends StatelessWidget {
             const SizedBox(
               height: 7,
             ),
-            const Text(
-              "Dia chi: ",
+            Text(
+              "Địa chỉ nhận hàng: " + orderInfo.deliveryAddress.toString(),
               softWrap: true,
               textAlign: TextAlign.left,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
               ),
@@ -44,7 +45,7 @@ class OrderInfo extends StatelessWidget {
               height: 7,
             ),
             const Text(
-              "SDT: ",
+              "SĐT: ",
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
@@ -57,9 +58,9 @@ class OrderInfo extends StatelessWidget {
               color: Colors.grey,
               thickness: 1,
             ),
-            const Text(
-              "Ban boi: ",
-              style: TextStyle(
+            Text(
+              "Nhân viên bán hàng: " + orderInfo.staffName.toString(),
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
               ),
@@ -67,9 +68,9 @@ class OrderInfo extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Tai chi nhanh: ",
-              style: TextStyle(
+            Text(
+              "Tại chi nhánh: " + orderInfo.store!.storeAddress.toString(),
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
               ),

@@ -6,12 +6,19 @@ import 'package:bigsize_management_staff/model/module/deals.dart';
 import '../../../model/repository/dates_repository.dart';
 import '../../resources/styles_manager.dart';
 import 'widgets/add_box.dart';
-import 'widgets/old_entries.dart';
+import 'widgets/order_product_list.dart';
 
-class AddDealView extends StatelessWidget {
+class AddDealView extends StatefulWidget {
   const AddDealView(this.isEntry, {this.deal, Key? key}) : super(key: key);
   final Deal? deal;
   final bool isEntry;
+
+  @override
+  _AddOrderView createState() => _AddOrderView();
+}
+
+class _AddOrderView extends State<AddDealView> {
+  double totalPrice = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class AddDealView extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-                "${deal == null ? "Tao" : "Edit"} ${isEntry ? "entry" : "don hang"}"),
+                "${widget.deal == null ? "Tao" : "Edit"} ${widget.isEntry ? "entry" : "don hang"}"),
             actions: [
               IconButton(
                   onPressed: () {
@@ -42,10 +49,10 @@ class AddDealView extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 400,
                       child: ListTile(
-                        title: Text(
+                        title: const Text(
                           "Tam tinh",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -58,8 +65,8 @@ class AddDealView extends StatelessWidget {
                         trailing: FittedBox(
                           fit: BoxFit.fill,
                           child: Text(
-                            "1000000 VND",
-                            style: TextStyle(
+                            totalPrice.toString() + " VND",
+                            style: const TextStyle(
                               fontFamily: "QuicksandBold",
                               fontSize: 20,
                               color: Colors.blue,
@@ -140,12 +147,12 @@ class AddDealView extends StatelessWidget {
                 Text("Them san pham",
                     style: Theme.of(context).textTheme.headline4),
                 divider(),
-                AddBox(),
+                const AddBox(),
                 ...List.generate(2, (index) => divider()),
                 Text("Danh sach san pham",
                     style: Theme.of(context).textTheme.headline4),
                 divider(),
-                OldEntryList(),
+                //const OrderProductList(),
               ],
             ),
           )),
@@ -170,7 +177,7 @@ class AddDealView extends StatelessWidget {
                 ),
                 divider(),
                 Text(
-                  "1000000 VND",
+                  totalPrice.toString() + " VND",
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],

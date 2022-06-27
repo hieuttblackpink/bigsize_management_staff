@@ -86,7 +86,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 15,
             ),
             SettingMenu(
-                text: "Ho so",
+                text: "Hồ sơ",
                 icon: Icons.account_circle_rounded,
                 press: () => {
                       Navigator.push(
@@ -98,7 +98,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 0.5,
             ),
             SettingMenu(
-                text: "Cai dat",
+                text: "Cài đặt",
                 icon: Icons.settings,
                 press: () => {
                       Navigator.push(
@@ -109,12 +109,12 @@ class _SettingLayout extends State<SettingLayout> {
             const SizedBox(
               height: 0.5,
             ),
-            const SettingMenu(text: "Trung tam tro giup", icon: Icons.help),
+            const SettingMenu(text: "Trung tâm trợ giúp", icon: Icons.help),
             const SizedBox(
               height: 0.5,
             ),
             SettingMenu(
-                text: "Ve ung dung",
+                text: "Về ứng dụng",
                 icon: Icons.info_rounded,
                 press: () => {
                       Navigator.push(
@@ -126,7 +126,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 0.5,
             ),
             SettingMenu(
-              text: "Dang xuat",
+              text: "Đăng xuất",
               icon: Icons.logout,
               press: () async {
                 _storageService.deleteAllSecureData();

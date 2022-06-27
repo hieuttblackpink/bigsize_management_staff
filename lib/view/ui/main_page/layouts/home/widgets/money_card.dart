@@ -63,7 +63,7 @@ class MoneyCard extends StatelessWidget {
             verticalLine(context),
             Column(
               children: [
-                Text("Don dat hang",
+                Text("Tổng đơn hàng",
                     style: Theme.of(context).textTheme.subtitle1),
                 divider(),
                 Selector<AppProvider, int>(
@@ -106,7 +106,7 @@ class MoneyCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Thong tin chi tiet",
+                "Thông tin chi tiết",
                 style: Theme.of(context).textTheme.headline3,
               ),
               Icon(

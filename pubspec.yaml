@@ -46,9 +46,11 @@ dependencies:
   timeline_tile: ^2.0.0
   http: ^0.13.4
   firebase_core: ^1.17.1
+  firebase_messaging: ^11.1.0
   fluttertoast: ^8.0.9
   get: ^4.6.5
   shimmer: ^2.0.0
+  dropdown_search: ^3.0.1
   #intl: ^0.17.0
   built_value: ^8.3.2
   dio: ^4.0.6

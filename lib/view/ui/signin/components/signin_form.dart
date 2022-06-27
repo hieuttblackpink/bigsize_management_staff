@@ -68,7 +68,7 @@ class _SignFormState extends State<SignForm> {
                   });
                 },
               ),
-              const Text("Remember me"),
+              const Text("Nhớ đăng nhập"),
               const Spacer(),
               GestureDetector(
                 onTap: () => {
@@ -76,7 +76,7 @@ class _SignFormState extends State<SignForm> {
                       builder: (context) => const ForgotPassword()))
                 },
                 child: const Text(
-                  "Forgot Password",
+                  "Quên mật khẩu",
                   style: TextStyle(
                       decoration: TextDecoration.underline,
                       fontFamily: "QuicksandMedium"),
@@ -168,19 +168,19 @@ class _SignFormState extends State<SignForm> {
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: "Password khong duoc trong");
+          removeError(error: "Mật khẩu không được để trống");
         } else if (value.length >= 8) {
-          removeError(error: "Password qua ngan");
+          removeError(error: "Mật khẩu quá ngắn (trên 8 ký tự)");
         }
         password = value;
         //return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: "Password khong duoc trong");
+          addError(error: "Mật khẩu không được để trống");
           return "";
         } else if (value.length < 8) {
-          addError(error: "Password qua ngan");
+          addError(error: "Mật khẩu quá ngắn (trên 8 ký tự)");
           return "";
         }
         return null;
@@ -190,12 +190,12 @@ class _SignFormState extends State<SignForm> {
         fontFamily: "QuicksandMedium",
       ),
       decoration: InputDecoration(
-        labelText: "Mat khau",
+        labelText: "Mật khẩu",
         labelStyle: const TextStyle(
           fontFamily: "QuicksandMedium",
           fontSize: 20,
         ),
-        hintText: "Nhập mat khau của bạn",
+        hintText: "Nhập mật khẩu của bạn",
         hintStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -243,7 +243,7 @@ class _SignFormState extends State<SignForm> {
       onSaved: (newValue) => username = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: "Username khong de trong");
+          removeError(error: "Tên tài khoản không được để trống");
         } /*else if (usernameValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidusernameError);
         }*/
@@ -252,7 +252,7 @@ class _SignFormState extends State<SignForm> {
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: "Username khong de trong");
+          addError(error: "Tên tài khoản không được để trống");
           return "";
         } /*else if (!usernameValidatorRegExp.hasMatch(value)) {
           addError(error: kInvalidusernameError);
@@ -265,12 +265,12 @@ class _SignFormState extends State<SignForm> {
         fontFamily: "QuicksandMedium",
       ),
       decoration: InputDecoration(
-        labelText: "Username",
+        labelText: "Tài khoản",
         labelStyle: const TextStyle(
           fontFamily: "QuicksandMedium",
           fontSize: 20,
         ),
-        hintText: "Nhập uid của bạn",
+        hintText: "Nhập tài khoản của bạn",
         hintStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,

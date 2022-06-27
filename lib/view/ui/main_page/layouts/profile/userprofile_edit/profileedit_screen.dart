@@ -14,7 +14,7 @@ class UserProfileEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sua thong tin ca nhan"),
+        title: const Text("Cập nhật thông tin cá nhân"),
       ),
       body: Body(
         userToken: userToken,

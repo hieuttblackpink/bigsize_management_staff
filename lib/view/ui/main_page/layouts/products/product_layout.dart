@@ -50,7 +50,7 @@ class _ProductLayout extends State<ProductLayout> {
                                 Row(
                                   children: [
                                     Text(
-                                        "Hien thi: ${entries.data!.length} san pham",
+                                        "Hiển thị: ${entries.data!.length} sản phẩm",
                                         style: const TextStyle(
                                           fontFamily: "QuicksandMedium",
                                           fontSize: 18,
@@ -289,7 +289,7 @@ class _ProductLayout extends State<ProductLayout> {
                               ),
                             ),
                             Text(
-                              "Promotion: " + item.promotionValue.toString(),
+                              "Giảm giá: " + item.promotionValue.toString(),
                               style: Theme.of(context).textTheme.headline4,
                             )
                           ],

@@ -11,9 +11,9 @@ class OrderPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (order.type.text == "Paid") {
-      paid = "Da thanh toan";
+      paid = "Dã thanh toán";
     } else {
-      paid = "Chua thanh toan";
+      paid = "Chưa thanh toán";
     }
     return Container(
       padding: const EdgeInsets.all(10),
@@ -47,7 +47,7 @@ class OrderPayment extends StatelessWidget {
               height: 10,
             ),
             const Text(
-              "Thanh toan bang vi Momo **4597",
+              "Thanh toán bằng ví Momo **4597",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandMedium",

@@ -1,8 +1,10 @@
+import 'package:bigsize_management_staff/models/order_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class OrderStatus extends StatelessWidget {
-  const OrderStatus({Key? key}) : super(key: key);
+  final Content orderContent;
+  const OrderStatus({Key? key, required this.orderContent}) : super(key: key);
 
   final double wTL = 75;
 
@@ -10,6 +12,7 @@ class OrderStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxHeight: 100),
+      width: double.infinity,
       //color: const Color.fromARGB(255, 224, 244, 253),
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -34,7 +37,7 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Dat hang",
+                "Đặt hàng",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -47,10 +50,12 @@ class OrderStatus extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               width: 60,
-              child: const Text(
-                "xx/xx/xxxx",
+              child: Text(
+                orderContent.createDate!.substring(0, 5) +
+                    "\n" +
+                    orderContent.createDate!.substring(6, 10),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandBold",
                   fontSize: 13,
@@ -75,7 +80,7 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Duyet",
+                "Duyệt",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -88,10 +93,12 @@ class OrderStatus extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               width: 60,
-              child: const Text(
-                "xx/xx/xxxx",
+              child: Text(
+                orderContent.approvalDate!.substring(0, 5) +
+                    "\n" +
+                    orderContent.createDate!.substring(6, 10),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandBold",
                   fontSize: 13,
@@ -116,7 +123,7 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Dong goi",
+                "Đóng gói",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -129,10 +136,12 @@ class OrderStatus extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               width: 60,
-              child: const Text(
-                "xx/xx/xxxx",
+              child: Text(
+                orderContent.packagedDate!.substring(0, 5) +
+                    "\n" +
+                    orderContent.createDate!.substring(6, 10),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandBold",
                   fontSize: 13,
@@ -157,7 +166,7 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Xuat kho",
+                "Xuất kho",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -170,10 +179,12 @@ class OrderStatus extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               width: 60,
-              child: const Text(
-                "xx/xx/xxxx",
+              child: Text(
+                orderContent.deliveryDate!.substring(0, 5) +
+                    "\n" +
+                    orderContent.createDate!.substring(6, 10),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandBold",
                   fontSize: 13,
@@ -199,7 +210,7 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Hoan thanh",
+                "Hoàn thành",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -212,10 +223,12 @@ class OrderStatus extends StatelessWidget {
               alignment: Alignment.center,
               height: 30,
               width: 60,
-              child: const Text(
-                "xx/xx/xxxx",
+              child: Text(
+                orderContent.receivedDate!.substring(0, 5) +
+                    "\n" +
+                    orderContent.createDate!.substring(6, 10),
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandBold",
                   fontSize: 13,

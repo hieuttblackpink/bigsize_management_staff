@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../../resources/theme_manager.dart';
@@ -13,7 +15,13 @@ class DefaultFormField extends StatelessWidget {
       this.keyboardType,
       this.suffix,
       this.border = false,
-      Key? key})
+      Key? key,
+      this.onChange,
+      this.onTap,
+      this.onEditingComplete,
+      this.onFieldSubmitted,
+      this.onSaved,
+      this.readOnly = false})
       : super(key: key);
 
   final bool border;
@@ -25,6 +33,12 @@ class DefaultFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final TextInputType? keyboardType;
   final Widget? suffix;
+  final ValueChanged<String>? onChange;
+  final GestureTapCallback? onTap;
+  final VoidCallback? onEditingComplete;
+  final ValueChanged<String>? onFieldSubmitted;
+  final FormFieldSetter<String>? onSaved;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +46,17 @@ class DefaultFormField extends StatelessWidget {
       height: 50,
       child: TextFormField(
         controller: controller,
+        onChanged: onChange,
+        onEditingComplete: onEditingComplete,
+        onTap: onTap,
+        onFieldSubmitted: onFieldSubmitted,
+        onSaved: onSaved,
         obscureText: isPass,
         autofillHints: fillHint == null ? null : [fillHint!],
         keyboardType: keyboardType,
         validator: validator,
         style: const TextStyle(fontSize: 20),
+        readOnly: readOnly,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.blue, width: 2.0),

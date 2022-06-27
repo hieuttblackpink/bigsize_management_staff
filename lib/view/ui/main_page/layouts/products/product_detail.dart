@@ -37,7 +37,7 @@ class _ProductDetail extends State<ProductDetail> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
-          title: Text("San pham #" + productID.toString()),
+          title: Text("Sản phẩm #" + productID.toString()),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -110,7 +110,7 @@ class _ProductDetail extends State<ProductDetail> {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          detail.data!.supplierName
+                                          detail.data!.brand
                                               .toString(), //Ten nha cung ung
                                           style: const TextStyle(
                                             fontFamily: "QuicksandLight",
@@ -141,7 +141,7 @@ class _ProductDetail extends State<ProductDetail> {
                                             ),
                                             Text(
                                               detail.data!.price.toString() +
-                                                  " d",
+                                                  " đ",
                                               style: const TextStyle(
                                                 fontFamily: "QuicksandMedium",
                                                 fontSize: 25,
@@ -151,7 +151,7 @@ class _ProductDetail extends State<ProductDetail> {
                                         ),
                                         const SizedBox(height: 15),
                                         const Text(
-                                          "Mo ta:",
+                                          "Mô tả:",
                                           style: TextStyle(
                                             fontFamily: "QuicksandMedium",
                                             fontSize: 17,
@@ -340,7 +340,10 @@ class _ProductDetail extends State<ProductDetail> {
                                 height: 120,
                                 padding: const EdgeInsets.only(bottom: 5),
                                 width: 200,
-                                color: Colors.white,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                             Shimmer.fromColors(
@@ -351,7 +354,10 @@ class _ProductDetail extends State<ProductDetail> {
                                 height: 70,
                                 padding: const EdgeInsets.only(bottom: 5),
                                 width: 150,
-                                color: Colors.white,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ],
@@ -364,7 +370,10 @@ class _ProductDetail extends State<ProductDetail> {
                             height: 20,
                             padding: const EdgeInsets.only(bottom: 5),
                             width: 50,
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -375,7 +384,10 @@ class _ProductDetail extends State<ProductDetail> {
                             height: 100,
                             padding: const EdgeInsets.only(bottom: 5),
                             width: double.infinity,
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -386,7 +398,10 @@ class _ProductDetail extends State<ProductDetail> {
                             height: 20,
                             padding: const EdgeInsets.only(bottom: 5),
                             width: 100,
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),

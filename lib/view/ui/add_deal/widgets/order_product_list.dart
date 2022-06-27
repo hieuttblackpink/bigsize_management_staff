@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../../../../model/module/product.dart';
 
-class OldEntryList extends StatelessWidget {
-  OldEntryList({Key? key}) : super(key: key);
+class OrderProductList extends StatefulWidget {
+  const OrderProductList({Key? key}) : super(key: key);
 
+  @override
+  _OrderProductList createState() => _OrderProductList();
+}
+
+class _OrderProductList extends State<OrderProductList> {
   final Product product = Product(
     notes: '',
     name: 'Laser Bag',

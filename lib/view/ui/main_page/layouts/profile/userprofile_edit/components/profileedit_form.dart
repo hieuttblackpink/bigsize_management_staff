@@ -78,7 +78,7 @@ class _EditProfile extends State<EditProfileForm> {
           margin: const EdgeInsets.only(left: 20),
           //color: Colors.blue,
           child: const Text(
-            "Ho va ten",
+            "Họ và tên",
             style: TextStyle(
               fontFamily: "QuicksandBold",
               fontSize: 20,
@@ -152,7 +152,7 @@ class _EditProfile extends State<EditProfileForm> {
           margin: const EdgeInsets.only(left: 20),
           //color: Colors.blue,
           child: const Text(
-            "SDT",
+            "SĐT",
             style: TextStyle(
                 fontFamily: "QuicksandBold",
                 fontSize: 20,
@@ -188,7 +188,7 @@ class _EditProfile extends State<EditProfileForm> {
           margin: const EdgeInsets.only(left: 20),
           //color: Colors.blue,
           child: const Text(
-            "Sinh nhat",
+            "Sinh nhật",
             style: TextStyle(
                 fontFamily: "QuicksandBold",
                 fontSize: 20,
@@ -418,7 +418,7 @@ class _EditProfile extends State<EditProfileForm> {
                   ])),
               padding: const EdgeInsets.all(0),
               child: const Text(
-                "XAC NHAN",
+                "XÁC NHẬN",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
