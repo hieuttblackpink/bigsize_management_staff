@@ -1,4 +1,4 @@
-import 'package:bigsize_management_staff/models/user.dart';
+import 'package:bigsize_management_staff/models/user/user.dart';
 import 'package:bigsize_management_staff/services/api_provider.dart';
 
 class StaffRepository {

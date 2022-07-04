@@ -5,9 +5,14 @@ class ProductDetail {
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
+  int? _quantityInNewOrder;
 
   ProductDetail(
-      {Content? content, Null? error, bool? isSuccess, String? responseTime}) {
+      {Content? content,
+      Null? error,
+      bool? isSuccess,
+      String? responseTime,
+      int? quantityInNewOrder}) {
     if (content != null) {
       _content = content;
     }
@@ -20,6 +25,9 @@ class ProductDetail {
     if (responseTime != null) {
       _responseTime = responseTime;
     }
+    if (quantityInNewOrder != null) {
+      _quantityInNewOrder = quantityInNewOrder;
+    }
   }
 
   Content? get content => _content;
@@ -30,6 +38,9 @@ class ProductDetail {
   set isSuccess(bool? isSuccess) => _isSuccess = isSuccess;
   String? get responseTime => _responseTime;
   set responseTime(String? responseTime) => _responseTime = responseTime;
+  int? get quantityInNewOrder => _quantityInNewOrder;
+  set quantityInNewOrder(int? quantityInNewOrder) =>
+      _quantityInNewOrder = quantityInNewOrder;
 
   ProductDetail.fromJson(Map<String, dynamic> json) {
     _content =
@@ -206,9 +217,14 @@ class ProductDetailList {
   int? _productId;
   Size? _size;
   Colour? _colour;
+  bool? _selected;
 
   ProductDetailList(
-      {int? productDetailId, int? productId, Size? size, Colour? colour}) {
+      {int? productDetailId,
+      int? productId,
+      Size? size,
+      Colour? colour,
+      bool? selected}) {
     if (productDetailId != null) {
       _productDetailId = productDetailId;
     }
@@ -221,6 +237,9 @@ class ProductDetailList {
     if (colour != null) {
       _colour = colour;
     }
+    if (selected != null) {
+      _selected = selected;
+    }
   }
 
   int? get productDetailId => _productDetailId;
@@ -232,6 +251,8 @@ class ProductDetailList {
   set size(Size? size) => _size = size;
   Colour? get colour => _colour;
   set colour(Colour? colour) => _colour = colour;
+  bool? get selected => _selected;
+  set selected(bool? selected) => _selected = selected;
 
   ProductDetailList.fromJson(Map<String, dynamic> json) {
     _productDetailId = json['product_detail_id'];

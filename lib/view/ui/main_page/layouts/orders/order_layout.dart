@@ -1,5 +1,5 @@
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
-import 'package:bigsize_management_staff/models/order_list.dart';
+import 'package:bigsize_management_staff/models/order/order_list.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:flutter/material.dart';
@@ -141,11 +141,11 @@ class _OrderLayout extends State<OrderLayout> {
                 const SizedBox(
                   height: 7,
                 ),
-                const Text(
-                  "", //item.,//ten khach hang
+                Text(
+                  item.customerName.toString(), //ten khach hang
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: "QuicksandBold",
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -166,7 +166,8 @@ class _OrderLayout extends State<OrderLayout> {
                             userToken: token,
                           )))
             },
-            //subtitle: Text("${item.date} | ${item.itemsCount} items"), //ngay tao + so san pham
+            subtitle:
+                Text("${item.totalQuantity} san pham"), //ngay tao + so san pham
             trailing: FittedBox(
               fit: BoxFit.fill,
               child: Tooltip(

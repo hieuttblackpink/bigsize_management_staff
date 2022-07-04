@@ -1,5 +1,5 @@
 import 'package:bigsize_management_staff/blocs/product_bloc.dart';
-import 'package:bigsize_management_staff/models/product.dart';
+import 'package:bigsize_management_staff/models/product/product.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';

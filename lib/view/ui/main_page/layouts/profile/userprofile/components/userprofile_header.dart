@@ -1,7 +1,7 @@
 // ignore_for_file: no_logic_in_create_state
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
-import 'package:bigsize_management_staff/models/user_profile.dart';
+import 'package:bigsize_management_staff/models/user/user_profile.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';

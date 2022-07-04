@@ -1,8 +1,12 @@
 // ignore_for_file: no_logic_in_create_state, avoid_print
 
 import 'package:bigsize_management_staff/blocs/product_bloc.dart';
-import 'package:bigsize_management_staff/models/product_detail.dart';
+import 'package:bigsize_management_staff/models/product/product_colour.dart';
+import 'package:bigsize_management_staff/models/product/product_detail.dart';
+import 'package:bigsize_management_staff/models/product/product_quantity_store.dart';
+import 'package:bigsize_management_staff/models/product/product_size.dart';
 import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail_quantity.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -169,29 +173,13 @@ class _ProductDetail extends State<ProductDetail> {
                                         ),
                                         const SizedBox(height: 15),
                                         const Text(
-                                          "San pham tuong tu",
+                                          "So luong san pham trong kho",
                                           style: TextStyle(),
                                         ),
                                         const SizedBox(height: 10),
-                                        SizedBox(
-                                          height: 110,
-                                          child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: 3,
-                                            itemBuilder: (context, index) =>
-                                                Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 6),
-                                              width: 110,
-                                              height: 110,
-                                              decoration: BoxDecoration(
-                                                //color: ,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
+                                        ProductDetailQuantity(
+                                            userToken: userToken,
+                                            productID: productID),
                                         const SizedBox(height: 20),
                                       ],
                                     ),

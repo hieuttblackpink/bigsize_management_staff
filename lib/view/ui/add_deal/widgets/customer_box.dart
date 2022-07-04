@@ -1,5 +1,6 @@
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
-import 'package:bigsize_management_staff/models/customer.dart';
+import 'package:bigsize_management_staff/models/customer/customer.dart';
+import 'package:bigsize_management_staff/view/ui/add_deal/add_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
 //import 'package:country_state_city_picker/country_state_city_picker.dart';
@@ -61,6 +62,7 @@ class _CustomerBox extends State<CustomerBox> {
                       prefix: Icons.phone_android_rounded,
                       title: 'SDT',
                       keyboardType: TextInputType.phone,
+                      maxLenght: 10,
                       onChange: (value) {
                         //phoneCus.text = value;
                       },
@@ -71,13 +73,22 @@ class _CustomerBox extends State<CustomerBox> {
                           nameCus.text = customer!.content!.fullname.toString();
                           isHaveCusPhone = true;
                           isCustomer = true;
+
+                          AddOrderView.of(context)!.onCusPhoneChange(
+                              phoneCus.text.toString(), false);
+
                           setState(() {
                             isHaveCusPhone = true;
                             isCustomer = true;
                           });
                         } else {
+                          nameCus.text = "";
                           isHaveCusPhone = true;
                           isCustomer = false;
+
+                          AddOrderView.of(context)!
+                              .onCusPhoneChange(phoneCus.text.toString(), true);
+
                           setState(() {
                             isHaveCusPhone = true;
                             isCustomer = false;
@@ -108,9 +119,47 @@ class _CustomerBox extends State<CustomerBox> {
                       border: true,
                       controller: phoneCus,
                       prefix: Icons.phone_android_rounded,
-                      title: 'Số điện thoại',
+                      title: 'SĐT',
+                      keyboardType: TextInputType.phone,
+                      maxLenght: 10,
+                      onChange: (value) {
+                        //phoneCus.text = value;
+                      },
+                      onFieldSubmitted: (value) async {
+                        customer = await _orderBloc
+                            .getCustomer(phoneCus.text.toString());
+                        if (customer!.isSuccess!) {
+                          nameCus.text = customer!.content!.fullname.toString();
+                          isHaveCusPhone = true;
+                          isCustomer = true;
+                          AddOrderView.of(context)!.onCusPhoneChange(
+                              phoneCus.text.toString(), false);
+                          setState(() {
+                            isHaveCusPhone = true;
+                            isCustomer = true;
+                          });
+                        } else {
+                          nameCus.text = "";
+                          isHaveCusPhone = true;
+                          isCustomer = false;
+                          AddOrderView.of(context)!
+                              .onCusPhoneChange(phoneCus.text.toString(), true);
+                          setState(() {
+                            isHaveCusPhone = true;
+                            isCustomer = false;
+                          });
+                        }
+                      },
                     ),
                   ),
+                  const SizedBox(height: 5),
+                  isCustomer
+                      ? Container()
+                      : const Text(
+                          "Đây là khách hàng mới",
+                          style: TextStyle(
+                              color: Colors.blue, fontStyle: FontStyle.italic),
+                        ),
                   const SizedBox(height: 10),
                   Container(
                     height: 45,
@@ -123,8 +172,12 @@ class _CustomerBox extends State<CustomerBox> {
                       controller: nameCus,
                       prefix: Icons.account_circle_rounded,
                       title: 'Tên khách hàng',
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.name,
                       readOnly: isCustomer,
+                      onFieldSubmitted: (value) async {
+                        AddOrderView.of(context)!
+                            .onCusNameChange(nameCus.text.toString());
+                      },
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -148,11 +201,12 @@ class _CustomerBox extends State<CustomerBox> {
                       CSCPicker(
                         showStates: true,
                         showCities: true,
+                        disableCountry: true,
                         defaultCountry: DefaultCountry.Vietnam,
                         flagState: CountryFlag.DISABLE,
-                        countryDropdownLabel: "Country",
-                        stateDropdownLabel: "Province/City",
-                        cityDropdownLabel: "District",
+                        countryDropdownLabel: "Quốc gia",
+                        stateDropdownLabel: "Tỉnh/Thành phố",
+                        cityDropdownLabel: "Quận/Huyện",
                         selectedItemStyle: const TextStyle(
                           fontFamily: "QuickSandBold",
                           fontSize: 15,

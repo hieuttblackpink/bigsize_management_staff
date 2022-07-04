@@ -1,5 +1,5 @@
 import 'package:bigsize_management_staff/model/module/deals.dart';
-import 'package:bigsize_management_staff/models/order_detail.dart';
+import 'package:bigsize_management_staff/models/order/order_detail.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 

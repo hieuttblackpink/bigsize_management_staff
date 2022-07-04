@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_question_mark, prefer_void_to_null, dead_code, unnecessary_getters_setters
 
-class ProductSearch {
+class OrderList {
   int? _currentPage;
   int? _totalPages;
   int? _pageSize;
@@ -12,7 +12,7 @@ class ProductSearch {
   bool? _isSuccess;
   String? _responseTime;
 
-  ProductSearch(
+  OrderList(
       {int? currentPage,
       int? totalPages,
       int? pageSize,
@@ -76,7 +76,7 @@ class ProductSearch {
   String? get responseTime => _responseTime;
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
-  ProductSearch.fromJson(Map<String, dynamic> json) {
+  OrderList.fromJson(Map<String, dynamic> json) {
     _currentPage = json['current_page'];
     _totalPages = json['total_pages'];
     _pageSize = json['page_size'];
@@ -113,78 +113,79 @@ class ProductSearch {
 }
 
 class Content {
-  int? _productId;
-  String? _productName;
-  int? _price;
-  Null? _promotionPrice;
-  Null? _promotionValue;
-  String? _imageUrl;
-  bool? _status;
+  int? _orderId;
+  String? _customerName;
+  int? _totalQuantity;
+  double? _totalPrice;
+  double? _totalPriceAfterDiscount;
+  String? _orderType;
+  String? _status;
 
   Content(
-      {int? productId,
-      String? productName,
-      int? price,
-      Null? promotionPrice,
-      Null? promotionValue,
-      String? imageUrl,
-      bool? status}) {
-    if (productId != null) {
-      _productId = productId;
+      {int? orderId,
+      String? customerName,
+      int? totalQuantity,
+      double? totalPrice,
+      double? totalPriceAfterDiscount,
+      String? orderType,
+      String? status}) {
+    if (orderId != null) {
+      _orderId = orderId;
     }
-    if (productName != null) {
-      _productName = productName;
+    if (customerName != null) {
+      _customerName = customerName;
     }
-    if (price != null) {
-      _price = price;
+    if (totalQuantity != null) {
+      _totalQuantity = totalQuantity;
     }
-    if (promotionPrice != null) {
-      _promotionPrice = promotionPrice;
+    if (totalPrice != null) {
+      _totalPrice = totalPrice;
     }
-    if (promotionValue != null) {
-      _promotionValue = promotionValue;
+    if (totalPriceAfterDiscount != null) {
+      _totalPriceAfterDiscount = totalPriceAfterDiscount;
     }
-    if (imageUrl != null) {
-      _imageUrl = imageUrl;
+    if (orderType != null) {
+      _orderType = orderType;
     }
     if (status != null) {
       _status = status;
     }
   }
 
-  int? get productId => _productId;
-  set productId(int? productId) => _productId = productId;
-  String? get productName => _productName;
-  set productName(String? productName) => _productName = productName;
-  int? get price => _price;
-  set price(int? price) => _price = price;
-  Null? get promotionPrice => _promotionPrice;
-  set promotionPrice(Null? promotionPrice) => _promotionPrice = promotionPrice;
-  Null? get promotionValue => _promotionValue;
-  set promotionValue(Null? promotionValue) => _promotionValue = promotionValue;
-  String? get imageUrl => _imageUrl;
-  set imageUrl(String? imageUrl) => _imageUrl = imageUrl;
-  bool? get status => _status;
-  set status(bool? status) => _status = status;
+  int? get orderId => _orderId;
+  set orderId(int? orderId) => _orderId = orderId;
+  String? get customerName => _customerName;
+  set customerName(String? customerName) => _customerName = customerName;
+  int? get totalQuantity => _totalQuantity;
+  set totalQuantity(int? totalQuantity) => _totalQuantity = totalQuantity;
+  double? get totalPrice => _totalPrice;
+  set totalPrice(double? totalPrice) => _totalPrice = totalPrice;
+  double? get totalPriceAfterDiscount => _totalPriceAfterDiscount;
+  set totalPriceAfterDiscount(double? totalPriceAfterDiscount) =>
+      _totalPriceAfterDiscount = totalPriceAfterDiscount;
+  String? get orderType => _orderType;
+  set orderType(String? orderType) => _orderType = orderType;
+  String? get status => _status;
+  set status(String? status) => _status = status;
 
   Content.fromJson(Map<String, dynamic> json) {
-    _productId = json['product_id'];
-    _productName = json['product_name'];
-    _price = json['price'];
-    _promotionPrice = json['promotion_price'];
-    _promotionValue = json['promotion_value'];
-    _imageUrl = json['image_url'];
+    _orderId = json['order_id'];
+    _customerName = json['customer_name'];
+    _totalQuantity = json['total_quantity'];
+    _totalPrice = json['total_price'];
+    _totalPriceAfterDiscount = json['total_price_after_discount'];
+    _orderType = json['order_type'];
     _status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['product_id'] = _productId;
-    data['product_name'] = _productName;
-    data['price'] = _price;
-    data['promotion_price'] = _promotionPrice;
-    data['promotion_value'] = _promotionValue;
-    data['image_url'] = _imageUrl;
+    data['order_id'] = _orderId;
+    data['customer_name'] = _customerName;
+    data['total_quantity'] = _totalQuantity;
+    data['total_price'] = _totalPrice;
+    data['total_price_after_discount'] = _totalPriceAfterDiscount;
+    data['order_type'] = _orderType;
     data['status'] = _status;
     return data;
   }

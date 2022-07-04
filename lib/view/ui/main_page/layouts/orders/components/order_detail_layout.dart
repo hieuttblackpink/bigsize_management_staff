@@ -1,5 +1,5 @@
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
-import 'package:bigsize_management_staff/models/order_detail.dart';
+import 'package:bigsize_management_staff/models/order/order_detail.dart';
 import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_info.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_payment.dart';
@@ -324,13 +324,17 @@ class _OrderDetail extends State<OrderDetail> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                product.productName.toString(),
+                product.productName.toString() +
+                    " - " +
+                    product.colour.toString() +
+                    " - " +
+                    product.size.toString(),
               ),
               Text(
-                product.pricePerOne.toString(),
+                product.pricePerOne.toString() + " d/cai",
               ),
               Text(
-                product.quantity.toString(),
+                "So luong: " + product.quantity.toString() + " cai",
               )
             ],
           ),

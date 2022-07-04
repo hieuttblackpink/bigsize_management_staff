@@ -335,6 +335,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.5"
+  flutter_format_money_vietnam:
+    dependency: "direct main"
+    description:
+      name: flutter_format_money_vietnam
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -583,6 +590,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  money_formatter:
+    dependency: "direct main"
+    description:
+      name: money_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   nested:
     dependency: transitive
     description:

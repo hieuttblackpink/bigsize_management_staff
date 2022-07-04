@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../resources/theme_manager.dart';
 
@@ -21,7 +22,9 @@ class DefaultFormField extends StatelessWidget {
       this.onEditingComplete,
       this.onFieldSubmitted,
       this.onSaved,
-      this.readOnly = false})
+      this.readOnly = false,
+      this.maxLenght,
+      this.inputFormaterLenght})
       : super(key: key);
 
   final bool border;
@@ -39,6 +42,8 @@ class DefaultFormField extends StatelessWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final FormFieldSetter<String>? onSaved;
   final bool readOnly;
+  final int? maxLenght;
+  final int? inputFormaterLenght;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +62,10 @@ class DefaultFormField extends StatelessWidget {
         validator: validator,
         style: const TextStyle(fontSize: 20),
         readOnly: readOnly,
+        maxLength: maxLenght,
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(inputFormaterLenght),
+        ],
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Colors.blue, width: 2.0),
@@ -79,6 +88,7 @@ class DefaultFormField extends StatelessWidget {
             fontSize: 16,
             color: Colors.grey,
           ),
+          counterText: "",
         ),
       ),
     );

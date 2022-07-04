@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:bigsize_management_staff/models/user.dart';
-import 'package:bigsize_management_staff/models/user_password.dart';
-import 'package:bigsize_management_staff/models/user_profile.dart';
+import 'package:bigsize_management_staff/models/user/user.dart';
+import 'package:bigsize_management_staff/models/user/user_password.dart';
+import 'package:bigsize_management_staff/models/user/user_profile.dart';
 import 'package:http/http.dart' as http;
 
 class StaffBloc {

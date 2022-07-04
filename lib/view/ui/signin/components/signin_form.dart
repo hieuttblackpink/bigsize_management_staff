@@ -2,7 +2,7 @@
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
-import 'package:bigsize_management_staff/models/user.dart';
+import 'package:bigsize_management_staff/models/user/user.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:bigsize_management_staff/models/store.dart';
+import 'package:bigsize_management_staff/models/store/store.dart';
 import 'package:http/http.dart' as http;
 
 class StoreBloc {

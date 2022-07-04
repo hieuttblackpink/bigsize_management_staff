@@ -1,7 +1,7 @@
 // ignore_for_file: deprecated_member_use, avoid_print, unnecessary_const
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
-import 'package:bigsize_management_staff/models/user_profile.dart';
+import 'package:bigsize_management_staff/models/user/user_profile.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/userprofile_screen.dart';

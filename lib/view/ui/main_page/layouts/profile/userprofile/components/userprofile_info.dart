@@ -1,7 +1,7 @@
 // ignore_for_file: no_logic_in_create_state
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
-import 'package:bigsize_management_staff/models/user_profile.dart';
+import 'package:bigsize_management_staff/models/user/user_profile.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/resources/theme_manager.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile_edit/profileedit_screen.dart';

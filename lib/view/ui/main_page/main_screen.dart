@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_print, no_logic_in_create_state
 
-import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
-import 'package:bigsize_management_staff/model/module/deals.dart';
-import 'package:bigsize_management_staff/models/user_profile.dart';
-import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +57,7 @@ class _MainView extends State<MainView> {
   }
 
   List<Widget> getRightAction(int activeLayout, BuildContext context) {
-    if (activeLayout > 0 && activeLayout < 3) {
+    if (activeLayout > 0 && activeLayout < 4) {
       return [
         IconButton(
             onPressed: () {
@@ -70,10 +67,16 @@ class _MainView extends State<MainView> {
                 case 2:
                   break;
                 case 3:
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const SearchProductLayout()));
                   break;
               }
             },
-            icon: const Icon(Icons.search)),
+            icon: activeLayout == 3
+                ? const Icon(Icons.search)
+                : const Icon(null)),
         IconButton(
             onPressed: () {
               switch (activeLayout) {
@@ -88,10 +91,12 @@ class _MainView extends State<MainView> {
                   break;
               }
             },
-            icon: const Icon(
-              Icons.add,
-              size: 35,
-            )),
+            icon: activeLayout == 1
+                ? const Icon(
+                    Icons.add,
+                    size: 35,
+                  )
+                : const Icon(null)),
         const SizedBox(
           width: 5,
         ),

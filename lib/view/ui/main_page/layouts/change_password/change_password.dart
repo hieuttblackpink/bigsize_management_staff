@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
-import 'package:bigsize_management_staff/models/user_password.dart';
+import 'package:bigsize_management_staff/models/user/user_password.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/change_password/change_success.dart';

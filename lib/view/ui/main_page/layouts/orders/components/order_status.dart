@@ -1,4 +1,4 @@
-import 'package:bigsize_management_staff/models/order_detail.dart';
+import 'package:bigsize_management_staff/models/order/order_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 

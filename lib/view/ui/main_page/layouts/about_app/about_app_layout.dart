@@ -102,7 +102,7 @@ class AppInfo extends StatelessWidget {
                     width: 170,
                     //color: Colors.pinkAccent,
                     child: const Text(
-                      "4.1.5",
+                      "6.0.9",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandBold",
