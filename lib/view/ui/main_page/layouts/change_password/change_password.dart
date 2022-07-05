@@ -56,7 +56,7 @@ class _ChangePassword extends State<ChangePassword> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Doi mat khau"),
+        title: const Text("Đổi mật khẩu"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -72,7 +72,7 @@ class _ChangePassword extends State<ChangePassword> {
                 controller: oldPass,
                 obscureText: true,
                 decoration: InputDecoration(
-                  label: const Text("Mat khau cu"),
+                  label: const Text("Mật khẩu cũ"),
                   border: myinputborder(),
                   enabledBorder: myinputborder(),
                   focusedBorder: myfocusborder(),
@@ -99,7 +99,7 @@ class _ChangePassword extends State<ChangePassword> {
                 controller: newPass,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: "Mat khau moi",
+                  labelText: "Mật khẩu mới",
                   border: myinputborder(),
                   enabledBorder: myinputborder(),
                   focusedBorder: myfocusborder(),
@@ -126,7 +126,7 @@ class _ChangePassword extends State<ChangePassword> {
                 controller: confirmPass,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: "Xac nhan mat khau",
+                  labelText: "Xác nhận mật khẩu",
                   border: myinputborder(),
                   enabledBorder: myinputborder(),
                   focusedBorder: myfocusborder(),
@@ -151,9 +151,9 @@ class _ChangePassword extends State<ChangePassword> {
               child: RaisedButton(
                 onPressed: () async {
                   if (newPass.text.length < 8) {
-                    addError(error: "Mat khau moi qua ngan");
+                    addError(error: "Mật khẩu mới quá ngắn");
                   } else {
-                    removeError(error: "Mat khau moi qua ngan");
+                    removeError(error: "Mật khẩu mới quá ngắn");
                     userToken =
                         await _storageService.readSecureData("UserToken");
                     _userPassword = await _staffBloc.changePassword(
@@ -179,7 +179,7 @@ class _ChangePassword extends State<ChangePassword> {
                       removeError(
                           error:
                               "New password and confirmation new password do not match.");
-                      print("Doi mat khau thanh cong");
+                      print("Đổi mật khẩu thành công!");
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -201,7 +201,7 @@ class _ChangePassword extends State<ChangePassword> {
                       color: Colors.black),
                   padding: const EdgeInsets.all(0),
                   child: const Text(
-                    "XAC NHAN",
+                    "XÁC NHẬN",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

@@ -173,7 +173,7 @@ class _ProductDetail extends State<ProductDetail> {
                                         ),
                                         const SizedBox(height: 15),
                                         const Text(
-                                          "So luong san pham trong kho",
+                                          "Số lượng sản phẩm trong kho",
                                           style: TextStyle(),
                                         ),
                                         const SizedBox(height: 10),

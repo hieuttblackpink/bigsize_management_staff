@@ -68,7 +68,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                           child: DefaultFormField(
                             border: true,
                             controller: searchController,
-                            title: "Search Product",
+                            title: "Tìm kiếm sản phẩm",
                             prefix: Icons.search,
                             onChange: (value) async {
                               searchController.text = value;
@@ -199,7 +199,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                               return Container(
                                 alignment: Alignment.center,
                                 child: const Text(
-                                  "Khong co ket qua",
+                                  "Không có kết quả tìm kiếm",
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontSize: 20,

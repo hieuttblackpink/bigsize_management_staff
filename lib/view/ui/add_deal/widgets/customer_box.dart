@@ -60,7 +60,7 @@ class _CustomerBox extends State<CustomerBox> {
                       border: true,
                       controller: phoneCus,
                       prefix: Icons.phone_android_rounded,
-                      title: 'SDT',
+                      title: 'SĐT',
                       keyboardType: TextInputType.phone,
                       maxLenght: 10,
                       onChange: (value) {

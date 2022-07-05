@@ -121,7 +121,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                           child: DefaultFormField(
                             border: true,
                             controller: searchController,
-                            title: "Search Product",
+                            title: "Tìm kiếm sản phẩm",
                             prefix: Icons.search,
                             onChange: (value) async {
                               searchController.text = value;
@@ -157,27 +157,33 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                                             productSearch!
                                                 .content![index].productId!
                                                 .toInt());
-                                    getProduct!.productDetailList!.first
-                                        .selected = true;
-                                    productDetailID = getProduct
-                                        .productDetailList!
-                                        .first
-                                        .productDetailId
-                                        .toString();
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return Container(
-                                            height: double.maxFinite,
-                                            color: Colors.white,
-                                            child: dialogContent(
-                                                context,
-                                                getProduct.productDetailList,
-                                                productSearch!
-                                                    .content![index].productId!
-                                                    .toInt()),
-                                          );
-                                        });
+                                    if (getProduct!
+                                        .productDetailList!.isNotEmpty) {
+                                      getProduct.productDetailList!.first
+                                          .selected = true;
+                                      productDetailID = getProduct
+                                          .productDetailList!
+                                          .first
+                                          .productDetailId
+                                          .toString();
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                              height: 500,
+                                              color: Colors.white,
+                                              child: dialogContent(
+                                                  context,
+                                                  getProduct.productDetailList,
+                                                  productSearch!.content![index]
+                                                      .productId!
+                                                      .toInt()),
+                                            );
+                                          });
+                                    } else {
+                                      showNoColorSizeDialog(context);
+                                    }
+
                                     /*    
                                     Navigator.pop(
                                         context,
@@ -244,7 +250,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                               return Container(
                                 alignment: Alignment.center,
                                 child: const Text(
-                                  "Khong co ket qua",
+                                  "Không có kết quả tìm kiếm",
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontSize: 20,
@@ -271,6 +277,34 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
     );
   }
 
+  showNoColorSizeDialog(context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Thông báo"),
+      content: const Text(
+          "Không thể thêm sản phẩm này\nSản phẩm này chưa có màu sắc và kích cỡ."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   dialogContent(BuildContext context,
       List<productDetail.ProductDetailList>? productDetailList, int productID) {
     return StatefulBuilder(builder: (context, setState) {
@@ -289,7 +323,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
             margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
             color: Colors.white,
             child: const Text(
-              "Chon mau sac va size",
+              "Chọn màu sắc và kích cỡ",
             ),
           ),
           const SizedBox(
@@ -371,7 +405,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
               color: Colors.blue,
               textColor: Colors.white,
               child: const Text(
-                "Them san pham",
+                "Thêm sản phẩm",
               ),
             ),
           ),

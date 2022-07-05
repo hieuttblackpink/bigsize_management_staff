@@ -14,7 +14,7 @@ class ChangePasswordSuccess extends StatelessWidget {
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.08),
         Text(
-          "Doi mat khau thanh cong",
+          "Đổi mật khẩu thành công",
           style: TextStyle(
             fontSize: (30 / 812.0) * MediaQuery.of(context).size.height,
             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class ChangePasswordSuccess extends StatelessWidget {
                   color: Colors.black),
               padding: const EdgeInsets.all(0),
               child: const Text(
-                "OKIE",
+                "XÁC NHẬN",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

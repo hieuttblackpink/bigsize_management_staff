@@ -400,6 +400,9 @@ class _EditProfile extends State<EditProfileForm> {
                     context,
                     MaterialPageRoute(
                         builder: (_) => const UserProfileScreen()));
+              } else {
+                showAlertDialog(context,
+                    "Có lỗi xảy ra khi cập nhật thông tin.\nVui lòng thử lại sau.");
               }
             },
             shape: RoundedRectangleBorder(
@@ -450,5 +453,32 @@ class _EditProfile extends State<EditProfileForm> {
           color: Color(0xFF00ADFF),
           width: 2,
         ));
+  }
+
+  showAlertDialog(context, String message) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Thông báo"),
+      content: Text(message),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

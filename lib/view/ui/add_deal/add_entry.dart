@@ -59,6 +59,8 @@ class AddOrderView extends State<AddDealView> {
   String payment = "";
   List<ProductInNewOrder> listProduct = [];
 
+  bool isCreating = false;
+
   void onCusPhoneChange(String phone, bool isNewCusChange) {
     setState(() {
       cusPhone = phone;
@@ -200,6 +202,10 @@ class AddOrderView extends State<AddDealView> {
                           alignment: Alignment.centerRight,
                           child: ElevatedButton(
                               onPressed: () async {
+                                setState(() {
+                                  isCreating = true;
+                                });
+
                                 String? token = await getUserToken();
                                 print("Token: " + token.toString());
                                 print("Cus phone: " + cusPhone);
@@ -213,7 +219,36 @@ class AddOrderView extends State<AddDealView> {
                                       item.quantity.toString());
                                 }
 
+                                if (cusPhone.isEmpty) {
+                                  setState(() {
+                                    isCreating = false;
+                                  });
+                                  print("Cus phone empty");
+                                  showAlertDialog(context,
+                                      "Bạn chưa nhập số điện thoại khách hàng.");
+                                  return;
+                                }
+
+                                if (listProduct.isEmpty) {
+                                  setState(() {
+                                    isCreating = false;
+                                  });
+                                  print("Listproduct is empty");
+                                  showAlertDialog(context,
+                                      "Danh sách sản phẩm không được trống.");
+                                  return;
+                                }
+
                                 if (isNewCus) {
+                                  if (cusName.isEmpty) {
+                                    setState(() {
+                                      isCreating = false;
+                                    });
+                                    print("Name phone empty");
+                                    showAlertDialog(context,
+                                        "Bạn chưa nhập tên khách hàng.");
+                                    return;
+                                  }
                                   NewCustomer newCustomer = NewCustomer(
                                       phoneNumber: cusPhone,
                                       fullname: cusName,
@@ -231,6 +266,9 @@ class AddOrderView extends State<AddDealView> {
                                         await createOrder(
                                             token.toString(), newOrder);
                                     if (orderReturn.isSuccess!) {
+                                      setState(() {
+                                        isCreating = false;
+                                      });
                                       Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
@@ -241,10 +279,22 @@ class AddOrderView extends State<AddDealView> {
                                                     userToken: token.toString(),
                                                   )));
                                     } else {
+                                      setState(() {
+                                        isCreating = false;
+                                      });
                                       print("Error when create order!");
+                                      print(orderReturn.error!.message);
+                                      showAlertDialog(context,
+                                          "Có lỗi xảy ra khi khi tạo đơn hàng này.\nVui lòng thử lại sau.");
                                     }
                                   } else {
+                                    setState(() {
+                                      isCreating = false;
+                                    });
                                     print("Error when create customer!");
+                                    print(newCus.error!.message);
+                                    showAlertDialog(context,
+                                        "Có lỗi xảy ra khi khi tạo khách hàng mới.\nVui lòng thử lại sau.");
                                   }
                                 } else {
                                   NewOrder newOrder = NewOrder(
@@ -255,6 +305,9 @@ class AddOrderView extends State<AddDealView> {
                                       await createOrder(
                                           token.toString(), newOrder);
                                   if (orderReturn.isSuccess!) {
+                                    setState(() {
+                                      isCreating = false;
+                                    });
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -265,7 +318,13 @@ class AddOrderView extends State<AddDealView> {
                                                   userToken: token.toString(),
                                                 )));
                                   } else {
+                                    setState(() {
+                                      isCreating = false;
+                                    });
                                     print("Error when create order!");
+                                    print(orderReturn.error!.message);
+                                    showAlertDialog(context,
+                                        "Có lỗi xảy ra khi khi tạo đơn hàng này.\nVui lòng thử lại sau.");
                                   }
                                 }
                               },
@@ -280,17 +339,38 @@ class AddOrderView extends State<AddDealView> {
                                               Radius.circular(20)),
                                           side: BorderSide(
                                               color: Colors.black)))),
-                              child: Container(
-                                width: 120,
-                                height: 40,
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Tạo đơn hàng",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              )),
+                              child: isCreating
+                                  ? Container(
+                                      width: 220,
+                                      height: 40,
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        children: const <Widget>[
+                                          Text(
+                                            "Đang tạo đơn hàng",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          CircularProgressIndicator(
+                                              color: Colors.white),
+                                        ],
+                                      ),
+                                    )
+                                  : Container(
+                                      width: 120,
+                                      height: 40,
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        "Tạo đơn hàng",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    )),
                         ),
                       ],
                     ),
@@ -395,4 +475,31 @@ class AddOrderView extends State<AddDealView> {
   Widget divider() => const SizedBox(
         height: 5.0,
       );
+
+  showAlertDialog(context, String message) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Thông báo"),
+      content: Text(message),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

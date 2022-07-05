@@ -42,7 +42,7 @@ class AppInfo extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Thong tin ung dung"),
+        title: const Text("Thông tin ứng dụng"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -68,7 +68,7 @@ class AppInfo extends StatelessWidget {
                 //padding: EdgeInsets.all(20),
                 //color: Colors.blue,
                 child: const Text(
-                  "BIGSIZE SHOP",
+                  "BIGSIZE SHOP FOR STAFF",
                   style: TextStyle(
                     fontFamily: "QuicksandBold",
                     fontSize: 35,
@@ -89,7 +89,7 @@ class AppInfo extends StatelessWidget {
                     width: 180,
                     //color: Colors.white,
                     child: const Text(
-                      "APP VERSION",
+                      "PHIÊN BẢN ỨNG DỤNG",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandMedium",
@@ -126,7 +126,7 @@ class AppInfo extends StatelessWidget {
                     width: 180,
                     //color: Colors.white,
                     child: const Text(
-                      "OS VERSION",
+                      "HỆ ĐIỀU HÀNH",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandMedium",
@@ -163,7 +163,7 @@ class AppInfo extends StatelessWidget {
                     width: 180,
                     //color: Colors.white,
                     child: const Text(
-                      "DEVICE INFO",
+                      "THIẾT BỊ",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandMedium",

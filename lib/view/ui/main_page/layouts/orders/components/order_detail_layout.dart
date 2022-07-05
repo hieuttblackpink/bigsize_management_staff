@@ -166,7 +166,7 @@ class _OrderDetail extends State<OrderDetail> {
             verticalLine(context),
             Column(
               children: [
-                Text("San pham", style: Theme.of(context).textTheme.subtitle1),
+                Text("Sản phẩm", style: Theme.of(context).textTheme.subtitle1),
                 divider(),
                 Text(totalProduct,
                     style: Theme.of(context).textTheme.subtitle1),
@@ -331,10 +331,10 @@ class _OrderDetail extends State<OrderDetail> {
                     product.size.toString(),
               ),
               Text(
-                product.pricePerOne.toString() + " d/cai",
+                product.pricePerOne.toString() + " d/cái",
               ),
               Text(
-                "So luong: " + product.quantity.toString() + " cai",
+                "Số lượng: " + product.quantity.toString() + " cái",
               )
             ],
           ),

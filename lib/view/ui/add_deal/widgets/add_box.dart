@@ -238,7 +238,7 @@ class addBox extends State<AddBox> {
             overflow: TextOverflow.ellipsis,
           ),
           isThreeLine: false,
-          subtitle: Text("${item.quantityInNewOrder} cai"),
+          subtitle: Text("${item.quantityInNewOrder} cái"),
           trailing: FittedBox(
             fit: BoxFit.fill,
             child: Column(

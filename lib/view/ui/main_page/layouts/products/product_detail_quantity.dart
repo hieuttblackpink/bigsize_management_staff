@@ -62,7 +62,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
 
   @override
   Widget build(BuildContext context) {
-    if (listProductColour != null) {
+    if (listProductColour!.isNotEmpty) {
       getProductSize(widget.userToken, widget.productID!.toInt(),
           listProductColour![colorIndex].colourId!.toInt());
       if (listProductSize != null) {
@@ -76,7 +76,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
     return Container(
       alignment: Alignment.center,
       child: Column(children: <Widget>[
-        listProductColour != null
+        listProductColour != null && listProductColour!.isNotEmpty
             ? GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 50,
@@ -196,7 +196,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
         productQuantityStoreContent != null
             ? Row(
                 children: <Widget>[
-                  const Text("San pham trong kho"),
+                  const Text("Sản phẩm trong kho còn: "),
                   const SizedBox(
                     width: 10,
                   ),
