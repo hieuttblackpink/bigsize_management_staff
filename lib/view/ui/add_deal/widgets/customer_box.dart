@@ -181,6 +181,7 @@ class _CustomerBox extends State<CustomerBox> {
                     ),
                   ),
                   const SizedBox(height: 10),
+                  /*
                   Container(
                     height: 65,
                     decoration: BoxDecoration(
@@ -254,7 +255,7 @@ class _CustomerBox extends State<CustomerBox> {
                         },
                       ),
                     ],
-                  ),
+                  ),*/
                 ],
               )),
     );

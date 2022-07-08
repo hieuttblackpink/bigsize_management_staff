@@ -72,14 +72,16 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                             prefix: Icons.search,
                             onChange: (value) async {
                               searchController.text = value;
+                              setState(() {
+                                searchController.selection =
+                                    TextSelection.fromPosition(TextPosition(
+                                        offset: searchController.text.length));
+                              });
                               _searchText = searchController.text;
                               ProductSearch search =
                                   await searchProductByName(_searchText);
                               setState(() {
                                 productSearch = search;
-                                searchController.selection =
-                                    TextSelection.fromPosition(TextPosition(
-                                        offset: searchController.text.length));
                               });
                             },
                           ),
@@ -88,6 +90,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                           height: 20,
                         ),
                         ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: productSearch == null
                               ? 0
@@ -102,7 +105,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                             MaterialPageRoute(
                                                 builder: (_) => ProductDetail(
                                                       userToken:
-                                                          token.toString(),
+                                                          token.data.toString(),
                                                       productID: productSearch!
                                                           .content![index]
                                                           .productId,
@@ -127,7 +130,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                     width: 100,
                                                     height: 100,
                                                   )),
-                                              const SizedBox(width: 7),
+                                              const SizedBox(width: 10),
                                               Expanded(
                                                   child: Column(
                                                       crossAxisAlignment:
@@ -140,14 +143,18 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                             .productName
                                                             .toString(),
                                                         style: const TextStyle(
-                                                            fontSize: 16,
+                                                            fontSize: 15,
+                                                            fontFamily:
+                                                                "QuicksandBold",
                                                             color:
                                                                 Colors.black)),
-                                                    const SizedBox(height: 3),
+                                                    const SizedBox(height: 5),
                                                     Text(
                                                         '${productSearch!.content![index].price}',
                                                         style: const TextStyle(
                                                             fontSize: 16,
+                                                            fontFamily:
+                                                                "QuicksandMedium",
                                                             color:
                                                                 Colors.black)),
                                                     const SizedBox(height: 3),

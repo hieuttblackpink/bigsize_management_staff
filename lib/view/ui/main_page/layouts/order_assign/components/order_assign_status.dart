@@ -2,9 +2,10 @@ import 'package:bigsize_management_staff/models/order/order_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-class OrderStatus extends StatelessWidget {
+class OrderAssignStatus extends StatelessWidget {
   final Content orderContent;
-  const OrderStatus({Key? key, required this.orderContent}) : super(key: key);
+  const OrderAssignStatus({Key? key, required this.orderContent})
+      : super(key: key);
 
   final double wTL = 75;
 

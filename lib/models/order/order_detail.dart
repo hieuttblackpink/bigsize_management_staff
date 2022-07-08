@@ -55,7 +55,7 @@ class Content {
   int? _orderId;
   int? _customerId;
   String? _customerName;
-  Null? _deliveryAddress;
+  DeliveryAddress? _deliveryAddress;
   Store? _store;
   int? _staffId;
   String? _staffName;
@@ -69,14 +69,14 @@ class Content {
   String? _packagedDate;
   String? _deliveryDate;
   String? _receivedDate;
-  Null? _rejectedDate;
+  String? _rejectedDate;
   String? _status;
 
   Content(
       {int? orderId,
       int? customerId,
       String? customerName,
-      Null? deliveryAddress,
+      DeliveryAddress? deliveryAddress,
       Store? store,
       int? staffId,
       String? staffName,
@@ -90,7 +90,7 @@ class Content {
       String? packagedDate,
       String? deliveryDate,
       String? receivedDate,
-      Null? rejectedDate,
+      String? rejectedDate,
       String? status}) {
     if (orderId != null) {
       _orderId = orderId;
@@ -157,8 +157,8 @@ class Content {
   set customerId(int? customerId) => _customerId = customerId;
   String? get customerName => _customerName;
   set customerName(String? customerName) => _customerName = customerName;
-  Null? get deliveryAddress => _deliveryAddress;
-  set deliveryAddress(Null? deliveryAddress) =>
+  DeliveryAddress? get deliveryAddress => _deliveryAddress;
+  set deliveryAddress(DeliveryAddress? deliveryAddress) =>
       _deliveryAddress = deliveryAddress;
   Store? get store => _store;
   set store(Store? store) => _store = store;
@@ -187,8 +187,8 @@ class Content {
   set deliveryDate(String? deliveryDate) => _deliveryDate = deliveryDate;
   String? get receivedDate => _receivedDate;
   set receivedDate(String? receivedDate) => _receivedDate = receivedDate;
-  Null? get rejectedDate => _rejectedDate;
-  set rejectedDate(Null? rejectedDate) => _rejectedDate = rejectedDate;
+  String? get rejectedDate => _rejectedDate;
+  set rejectedDate(String? rejectedDate) => _rejectedDate = rejectedDate;
   String? get status => _status;
   set status(String? status) => _status = status;
 
@@ -196,7 +196,9 @@ class Content {
     _orderId = json['order_id'];
     _customerId = json['customer_id'];
     _customerName = json['customer_name'];
-    _deliveryAddress = json['delivery_address'];
+    _deliveryAddress = json['delivery_address'] != null
+        ? DeliveryAddress.fromJson(json['delivery_address'])
+        : null;
     _store = json['store'] != null ? Store.fromJson(json['store']) : null;
     _staffId = json['staff_id'];
     _staffName = json['staff_name'];
@@ -224,7 +226,9 @@ class Content {
     data['order_id'] = _orderId;
     data['customer_id'] = _customerId;
     data['customer_name'] = _customerName;
-    data['delivery_address'] = _deliveryAddress;
+    if (_deliveryAddress != null) {
+      data['delivery_address'] = _deliveryAddress!.toJson();
+    }
     if (_store != null) {
       data['store'] = _store!.toJson();
     }
@@ -244,6 +248,67 @@ class Content {
     data['received_date'] = _receivedDate;
     data['rejected_date'] = _rejectedDate;
     data['status'] = _status;
+    return data;
+  }
+}
+
+class DeliveryAddress {
+  int? _addressId;
+  int? _customerId;
+  String? _receiverName;
+  String? _receiverPhone;
+  String? _receiveAddress;
+
+  DeliveryAddress(
+      {int? addressId,
+      int? customerId,
+      String? receiverName,
+      String? receiverPhone,
+      String? receiveAddress}) {
+    if (addressId != null) {
+      _addressId = addressId;
+    }
+    if (customerId != null) {
+      _customerId = customerId;
+    }
+    if (receiverName != null) {
+      _receiverName = receiverName;
+    }
+    if (receiverPhone != null) {
+      _receiverPhone = receiverPhone;
+    }
+    if (receiveAddress != null) {
+      _receiveAddress = receiveAddress;
+    }
+  }
+
+  int? get addressId => _addressId;
+  set addressId(int? addressId) => _addressId = addressId;
+  int? get customerId => _customerId;
+  set customerId(int? customerId) => _customerId = customerId;
+  String? get receiverName => _receiverName;
+  set receiverName(String? receiverName) => _receiverName = receiverName;
+  String? get receiverPhone => _receiverPhone;
+  set receiverPhone(String? receiverPhone) => _receiverPhone = receiverPhone;
+  String? get receiveAddress => _receiveAddress;
+  set receiveAddress(String? receiveAddress) =>
+      _receiveAddress = receiveAddress;
+
+  DeliveryAddress.fromJson(Map<String, dynamic> json) {
+    _addressId = json['address_id'];
+    _customerId = json['customer_id'];
+    _receiverName = json['receiver_name'];
+    _receiverPhone = json['receiver_phone'];
+    _receiveAddress = json['receive_address'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['address_id'] = _addressId;
+    data['customer_id'] = _customerId;
+    data['receiver_name'] = _receiverName;
+    data['receiver_phone'] = _receiverPhone;
+    data['receive_address'] = _receiveAddress;
     return data;
   }
 }

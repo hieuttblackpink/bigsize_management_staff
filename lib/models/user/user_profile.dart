@@ -2,12 +2,12 @@
 
 class StaffProfile {
   Content? _content;
-  Null _error;
+  Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   StaffProfile(
-      {Content? content, Null error, bool? isSuccess, String? responseTime}) {
+      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -24,8 +24,8 @@ class StaffProfile {
 
   Content? get content => _content;
   set content(Content? content) => _content = content;
-  Null? get error => _error;
-  set error(Null error) => _error = error;
+  Error? get error => _error;
+  set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
   set isSuccess(bool? isSuccess) => _isSuccess = isSuccess;
   String? get responseTime => _responseTime;
@@ -34,7 +34,7 @@ class StaffProfile {
   StaffProfile.fromJson(Map<String, dynamic> json) {
     _content =
         json['content'] != null ? Content.fromJson(json['content']) : null;
-    _error = json['error'];
+    _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
   }
@@ -44,7 +44,9 @@ class StaffProfile {
     if (_content != null) {
       data['content'] = _content!.toJson();
     }
-    data['error'] = _error;
+    if (_error != null) {
+      data['error'] = _error!.toJson();
+    }
     data['is_success'] = _isSuccess;
     data['response_time'] = _responseTime;
     return data;
@@ -125,6 +127,45 @@ class Content {
     data['birthday'] = _birthday;
     data['store_id'] = _storeId;
     data['role'] = _role;
+    return data;
+  }
+}
+
+class Error {
+  int? _code;
+  String? _type;
+  String? _message;
+
+  Error({int? code, String? type, String? message}) {
+    if (code != null) {
+      _code = code;
+    }
+    if (type != null) {
+      _type = type;
+    }
+    if (message != null) {
+      _message = message;
+    }
+  }
+
+  int? get code => _code;
+  set code(int? code) => _code = code;
+  String? get type => _type;
+  set type(String? type) => _type = type;
+  String? get message => _message;
+  set message(String? message) => _message = message;
+
+  Error.fromJson(Map<String, dynamic> json) {
+    _code = json['code'];
+    _type = json['type'];
+    _message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = _code;
+    data['type'] = _type;
+    data['message'] = _message;
     return data;
   }
 }

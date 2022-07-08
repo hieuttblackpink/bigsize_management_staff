@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_void_to_null, unnecessary_question_mark, dead_code, unnecessary_getters_setters
 
-class ProductQuantityStore {
-  ProductQuantityStoreContent? _content;
+class StaffWorking {
+  List<ContentStaffWorking>? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
-  ProductQuantityStore(
-      {ProductQuantityStoreContent? content,
+  StaffWorking(
+      {List<ContentStaffWorking>? content,
       Error? error,
       bool? isSuccess,
       String? responseTime}) {
@@ -25,8 +25,8 @@ class ProductQuantityStore {
     }
   }
 
-  ProductQuantityStoreContent? get content => _content;
-  set content(ProductQuantityStoreContent? content) => _content = content;
+  List<ContentStaffWorking>? get content => _content;
+  set content(List<ContentStaffWorking>? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -34,10 +34,13 @@ class ProductQuantityStore {
   String? get responseTime => _responseTime;
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
-  ProductQuantityStore.fromJson(Map<String, dynamic> json) {
-    _content = json['content'] != null
-        ? ProductQuantityStoreContent.fromJson(json['content'])
-        : null;
+  StaffWorking.fromJson(Map<String, dynamic> json) {
+    if (json['content'] != null) {
+      _content = <ContentStaffWorking>[];
+      json['content'].forEach((v) {
+        _content!.add(ContentStaffWorking.fromJson(v));
+      });
+    }
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -46,7 +49,7 @@ class ProductQuantityStore {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (_content != null) {
-      data['content'] = _content!.toJson();
+      data['content'] = _content!.map((v) => v.toJson()).toList();
     }
     if (_error != null) {
       data['error'] = _error!.toJson();
@@ -57,43 +60,33 @@ class ProductQuantityStore {
   }
 }
 
-class ProductQuantityStoreContent {
-  int? _storeId;
-  int? _productDetailId;
-  int? _quantity;
+class ContentStaffWorking {
+  String? _date;
+  double? _value;
 
-  ProductQuantityStoreContent(
-      {int? storeId, int? productDetailId, int? quantity}) {
-    if (storeId != null) {
-      _storeId = storeId;
+  ContentStaffWorking({String? date, double? value}) {
+    if (date != null) {
+      _date = date;
     }
-    if (productDetailId != null) {
-      _productDetailId = productDetailId;
-    }
-    if (quantity != null) {
-      _quantity = quantity;
+    if (value != null) {
+      _value = value;
     }
   }
 
-  int? get storeId => _storeId;
-  set storeId(int? storeId) => _storeId = storeId;
-  int? get productDetailId => _productDetailId;
-  set productDetailId(int? productDetailId) =>
-      _productDetailId = productDetailId;
-  int? get quantity => _quantity;
-  set quantity(int? quantity) => _quantity = quantity;
+  String? get date => _date;
+  set date(String? date) => _date = date;
+  double? get value => _value;
+  set value(double? value) => _value = value;
 
-  ProductQuantityStoreContent.fromJson(Map<String, dynamic> json) {
-    _storeId = json['store_id'];
-    _productDetailId = json['product_detail_id'];
-    _quantity = json['quantity'];
+  ContentStaffWorking.fromJson(Map<String, dynamic> json) {
+    _date = json['date'];
+    _value = json['value'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['store_id'] = _storeId;
-    data['product_detail_id'] = _productDetailId;
-    data['quantity'] = _quantity;
+    data['date'] = _date;
+    data['value'] = _value;
     return data;
   }
 }

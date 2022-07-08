@@ -4,7 +4,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/prod
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:bigsize_management_staff/view/ui/main_page/layouts/entry/entry_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/order_assign/order_assign_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/home/home_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/order_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_layout.dart';
@@ -16,7 +16,7 @@ import '../../resources/routes_manger.dart';
 const List<String> appBarTitles = [
   "Trang chủ",
   "Đơn đặt hàng",
-  "--",
+  "Don hang online",
   "Sản phẩm",
   "Tài khoản"
 ];
@@ -48,7 +48,7 @@ class _MainView extends State<MainView> {
         body: [
           const HomeLayout(),
           const OrderLayout(),
-          const EntryLayout(),
+          const OrderAssignLayout(),
           const ProductLayout(),
           const SettingLayout(),
         ][value],

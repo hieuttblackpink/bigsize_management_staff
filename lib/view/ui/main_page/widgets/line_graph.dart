@@ -1,15 +1,17 @@
+import 'package:bigsize_management_staff/models/user/user_work.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class LineGraph extends StatelessWidget {
   LineGraph(this.data, {Key? key}) : super(key: key);
 
-  final List<int> data;
+  final List<double> data;
   late final double maxData = max(data).toDouble();
   late final int scale = (maxData ~/ 25) * 5;
 
-  int max(List<int> list) {
-    int max = 0;
+  double max(List<double> list) {
+    double max = 0;
     for (int i = 0; i < list.length; i++) {
       if (list[i] > max) {
         max = list[i];
@@ -20,9 +22,11 @@ class LineGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(scale);
     return Container(
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.only(top: 15, bottom: 0, left: 8, right: 0),
+      margin: const EdgeInsets.all(1),
+      padding: const EdgeInsets.only(top: 15, bottom: 0, left: 5, right: 0),
+      //height: 200,
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
           borderRadius: const BorderRadius.all(Radius.circular(20))),
@@ -63,10 +67,17 @@ class LineGraph extends StatelessWidget {
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
-              reservedSize: 22,
-              interval: scale.toDouble(),
+              reservedSize: 35,
+              interval: scale.toDouble() == 0 ? 1 : scale.toDouble(),
               getTitlesWidget: (val, _) => Text(
-                val % (scale) == 0 ? "${val.round()}" : '',
+                val % (scale) == 0
+                    ? MoneyFormatter(amount: val)
+                        .output
+                        .compactNonSymbol
+                        .toString()
+                    : val.toString().substring(0, val.toString().indexOf('.')) +
+                        "",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Theme.of(context)
                         .colorScheme
@@ -81,8 +92,10 @@ class LineGraph extends StatelessWidget {
               sideTitles: SideTitles(
             showTitles: true,
             interval: 1,
+            reservedSize: 30,
             getTitlesWidget: (val, _) => Text(
-              '',
+              "${val + 1}",
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context)
                       .colorScheme

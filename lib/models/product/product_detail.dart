@@ -68,7 +68,7 @@ class Content {
   String? _productName;
   double? _price;
   double? _promotionPrice;
-  Null? _promotionValue;
+  String? _promotionValue;
   String? _category;
   List<ProductDetailList>? _productDetailList;
   String? _gender;
@@ -83,7 +83,7 @@ class Content {
       String? productName,
       double? price,
       double? promotionPrice,
-      Null? promotionValue,
+      String? promotionValue,
       String? category,
       List<ProductDetailList>? productDetailList,
       String? gender,
@@ -144,8 +144,9 @@ class Content {
   double? get promotionPrice => _promotionPrice;
   set promotionPrice(double? promotionPrice) =>
       _promotionPrice = promotionPrice;
-  Null? get promotionValue => _promotionValue;
-  set promotionValue(Null? promotionValue) => _promotionValue = promotionValue;
+  String? get promotionValue => _promotionValue;
+  set promotionValue(String? promotionValue) =>
+      _promotionValue = promotionValue;
   String? get category => _category;
   set category(String? category) => _category = category;
   List<ProductDetailList>? get productDetailList => _productDetailList;

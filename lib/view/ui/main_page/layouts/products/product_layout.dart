@@ -284,12 +284,15 @@ class _ProductLayout extends State<ProductLayout> {
                             Tooltip(
                               message: "Real price ${item.price} VND",
                               child: Text(
-                                "${item.promotionPrice} VND",
+                                "${item.price} VND",
                                 style: Theme.of(context).textTheme.caption,
                               ),
                             ),
                             Text(
-                              "Giảm giá: " + item.promotionValue.toString(),
+                              item.promotionValue.toString() == "null"
+                                  ? "Giảm giá: Khong"
+                                  : "Giảm giá: " +
+                                      item.promotionValue.toString(),
                               style: Theme.of(context).textTheme.headline4,
                             )
                           ],
@@ -297,6 +300,7 @@ class _ProductLayout extends State<ProductLayout> {
                       )
                     ],
                   ),
+                  /*
                   Positioned(
                     right: 10,
                     top: constraints.maxHeight * .58 - 10,
@@ -307,7 +311,7 @@ class _ProductLayout extends State<ProductLayout> {
                       backgroundColor: Theme.of(context).colorScheme.onSurface,
                       child: Text(item.quantity.toString()),
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),

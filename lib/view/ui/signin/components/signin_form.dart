@@ -143,6 +143,9 @@ class _SignFormState extends State<SignForm> {
                       username.toString(), password.toString());
                   loginSuccess = _staffLogin.isSuccess!;
                   if (loginSuccess) {
+                    _storageItemToken = StorageItem(
+                        "UserToken", _staffLogin.content!.token.toString());
+                    _storageService.writeSecureData(_storageItemToken);
                     _formKey.currentState!.save();
                     removeError(
                         error: "Sai thông tin tài khoản hoặc mật khẩu.");

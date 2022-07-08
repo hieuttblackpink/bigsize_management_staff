@@ -3,50 +3,42 @@ import 'dart:async';
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
 import 'package:bigsize_management_staff/models/order/order_list.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
-import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/order_assign/components/order_assign_detail_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
-class OrderLayout extends StatefulWidget {
-  const OrderLayout({Key? key}) : super(key: key);
+class OrderAssignLayout extends StatefulWidget {
+  const OrderAssignLayout({Key? key}) : super(key: key);
 
   @override
-  _OrderLayout createState() => _OrderLayout();
+  _OrderAssignLayout createState() => _OrderAssignLayout();
 }
 
-class _OrderLayout extends State<OrderLayout> {
+class _OrderAssignLayout extends State<OrderAssignLayout> {
   final StorageService _storageService = StorageService();
   final OrderBloc _orderBloc = OrderBloc();
-  late Future<OrderList?> orderListGet;
-  OrderList? orderList;
-  //late OrderList orderListStream;
-
-  /*
-  final StreamController<OrderList> _myStreamCtrl =
-      StreamController<OrderList>.broadcast();
-  Stream<OrderList> get onVariableChanged => _myStreamCtrl.stream;
-  void updateMyUI() => _myStreamCtrl.sink.add(orderListStream);
-  */
+  late Future<OrderList?> orderAssignListGet;
+  OrderList? orderAssignList;
 
   var now = DateTime.now();
   var formatter = DateFormat('dd/MM/yyyy');
   bool isChange = true;
 
   TextEditingController dateController = TextEditingController();
-  String orderDate = "";
+  String orderAssignDate = "";
 
   Future<String?> getToken() async {
     return _storageService.readSecureData("UserToken");
   }
 
-  Future<OrderList?> getListOrder(String token, String date) async {
+  Future<OrderList?> getListOrderAssign(String token, String date) async {
     //print(date);
-    OrderList? result = await _orderBloc.getListOrder(token, date);
+    OrderList? result = await _orderBloc.getListOrderAssign(token);
     if (mounted) {
       setState(() {
-        orderList = result;
+        orderAssignList = result;
         isChange = false;
       });
     }
@@ -66,7 +58,7 @@ class _OrderLayout extends State<OrderLayout> {
     String formattedDate = formatter.format(now);
     print(formattedDate);
     dateController.text = formattedDate;
-    orderDate = formattedDate;
+    orderAssignDate = formattedDate;
   }
 
   @override
@@ -80,7 +72,7 @@ class _OrderLayout extends State<OrderLayout> {
                 future: getToken(),
                 builder: (context, token) {
                   if (token.hasData) {
-                    getListOrder(token.data.toString(), orderDate);
+                    getListOrderAssign(token.data.toString(), orderAssignDate);
                     //updateMyUI();
                     return Column(
                       children: <Widget>[
@@ -170,11 +162,11 @@ class _OrderLayout extends State<OrderLayout> {
                                         "/" +
                                         date.year.toString();
                                   }
-                                  print("Here: " + bd);
+                                  //print("Here: " + bd);
                                   dateController.text = bd;
-                                  orderDate = dateController.text;
+                                  orderAssignDate = dateController.text;
                                   isChange = true;
-                                  getListOrder(token.data.toString(),
+                                  getListOrderAssign(token.data.toString(),
                                       dateController.text.toString());
                                 },
                                 currentTime: DateTime.now(),
@@ -183,8 +175,8 @@ class _OrderLayout extends State<OrderLayout> {
                             },
                           ),
                         ),
-                        orderList != null &&
-                                orderList!.content!.isNotEmpty &&
+                        orderAssignList != null &&
+                                orderAssignList!.content!.isNotEmpty &&
                                 !isChange
                             ? Column(
                                 children: <Widget>[
@@ -196,7 +188,7 @@ class _OrderLayout extends State<OrderLayout> {
                                       Row(
                                         children: [
                                           Text(
-                                              "Tổng đơn hàng ${orderList!.content!.length}",
+                                              "Tổng đơn hàng online ${orderAssignList!.content!.length}",
                                               style: const TextStyle(
                                                 fontFamily: "QuicksandBold",
                                                 fontSize: 15,
@@ -224,32 +216,38 @@ class _OrderLayout extends State<OrderLayout> {
                                             const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) =>
-                                            index == orderList!.content!.length
+                                            index ==
+                                                    orderAssignList!
+                                                        .content!.length
                                                 ? listItem(
                                                     context,
-                                                    orderList!.content!.last,
+                                                    orderAssignList!
+                                                        .content!.last,
                                                     index,
                                                     token.toString())
                                                 : listItem(
                                                     context,
-                                                    orderList!.content![index],
+                                                    orderAssignList!
+                                                        .content![index],
                                                     index,
                                                     token.toString()),
                                         separatorBuilder: (_, __) =>
                                             const SizedBox(
                                           height: 10,
                                         ),
-                                        itemCount: orderList!.content!.length,
+                                        itemCount:
+                                            orderAssignList!.content!.length,
                                       )
                                     ],
                                   ),
                                 ],
                               )
-                            : orderList != null && orderList!.content!.isEmpty
+                            : orderAssignList != null &&
+                                    orderAssignList!.content!.isEmpty
                                 ? Container(
                                     alignment: Alignment.center,
                                     child: const Text(
-                                        "Ban khong co don hang vao ngay nay"),
+                                        "Ban khong co don hang online vao ngay nay"),
                                   )
                                 : loadListOrder(context)
                       ],
@@ -273,7 +271,7 @@ class _OrderLayout extends State<OrderLayout> {
               Row(
                 children: [
                   Shimmer.fromColors(
-                      child: const Text("Tổng đơn hàng ",
+                      child: const Text("Tổng đơn hàng online ",
                           style: TextStyle(
                             fontFamily: "QuicksandBold",
                             fontSize: 15,
@@ -437,7 +435,7 @@ class _OrderLayout extends State<OrderLayout> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => OrderDetail(
+                      builder: (_) => OrderAssignDetail(
                             id: item.orderId.toString(),
                             userToken: token,
                           )))

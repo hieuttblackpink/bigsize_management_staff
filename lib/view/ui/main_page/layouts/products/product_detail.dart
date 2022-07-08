@@ -25,7 +25,7 @@ class _ProductDetail extends State<ProductDetail> {
   final String userToken;
   final int? productID;
   final ProductBloc _productBloc = ProductBloc();
-  int activePage = 1;
+  int activePage = 0;
 
   _ProductDetail(this.userToken, this.productID);
 
@@ -102,6 +102,7 @@ class _ProductDetail extends State<ProductDetail> {
                                   padding: const EdgeInsets.only(
                                       top: 0, right: 14, left: 14),
                                   decoration: const BoxDecoration(
+                                    //color: Color.fromARGB(50, 200, 240, 255),
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(30),
@@ -113,70 +114,107 @@ class _ProductDetail extends State<ProductDetail> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text(
-                                          detail.data!.brand
-                                              .toString(), //Ten nha cung ung
-                                          style: const TextStyle(
-                                            fontFamily: "QuicksandLight",
-                                            fontSize: 20,
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Text(
+                                            detail.data!.brand
+                                                .toString(), //Ten nha cung ung
+                                            style: const TextStyle(
+                                              fontFamily: "QuicksandMedium",
+                                              fontSize: 25,
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(
                                           height: 5,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Container(
-                                              alignment: Alignment.centerLeft,
-                                              height: 120,
-                                              width: 200,
-                                              child: Text(
-                                                detail.data!.productName
-                                                    .toString(),
-                                                maxLines: 2,
-                                                softWrap: true,
-                                                style: const TextStyle(
-                                                  fontFamily: "QuicksandBold",
-                                                  fontSize: 35,
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: StyleManager.shadow,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                alignment: Alignment.centerLeft,
+                                                height: 120,
+                                                width: 200,
+                                                child: Text(
+                                                  detail.data!.productName
+                                                      .toString(),
+                                                  maxLines: 2,
+                                                  softWrap: true,
+                                                  style: const TextStyle(
+                                                    fontFamily: "QuicksandBold",
+                                                    fontSize: 35,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Text(
-                                              detail.data!.price.toString() +
-                                                  " đ",
-                                              style: const TextStyle(
-                                                fontFamily: "QuicksandMedium",
-                                                fontSize: 25,
+                                              Text(
+                                                detail.data!.price.toString() +
+                                                    " đ",
+                                                style: const TextStyle(
+                                                  fontFamily: "QuicksandMedium",
+                                                  fontSize: 25,
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 15),
-                                        const Text(
-                                          "Mô tả:",
-                                          style: TextStyle(
-                                            fontFamily: "QuicksandMedium",
-                                            fontSize: 17,
+                                            ],
                                           ),
                                         ),
                                         const SizedBox(height: 15),
-                                        Text(
-                                          detail.data!.description
-                                              .toString(), //description
-                                          softWrap: true,
-                                          style: const TextStyle(
-                                            fontFamily: "QuicksandLights",
-                                            fontSize: 15,
+                                        Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: StyleManager.shadow,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              const Text(
+                                                "Mô tả:",
+                                                style: TextStyle(
+                                                  fontFamily: "QuicksandMedium",
+                                                  fontSize: 17,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 15),
+                                              Text(
+                                                detail.data!.description
+                                                    .toString(), //description
+                                                softWrap: true,
+                                                style: const TextStyle(
+                                                  fontFamily: "QuicksandLights",
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 5),
+                                            ],
                                           ),
                                         ),
                                         const SizedBox(height: 15),
                                         const Text(
                                           "Số lượng sản phẩm trong kho",
-                                          style: TextStyle(),
+                                          style: TextStyle(
+                                              fontFamily: "QuicksandMedium"),
                                         ),
-                                        const SizedBox(height: 10),
+                                        const SizedBox(height: 15),
                                         ProductDetailQuantity(
                                             userToken: userToken,
                                             productID: productID),

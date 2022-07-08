@@ -227,18 +227,22 @@ class addBox extends State<AddBox> {
             width: 50,
           ),
           title: Text(
-            item.content!.productName.toString() +
-                " - " +
-                item.content!.productDetailList!.first.colour!.colourName
+            item.content!.productName.toString(),
+            softWrap: false,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            //textWidthBasis: TextWidthBasis.longestLine,
+          ),
+          isThreeLine: false,
+          subtitle: Text(
+            item.content!.productDetailList!.first.colour!.colourName
                     .toString() +
                 " - " +
                 item.content!.productDetailList!.first.size!.sizeName
-                    .toString(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+                    .toString() +
+                " - ${item.quantityInNewOrder} cái",
+            style: const TextStyle(fontFamily: "QuicksandMedium"),
           ),
-          isThreeLine: false,
-          subtitle: Text("${item.quantityInNewOrder} cái"),
           trailing: FittedBox(
             fit: BoxFit.fill,
             child: Column(
@@ -250,7 +254,10 @@ class addBox extends State<AddBox> {
                   children: <Widget>[
                     IconButton(
                         onPressed: item.quantityInNewOrder == 1
-                            ? null
+                            ? () => {
+                                  showAlertDialog(context,
+                                      "Không thể giảm thêm.\nNếu muốn xóa sản phẩm này, hãy trượt sang bên trái."),
+                                }
                             : () async {
                                 setState(() {
                                   item.quantityInNewOrder =
@@ -317,6 +324,33 @@ class addBox extends State<AddBox> {
           ),
         ],
       );
+
+  showAlertDialog(context, String message) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: const Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Thông báo"),
+      content: Text(message),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   /*
   showAddForm(BuildContext context, String token) => showDialog(

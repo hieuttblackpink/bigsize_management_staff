@@ -116,8 +116,8 @@ class Content {
   int? _productId;
   String? _productName;
   double? _price;
-  Null? _promotionPrice;
-  Null? _promotionValue;
+  double? _promotionPrice;
+  String? _promotionValue;
   String? _imageUrl;
   bool? _status;
 
@@ -125,8 +125,8 @@ class Content {
       {int? productId,
       String? productName,
       double? price,
-      Null? promotionPrice,
-      Null? promotionValue,
+      double? promotionPrice,
+      String? promotionValue,
       String? imageUrl,
       bool? status}) {
     if (productId != null) {
@@ -158,10 +158,12 @@ class Content {
   set productName(String? productName) => _productName = productName;
   double? get price => _price;
   set price(double? price) => _price = price;
-  Null? get promotionPrice => _promotionPrice;
-  set promotionPrice(Null? promotionPrice) => _promotionPrice = promotionPrice;
-  Null? get promotionValue => _promotionValue;
-  set promotionValue(Null? promotionValue) => _promotionValue = promotionValue;
+  double? get promotionPrice => _promotionPrice;
+  set promotionPrice(double? promotionPrice) =>
+      _promotionPrice = promotionPrice;
+  String? get promotionValue => _promotionValue;
+  set promotionValue(String? promotionValue) =>
+      _promotionValue = promotionValue;
   String? get imageUrl => _imageUrl;
   set imageUrl(String? imageUrl) => _imageUrl = imageUrl;
   bool? get status => _status;

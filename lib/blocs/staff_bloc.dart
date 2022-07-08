@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:bigsize_management_staff/models/user/user.dart';
 import 'package:bigsize_management_staff/models/user/user_password.dart';
 import 'package:bigsize_management_staff/models/user/user_profile.dart';
+import 'package:bigsize_management_staff/models/user/user_work.dart';
+import 'package:bigsize_management_staff/models/user/user_work_order.dart';
 import 'package:http/http.dart' as http;
 
 class StaffBloc {
@@ -70,5 +72,29 @@ class StaffBloc {
     );
     print("SB_CP: " + response.body.toString());
     return UserPassword.fromJson(jsonDecode(response.body));
+  }
+
+  Future<StaffWorking> getStaffWork(String token) async {
+    final response = await http.get(
+      Uri.parse(_baseUrl + "orders/staff-performance"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer $token",
+      },
+    );
+    //print("SB_SW: " + response.body.toString());
+    return StaffWorking.fromJson(jsonDecode(response.body));
+  }
+
+  Future<StaffWorkingOrder> getStaffWorkOrder(String token) async {
+    final response = await http.get(
+      Uri.parse(_baseUrl + "orders/staff-performance-order"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer $token",
+      },
+    );
+    //print("SB_SW: " + response.body.toString());
+    return StaffWorkingOrder.fromJson(jsonDecode(response.body));
   }
 }

@@ -62,7 +62,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
 
   @override
   Widget build(BuildContext context) {
-    if (listProductColour!.isNotEmpty) {
+    if (listProductColour != null && listProductColour!.isNotEmpty) {
       getProductSize(widget.userToken, widget.productID!.toInt(),
           listProductColour![colorIndex].colourId!.toInt());
       if (listProductSize != null) {
@@ -79,7 +79,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
         listProductColour != null && listProductColour!.isNotEmpty
             ? GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 50,
+                    maxCrossAxisExtent: 60,
                     childAspectRatio: 1 / 1,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),
@@ -115,8 +115,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                             radix: 16)),
                         shape: BoxShape.circle,
                         border: index == colorIndex
-                            ? Border.all(
-                                width: 1, color: Colors.black.withOpacity(0.5))
+                            ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0, color: Colors.white),
                       ),
                       child: index == colorIndex
@@ -133,15 +132,15 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                 })
             : Container(),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         listProductSize != null
             ? GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 50,
+                    maxCrossAxisExtent: 75,
                     childAspectRatio: 1 / 1,
                     crossAxisSpacing: 10,
-                    mainAxisSpacing: 10),
+                    mainAxisSpacing: 20),
                 itemCount: listProductSize!.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -157,15 +156,15 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                       });
                     },
                     child: Container(
-                      width: 70,
+                      width: 100,
                       height: 50,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: index == sizeIndex
-                            ? Border.all(
-                                width: 1, color: Colors.black.withOpacity(0.5))
+                            ? Border.all(width: 1, color: Colors.black)
                             : Border.all(width: 0, color: Colors.white),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: index == sizeIndex
                           ? Container(
@@ -173,8 +172,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                               child: Text(
                                 listProductSize![index].sizeName.toString(),
                                 style: const TextStyle(
-                                  fontSize: 20,
-                                ),
+                                    fontSize: 20, fontFamily: "QuicksandBold"),
                               ),
                             )
                           : Container(
@@ -182,8 +180,8 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                               child: Text(
                                 listProductSize![index].sizeName.toString(),
                                 style: const TextStyle(
-                                  fontSize: 15,
-                                ),
+                                    fontSize: 15,
+                                    fontFamily: "QuicksandMedium"),
                               ),
                             ),
                     ),
@@ -191,16 +189,24 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                 })
             : Container(),
         const SizedBox(
-          height: 20,
+          height: 25,
         ),
         productQuantityStoreContent != null
             ? Row(
                 children: <Widget>[
-                  const Text("Sản phẩm trong kho còn: "),
+                  const Text(
+                    "Sản phẩm trong kho còn: ",
+                    style:
+                        TextStyle(fontFamily: "QuicksandMedium", fontSize: 15),
+                  ),
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(productQuantityStoreContent!.quantity.toString()),
+                  Text(
+                    productQuantityStoreContent!.quantity.toString(),
+                    style: const TextStyle(
+                        fontFamily: "QuicksandBold", fontSize: 25),
+                  ),
                 ],
               )
             : Container(),
