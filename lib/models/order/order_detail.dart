@@ -1,13 +1,16 @@
 // ignore_for_file: unnecessary_question_mark, prefer_void_to_null, dead_code, unnecessary_getters_setters
 
-class OrderDetailBloc {
-  Content? _content;
+class OrderDetailModel {
+  ContentOrderDetail? _content;
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
 
-  OrderDetailBloc(
-      {Content? content, Null? error, bool? isSuccess, String? responseTime}) {
+  OrderDetailModel(
+      {ContentOrderDetail? content,
+      Null? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class OrderDetailBloc {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentOrderDetail? get content => _content;
+  set content(ContentOrderDetail? content) => _content = content;
   Null? get error => _error;
   set error(Null? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -31,9 +34,10 @@ class OrderDetailBloc {
   String? get responseTime => _responseTime;
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
-  OrderDetailBloc.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+  OrderDetailModel.fromJson(Map<String, dynamic> json) {
+    _content = json['content'] != null
+        ? ContentOrderDetail.fromJson(json['content'])
+        : null;
     _error = json['error'];
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -51,7 +55,7 @@ class OrderDetailBloc {
   }
 }
 
-class Content {
+class ContentOrderDetail {
   int? _orderId;
   int? _customerId;
   String? _customerName;
@@ -72,7 +76,7 @@ class Content {
   String? _rejectedDate;
   String? _status;
 
-  Content(
+  ContentOrderDetail(
       {int? orderId,
       int? customerId,
       String? customerName,
@@ -192,7 +196,7 @@ class Content {
   String? get status => _status;
   set status(String? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentOrderDetail.fromJson(Map<String, dynamic> json) {
     _orderId = json['order_id'];
     _customerId = json['customer_id'];
     _customerName = json['customer_name'];

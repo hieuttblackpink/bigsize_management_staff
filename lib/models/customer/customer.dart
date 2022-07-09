@@ -1,13 +1,16 @@
 // ignore_for_file: unnecessary_getters_setters
 
 class Customer {
-  Content? _content;
+  ContentCustomer? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   Customer(
-      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
+      {ContentCustomer? content,
+      Error? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class Customer {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentCustomer? get content => _content;
+  set content(ContentCustomer? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -32,8 +35,9 @@ class Customer {
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
   Customer.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+    _content = json['content'] != null
+        ? ContentCustomer.fromJson(json['content'])
+        : null;
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -53,7 +57,7 @@ class Customer {
   }
 }
 
-class Content {
+class ContentCustomer {
   int? _uid;
   String? _fullname;
   String? _phoneNumber;
@@ -64,7 +68,7 @@ class Content {
   int? _weigth;
   int? _heigth;
 
-  Content(
+  ContentCustomer(
       {int? uid,
       String? fullname,
       String? phoneNumber,
@@ -122,7 +126,7 @@ class Content {
   int? get heigth => _heigth;
   set heigth(int? heigth) => _heigth = heigth;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentCustomer.fromJson(Map<String, dynamic> json) {
     _uid = json['uid'];
     _fullname = json['fullname'];
     _phoneNumber = json['phone_number'];

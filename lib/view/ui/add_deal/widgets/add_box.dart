@@ -1,7 +1,6 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, prefer_final_fields
 
 import 'package:bigsize_management_staff/blocs/product_bloc.dart';
-import 'package:bigsize_management_staff/model/module/product.dart';
 import 'package:bigsize_management_staff/models/order/new_order.dart';
 import 'package:bigsize_management_staff/models/product/product_chosen_data.dart';
 import 'package:bigsize_management_staff/models/product/product_detail.dart';
@@ -12,7 +11,6 @@ import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/add_entry.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/widgets/product_search_to_add.dart';
 import 'package:flutter/material.dart';
-import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
 
 import '../../../resources/styles_manager.dart';
 

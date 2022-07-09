@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_void_to_null, unnecessary_question_mark, dead_code, unnecessary_getters_setters
 
 class Store {
-  Content? _content;
+  ContentStore? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   Store(
-      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
+      {ContentStore? content,
+      Error? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class Store {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentStore? get content => _content;
+  set content(ContentStore? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -33,7 +36,7 @@ class Store {
 
   Store.fromJson(Map<String, dynamic> json) {
     _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+        json['content'] != null ? ContentStore.fromJson(json['content']) : null;
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -53,13 +56,13 @@ class Store {
   }
 }
 
-class Content {
+class ContentStore {
   int? _storeId;
   String? _storeAddress;
   String? _storePhone;
   bool? _status;
 
-  Content(
+  ContentStore(
       {int? storeId, String? storeAddress, String? storePhone, bool? status}) {
     if (storeId != null) {
       _storeId = storeId;
@@ -84,7 +87,7 @@ class Content {
   bool? get status => _status;
   set status(bool? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentStore.fromJson(Map<String, dynamic> json) {
     _storeId = json['store_id'];
     _storeAddress = json['store_address'];
     _storePhone = json['store_phone'];

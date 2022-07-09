@@ -305,7 +305,7 @@ class _HomeLayout extends State<HomeLayout> {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  Text("Doanh thu 7 ngay",
+                                  Text("Doanh thu 7 ngày qua",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline4),
@@ -337,7 +337,7 @@ class _HomeLayout extends State<HomeLayout> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Text("Don hang 7 ngay",
+                                  Text("Đơn hàng 7 ngày qua",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline4),

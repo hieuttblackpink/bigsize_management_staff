@@ -1,20 +1,16 @@
 import 'package:bigsize_management_staff/model/module/deals.dart';
+import 'package:bigsize_management_staff/models/order/order_detail.dart';
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class OrderPayment extends StatelessWidget {
-  final OrderModel order;
+  final OrderDetailModel? order;
   OrderPayment({Key? key, required this.order}) : super(key: key);
 
   late String paid = "";
 
   @override
   Widget build(BuildContext context) {
-    if (order.type.text == "Paid") {
-      paid = "Dã thanh toán";
-    } else {
-      paid = "Chưa thanh toán";
-    }
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -29,26 +25,34 @@ class OrderPayment extends StatelessWidget {
             Row(
               children: <Widget>[
                 Icon(
-                  order.type.icon,
+                  order!.content!.paymentMethod == null
+                      ? Icons.cancel_rounded
+                      : Icons.check_circle_rounded,
                   size: 20,
-                  color: order.type.color,
+                  color: order!.content!.paymentMethod == null
+                      ? Colors.red
+                      : Colors.green,
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                Text(paid,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(color: order.type.color))
+                Text(
+                    order!.content!.paymentMethod == null
+                        ? "Chua thanh toan"
+                        : "Da thanh toan",
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: order!.content!.paymentMethod == null
+                              ? Colors.red
+                              : Colors.green,
+                        ))
               ],
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Thanh toán bằng ví Momo **4597",
-              style: TextStyle(
+            Text(
+              order!.content!.paymentMethod.toString(),
+              style: const TextStyle(
                   color: Colors.black,
                   fontFamily: "QuicksandMedium",
                   fontSize: 20),

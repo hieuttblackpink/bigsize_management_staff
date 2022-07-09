@@ -1,13 +1,16 @@
 // ignore_for_file: unnecessary_getters_setters
 
 class NewOrderReturn {
-  Content? _content;
+  ContentNewOrderReturn? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   NewOrderReturn(
-      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
+      {ContentNewOrderReturn? content,
+      Error? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class NewOrderReturn {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentNewOrderReturn? get content => _content;
+  set content(ContentNewOrderReturn? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -32,8 +35,9 @@ class NewOrderReturn {
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
   NewOrderReturn.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+    _content = json['content'] != null
+        ? ContentNewOrderReturn.fromJson(json['content'])
+        : null;
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -53,10 +57,10 @@ class NewOrderReturn {
   }
 }
 
-class Content {
+class ContentNewOrderReturn {
   int? _orderId;
 
-  Content({int? orderId}) {
+  ContentNewOrderReturn({int? orderId}) {
     if (orderId != null) {
       _orderId = orderId;
     }
@@ -65,7 +69,7 @@ class Content {
   int? get orderId => _orderId;
   set orderId(int? orderId) => _orderId = orderId;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentNewOrderReturn.fromJson(Map<String, dynamic> json) {
     _orderId = json['order_id'];
   }
 

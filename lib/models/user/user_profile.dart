@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_void_to_null, dead_code, unnecessary_getters_setters
 
 class StaffProfile {
-  Content? _content;
+  ContentStaffProfile? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   StaffProfile(
-      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
+      {ContentStaffProfile? content,
+      Error? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class StaffProfile {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentStaffProfile? get content => _content;
+  set content(ContentStaffProfile? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -32,8 +35,9 @@ class StaffProfile {
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
   StaffProfile.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+    _content = json['content'] != null
+        ? ContentStaffProfile.fromJson(json['content'])
+        : null;
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -53,7 +57,7 @@ class StaffProfile {
   }
 }
 
-class Content {
+class ContentStaffProfile {
   int? _uid;
   String? _fullname;
   String? _phoneNumber;
@@ -62,7 +66,7 @@ class Content {
   int? _storeId;
   String? _role;
 
-  Content(
+  ContentStaffProfile(
       {int? uid,
       String? fullname,
       String? phoneNumber,
@@ -108,7 +112,7 @@ class Content {
   String? get role => _role;
   set role(String? role) => _role = role;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentStaffProfile.fromJson(Map<String, dynamic> json) {
     _uid = json['uid'];
     _fullname = json['fullname'];
     _phoneNumber = json['phone_number'];

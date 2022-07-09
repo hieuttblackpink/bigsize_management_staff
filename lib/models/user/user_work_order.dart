@@ -1,13 +1,13 @@
 // ignore_for_file: unnecessary_question_mark, prefer_void_to_null, dead_code, unnecessary_getters_setters
 
 class StaffWorkingOrder {
-  List<Content>? _content;
+  List<ContentStaffWorkingOrder>? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   StaffWorkingOrder(
-      {List<Content>? content,
+      {List<ContentStaffWorkingOrder>? content,
       Error? error,
       bool? isSuccess,
       String? responseTime}) {
@@ -25,8 +25,8 @@ class StaffWorkingOrder {
     }
   }
 
-  List<Content>? get content => _content;
-  set content(List<Content>? content) => _content = content;
+  List<ContentStaffWorkingOrder>? get content => _content;
+  set content(List<ContentStaffWorkingOrder>? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -36,9 +36,9 @@ class StaffWorkingOrder {
 
   StaffWorkingOrder.fromJson(Map<String, dynamic> json) {
     if (json['content'] != null) {
-      _content = <Content>[];
+      _content = <ContentStaffWorkingOrder>[];
       json['content'].forEach((v) {
-        _content!.add(Content.fromJson(v));
+        _content!.add(ContentStaffWorkingOrder.fromJson(v));
       });
     }
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
@@ -60,11 +60,11 @@ class StaffWorkingOrder {
   }
 }
 
-class Content {
+class ContentStaffWorkingOrder {
   String? _date;
   int? _quantityOfOrders;
 
-  Content({String? date, int? quantityOfOrders}) {
+  ContentStaffWorkingOrder({String? date, int? quantityOfOrders}) {
     if (date != null) {
       _date = date;
     }
@@ -79,7 +79,7 @@ class Content {
   set quantityOfOrders(int? quantityOfOrders) =>
       _quantityOfOrders = quantityOfOrders;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentStaffWorkingOrder.fromJson(Map<String, dynamic> json) {
     _date = json['date'];
     _quantityOfOrders = json['quantity_of_orders'];
   }

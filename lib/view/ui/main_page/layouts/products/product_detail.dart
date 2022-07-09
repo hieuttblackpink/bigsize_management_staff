@@ -29,7 +29,7 @@ class _ProductDetail extends State<ProductDetail> {
 
   _ProductDetail(this.userToken, this.productID);
 
-  Future<Content?> getProductDetail(String token, int id) async {
+  Future<ContentProductDetail?> getProductDetail(String token, int id) async {
     return await _productBloc
         .getProductDetail(token, id)
         .then((value) => value.content);
@@ -46,7 +46,7 @@ class _ProductDetail extends State<ProductDetail> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              FutureBuilder<Content?>(
+              FutureBuilder<ContentProductDetail?>(
                   future: getProductDetail(userToken, productID!),
                   builder: (context, detail) {
                     if (detail.hasData) {

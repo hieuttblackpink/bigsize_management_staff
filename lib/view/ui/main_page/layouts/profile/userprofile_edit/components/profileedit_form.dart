@@ -380,7 +380,7 @@ class _EditProfile extends State<EditProfileForm> {
           margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
           child: RaisedButton(
             onPressed: () async {
-              Content content = Content(
+              ContentStaffProfile content = ContentStaffProfile(
                   uid: 1,
                   fullname: nameP.text,
                   phoneNumber: phoneP.text,

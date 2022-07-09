@@ -22,7 +22,7 @@ class OrderDetail extends StatefulWidget {
 class _OrderDetail extends State<OrderDetail> {
   final OrderBloc _orderBloc = OrderBloc();
 
-  Future<OrderDetailBloc>? getOrder(String token, String id) async {
+  Future<OrderDetailModel>? getOrder(String token, String id) async {
     return await _orderBloc.getOrder(token, id);
   }
 
@@ -37,7 +37,7 @@ class _OrderDetail extends State<OrderDetail> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(children: <Widget>[
-          FutureBuilder<OrderDetailBloc?>(
+          FutureBuilder<OrderDetailModel?>(
               future: getOrder(widget.userToken, widget.id),
               builder: (context, order) {
                 if (order.hasData) {
@@ -69,7 +69,7 @@ class _OrderDetail extends State<OrderDetail> {
                         Text("Hình thức thanh toán",
                             style: Theme.of(context).textTheme.headline4),
                         divider(),
-                        //OrderPayment(order: order),
+                        OrderPayment(order: order.data),
                         divider(),
                         ...List.generate(2, (index) => divider()),
                         const SizedBox(height: 20),

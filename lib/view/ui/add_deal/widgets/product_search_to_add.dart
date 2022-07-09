@@ -50,7 +50,8 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
     return search;
   }
 
-  Future<productDetail.Content?> getProductDetail(String token, int id) async {
+  Future<productDetail.ContentProductDetail?> getProductDetail(
+      String token, int id) async {
     return await _productBloc
         .getProductDetail(token, id)
         .then((value) => value.content);
@@ -151,8 +152,8 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                                 productSearch!.content!.isNotEmpty) {
                               return GestureDetector(
                                   onTap: () async {
-                                    productDetail.Content? getProduct =
-                                        await getProductDetail(
+                                    productDetail.ContentProductDetail?
+                                        getProduct = await getProductDetail(
                                             token.data.toString(),
                                             productSearch!
                                                 .content![index].productId!

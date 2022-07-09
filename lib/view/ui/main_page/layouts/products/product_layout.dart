@@ -22,7 +22,7 @@ class _ProductLayout extends State<ProductLayout> {
     return await _storageService.readSecureData("UserToken");
   }
 
-  Future<List<Content>?> getProductList(String token) async {
+  Future<List<ContentProductList>?> getProductList(String token) async {
     return await _productBloc
         .getListProduct(token)
         .then((value) => value.content);
@@ -39,7 +39,7 @@ class _ProductLayout extends State<ProductLayout> {
                 if (token.hasData) {
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: FutureBuilder<List<Content>?>(
+                    child: FutureBuilder<List<ContentProductList>?>(
                         future: getProductList(token.data.toString()),
                         builder: (context, entries) {
                           if (entries.hasData) {
@@ -229,7 +229,8 @@ class _ProductLayout extends State<ProductLayout> {
     );
   }
 
-  Widget listItem(BuildContext context, Content item, String token) =>
+  Widget listItem(
+          BuildContext context, ContentProductList item, String token) =>
       GestureDetector(
           onTap: () => {
                 Navigator.push(

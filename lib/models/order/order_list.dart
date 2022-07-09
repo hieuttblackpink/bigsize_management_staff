@@ -7,7 +7,7 @@ class OrderList {
   int? _totalCount;
   bool? _hasPrevious;
   bool? _hasNext;
-  List<Content>? _content;
+  List<ContentOrderList>? _content;
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
@@ -19,7 +19,7 @@ class OrderList {
       int? totalCount,
       bool? hasPrevious,
       bool? hasNext,
-      List<Content>? content,
+      List<ContentOrderList>? content,
       Null? error,
       bool? isSuccess,
       String? responseTime}) {
@@ -67,8 +67,8 @@ class OrderList {
   set hasPrevious(bool? hasPrevious) => _hasPrevious = hasPrevious;
   bool? get hasNext => _hasNext;
   set hasNext(bool? hasNext) => _hasNext = hasNext;
-  List<Content>? get content => _content;
-  set content(List<Content>? content) => _content = content;
+  List<ContentOrderList>? get content => _content;
+  set content(List<ContentOrderList>? content) => _content = content;
   Null? get error => _error;
   set error(Null? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -84,9 +84,9 @@ class OrderList {
     _hasPrevious = json['has_previous'];
     _hasNext = json['has_next'];
     if (json['content'] != null) {
-      _content = <Content>[];
+      _content = <ContentOrderList>[];
       json['content'].forEach((v) {
-        _content!.add(Content.fromJson(v));
+        _content!.add(ContentOrderList.fromJson(v));
       });
     }
     _error = json['error'];
@@ -112,7 +112,7 @@ class OrderList {
   }
 }
 
-class Content {
+class ContentOrderList {
   int? _orderId;
   String? _customerName;
   int? _totalQuantity;
@@ -121,7 +121,7 @@ class Content {
   String? _orderType;
   String? _status;
 
-  Content(
+  ContentOrderList(
       {int? orderId,
       String? customerName,
       int? totalQuantity,
@@ -168,7 +168,7 @@ class Content {
   String? get status => _status;
   set status(String? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentOrderList.fromJson(Map<String, dynamic> json) {
     _orderId = json['order_id'];
     _customerName = json['customer_name'];
     _totalQuantity = json['total_quantity'];

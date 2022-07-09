@@ -1,6 +1,7 @@
 import 'package:bigsize_management_staff/models/user/user_work.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_formatter/money_formatter.dart';
 
 class LineGraph extends StatelessWidget {
@@ -9,6 +10,7 @@ class LineGraph extends StatelessWidget {
   final List<double> data;
   late final double maxData = max(data).toDouble();
   late final int scale = (maxData ~/ 25) * 5;
+  var date = DateTime.now();
 
   double max(List<double> list) {
     double max = 0;
@@ -22,7 +24,7 @@ class LineGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(scale);
+    //print(scale);
     return Container(
       margin: const EdgeInsets.all(1),
       padding: const EdgeInsets.only(top: 15, bottom: 0, left: 5, right: 0),
@@ -82,8 +84,9 @@ class LineGraph extends StatelessWidget {
                     color: Theme.of(context)
                         .colorScheme
                         .onSurface
-                        .withOpacity(0.5),
+                        .withOpacity(0.9),
                     fontWeight: FontWeight.bold,
+                    fontFamily: "QuicksandMedium",
                     fontSize: 12),
               ),
             ),
@@ -93,16 +96,20 @@ class LineGraph extends StatelessWidget {
             showTitles: true,
             interval: 1,
             reservedSize: 30,
-            getTitlesWidget: (val, _) => Text(
-              "${val + 1}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onBackground
-                      .withOpacity(0.5),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12),
+            getTitlesWidget: (val, _) => Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Text(
+                DateFormat("dd/MM").format(
+                    DateTime(date.year, date.month, date.day - val.toInt())),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withOpacity(0.9),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12),
+              ),
             ),
           )),
         ),

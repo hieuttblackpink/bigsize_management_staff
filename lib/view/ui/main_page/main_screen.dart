@@ -16,7 +16,7 @@ import '../../resources/routes_manger.dart';
 const List<String> appBarTitles = [
   "Trang chủ",
   "Đơn đặt hàng",
-  "Don hang online",
+  "Đơn hàng online",
   "Sản phẩm",
   "Tài khoản"
 ];

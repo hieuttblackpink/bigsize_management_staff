@@ -7,7 +7,7 @@ class ProductSearch {
   int? _totalCount;
   bool? _hasPrevious;
   bool? _hasNext;
-  List<Content>? _content;
+  List<ContentProductSearch>? _content;
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
@@ -19,7 +19,7 @@ class ProductSearch {
       int? totalCount,
       bool? hasPrevious,
       bool? hasNext,
-      List<Content>? content,
+      List<ContentProductSearch>? content,
       Null? error,
       bool? isSuccess,
       String? responseTime}) {
@@ -67,8 +67,8 @@ class ProductSearch {
   set hasPrevious(bool? hasPrevious) => _hasPrevious = hasPrevious;
   bool? get hasNext => _hasNext;
   set hasNext(bool? hasNext) => _hasNext = hasNext;
-  List<Content>? get content => _content;
-  set content(List<Content>? content) => _content = content;
+  List<ContentProductSearch>? get content => _content;
+  set content(List<ContentProductSearch>? content) => _content = content;
   Null? get error => _error;
   set error(Null? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -84,9 +84,9 @@ class ProductSearch {
     _hasPrevious = json['has_previous'];
     _hasNext = json['has_next'];
     if (json['content'] != null) {
-      _content = <Content>[];
+      _content = <ContentProductSearch>[];
       json['content'].forEach((v) {
-        _content!.add(Content.fromJson(v));
+        _content!.add(ContentProductSearch.fromJson(v));
       });
     }
     _error = json['error'];
@@ -112,7 +112,7 @@ class ProductSearch {
   }
 }
 
-class Content {
+class ContentProductSearch {
   int? _productId;
   String? _productName;
   double? _price;
@@ -121,7 +121,7 @@ class Content {
   String? _imageUrl;
   bool? _status;
 
-  Content(
+  ContentProductSearch(
       {int? productId,
       String? productName,
       double? price,
@@ -169,7 +169,7 @@ class Content {
   bool? get status => _status;
   set status(bool? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentProductSearch.fromJson(Map<String, dynamic> json) {
     _productId = json['product_id'];
     _productName = json['product_name'];
     _price = json['price'];

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 class OrderAssignStatus extends StatelessWidget {
-  final Content orderContent;
+  final ContentOrderDetail orderContent;
   const OrderAssignStatus({Key? key, required this.orderContent})
       : super(key: key);
 

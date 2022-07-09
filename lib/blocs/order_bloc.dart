@@ -38,7 +38,7 @@ class OrderBloc {
     }
   }
 
-  Future<OrderDetailBloc> getOrder(String token, String id) async {
+  Future<OrderDetailModel> getOrder(String token, String id) async {
     final response = await http.get(
       Uri.parse(_baseUrl + "orders/detail/$id"),
       headers: <String, String>{
@@ -46,7 +46,7 @@ class OrderBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return OrderDetailBloc.fromJson(jsonDecode(response.body));
+    return OrderDetailModel.fromJson(jsonDecode(response.body));
   }
 
   Future<NewOrderReturn> createOrder(String token, NewOrder newOrder) async {

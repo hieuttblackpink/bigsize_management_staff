@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_void_to_null, unnecessary_question_mark, dead_code, unnecessary_getters_setters
 
 class StaffLogin {
-  Content? _content;
+  ContentStaffLogin? _content;
   Error? _error;
   bool? _isSuccess;
   String? _responseTime;
 
   StaffLogin(
-      {Content? content, Error? error, bool? isSuccess, String? responseTime}) {
+      {ContentStaffLogin? content,
+      Error? error,
+      bool? isSuccess,
+      String? responseTime}) {
     if (content != null) {
       _content = content;
     }
@@ -22,8 +25,8 @@ class StaffLogin {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentStaffLogin? get content => _content;
+  set content(ContentStaffLogin? content) => _content = content;
   Error? get error => _error;
   set error(Error? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -32,8 +35,9 @@ class StaffLogin {
   set responseTime(String? responseTime) => _responseTime = responseTime;
 
   StaffLogin.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+    _content = json['content'] != null
+        ? ContentStaffLogin.fromJson(json['content'])
+        : null;
     _error = json['error'] != null ? Error.fromJson(json['error']) : null;
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -53,11 +57,11 @@ class StaffLogin {
   }
 }
 
-class Content {
+class ContentStaffLogin {
   late String _token;
   late String _role;
 
-  Content({String? token, String? role}) {
+  ContentStaffLogin({String? token, String? role}) {
     if (token != null) {
       _token = token;
     }
@@ -71,7 +75,7 @@ class Content {
   String get role => _role;
   set role(String role) => _role = role;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentStaffLogin.fromJson(Map<String, dynamic> json) {
     _token = json['token'];
     _role = json['role'];
   }

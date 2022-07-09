@@ -26,7 +26,7 @@ class OrderAssignDetail extends StatefulWidget {
 class _OrderAssignDetail extends State<OrderAssignDetail> {
   final OrderBloc _orderBloc = OrderBloc();
 
-  Future<OrderDetailBloc>? getOrder(String token, String id) async {
+  Future<OrderDetailModel>? getOrder(String token, String id) async {
     return await _orderBloc.getOrder(token, id);
   }
 
@@ -49,7 +49,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(children: <Widget>[
-          FutureBuilder<OrderDetailBloc?>(
+          FutureBuilder<OrderDetailModel?>(
               future: getOrder(widget.userToken, widget.id),
               builder: (context, order) {
                 if (order.hasData) {
@@ -138,7 +138,8 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                         await updateToPackage(widget.userToken,
                                             int.parse(widget.id));
                                     if (isPackaged.isSuccess!) {
-                                      Navigator.pushReplacement(
+                                      Navigator.pop(context);
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => OrderAssignDetail(
@@ -157,7 +158,8 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                         await updateToExported(widget.userToken,
                                             int.parse(widget.id));
                                     if (isPackaged.isSuccess!) {
-                                      Navigator.pushReplacement(
+                                      Navigator.pop(context);
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (_) => OrderAssignDetail(

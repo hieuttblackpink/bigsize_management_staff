@@ -7,7 +7,7 @@ class ProductList {
   int? _totalCount;
   bool? _hasPrevious;
   bool? _hasNext;
-  List<Content>? _content;
+  List<ContentProductList>? _content;
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
@@ -19,7 +19,7 @@ class ProductList {
       int? totalCount,
       bool? hasPrevious,
       bool? hasNext,
-      List<Content>? content,
+      List<ContentProductList>? content,
       Null? error,
       bool? isSuccess,
       String? responseTime}) {
@@ -67,8 +67,8 @@ class ProductList {
   set hasPrevious(bool? hasPrevious) => _hasPrevious = hasPrevious;
   bool? get hasNext => _hasNext;
   set hasNext(bool? hasNext) => _hasNext = hasNext;
-  List<Content>? get content => _content;
-  set content(List<Content>? content) => _content = content;
+  List<ContentProductList>? get content => _content;
+  set content(List<ContentProductList>? content) => _content = content;
   Null? get error => _error;
   set error(Null? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -84,9 +84,9 @@ class ProductList {
     _hasPrevious = json['has_previous'];
     _hasNext = json['has_next'];
     if (json['content'] != null) {
-      _content = <Content>[];
+      _content = <ContentProductList>[];
       json['content'].forEach((v) {
-        _content!.add(Content.fromJson(v));
+        _content!.add(ContentProductList.fromJson(v));
       });
     }
     _error = json['error'];
@@ -112,7 +112,7 @@ class ProductList {
   }
 }
 
-class Content {
+class ContentProductList {
   int? _productId;
   String? _productName;
   int? _quantity;
@@ -122,7 +122,7 @@ class Content {
   String? _imageUrl;
   bool? _status;
 
-  Content(
+  ContentProductList(
       {int? productId,
       String? productName,
       int? quantity,
@@ -176,7 +176,7 @@ class Content {
   bool? get status => _status;
   set status(bool? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentProductList.fromJson(Map<String, dynamic> json) {
     _productId = json['product_id'];
     _productName = json['product_name'];
     _quantity = json['quantity'];

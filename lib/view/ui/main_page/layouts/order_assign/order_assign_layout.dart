@@ -246,8 +246,16 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                     orderAssignList!.content!.isEmpty
                                 ? Container(
                                     alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(top: 20),
                                     child: const Text(
-                                        "Ban khong co don hang online vao ngay nay"),
+                                      "Tuyệt vời!\nBạn đã xử lí toàn bộ đơn hàng online",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: "QuicksandMedium",
+                                          fontStyle: FontStyle.italic,
+                                          color: Colors.blue,
+                                          fontSize: 15),
+                                    ),
                                   )
                                 : loadListOrder(context)
                       ],
@@ -390,8 +398,8 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
         ],
       );
 
-  Widget listItem(
-          BuildContext context, Content item, int index, String token) =>
+  Widget listItem(BuildContext context, ContentOrderList item, int index,
+          String token) =>
       Container(
           //height: 70,
           color: Colors.white,

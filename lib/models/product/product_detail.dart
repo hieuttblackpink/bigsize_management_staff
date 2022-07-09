@@ -1,14 +1,14 @@
 // ignore_for_file: unnecessary_question_mark, prefer_void_to_null, dead_code, unnecessary_getters_setters
 
 class ProductDetail {
-  Content? _content;
+  ContentProductDetail? _content;
   Null? _error;
   bool? _isSuccess;
   String? _responseTime;
   int? _quantityInNewOrder;
 
   ProductDetail(
-      {Content? content,
+      {ContentProductDetail? content,
       Null? error,
       bool? isSuccess,
       String? responseTime,
@@ -30,8 +30,8 @@ class ProductDetail {
     }
   }
 
-  Content? get content => _content;
-  set content(Content? content) => _content = content;
+  ContentProductDetail? get content => _content;
+  set content(ContentProductDetail? content) => _content = content;
   Null? get error => _error;
   set error(Null? error) => _error = error;
   bool? get isSuccess => _isSuccess;
@@ -43,8 +43,9 @@ class ProductDetail {
       _quantityInNewOrder = quantityInNewOrder;
 
   ProductDetail.fromJson(Map<String, dynamic> json) {
-    _content =
-        json['content'] != null ? Content.fromJson(json['content']) : null;
+    _content = json['content'] != null
+        ? ContentProductDetail.fromJson(json['content'])
+        : null;
     _error = json['error'];
     _isSuccess = json['is_success'];
     _responseTime = json['response_time'];
@@ -62,7 +63,7 @@ class ProductDetail {
   }
 }
 
-class Content {
+class ContentProductDetail {
   int? _productId;
   int? _productDetailId;
   String? _productName;
@@ -77,7 +78,7 @@ class Content {
   String? _description;
   bool? _status;
 
-  Content(
+  ContentProductDetail(
       {int? productId,
       int? productDetailId,
       String? productName,
@@ -163,7 +164,7 @@ class Content {
   bool? get status => _status;
   set status(bool? status) => _status = status;
 
-  Content.fromJson(Map<String, dynamic> json) {
+  ContentProductDetail.fromJson(Map<String, dynamic> json) {
     _productId = json['product_id'];
     _productDetailId = json['product_detail_id'];
     _productName = json['product_name'];

@@ -3,7 +3,7 @@ import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class OrderAssignInfo extends StatelessWidget {
-  final Content orderInfo;
+  final ContentOrderDetail orderInfo;
   const OrderAssignInfo({Key? key, required this.orderInfo}) : super(key: key);
 
   @override
