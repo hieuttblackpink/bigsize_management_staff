@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
 import 'package:bigsize_management_staff/models/order/order_list.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
+import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/order_assign/components/order_assign_detail_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -36,12 +37,6 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
   Future<OrderList?> getListOrderAssign(String token, String date) async {
     //print(date);
     OrderList? result = await _orderBloc.getListOrderAssign(token);
-    if (mounted) {
-      setState(() {
-        orderAssignList = result;
-        isChange = false;
-      });
-    }
     //return await _orderBloc.getListOrder(token, date);
     return result;
   }
@@ -72,7 +67,16 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                 future: getToken(),
                 builder: (context, token) {
                   if (token.hasData) {
-                    getListOrderAssign(token.data.toString(), orderAssignDate);
+                    if (isChange) {
+                      getListOrderAssign(token.data.toString(), orderAssignDate)
+                          .then((value) {
+                        setState(() {
+                          orderAssignList = value;
+                          isChange = false;
+                        });
+                      });
+                    }
+
                     //updateMyUI();
                     return Column(
                       children: <Widget>[
@@ -402,7 +406,11 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
           String token) =>
       Container(
           //height: 70,
-          color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: StyleManager.shadow,
+          ),
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,8 +456,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                             userToken: token,
                           )))
             },
-            subtitle:
-                Text("${item.totalQuantity} sản phẩm"), //ngay tao + so san pham
+            subtitle: Text(
+              "${item.totalQuantity} sản phẩm",
+              style: const TextStyle(fontFamily: "QuicksandMedium"),
+            ), //ngay tao + so san pham
             trailing: FittedBox(
               fit: BoxFit.fill,
               child: Tooltip(
@@ -461,7 +471,8 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                   children: <Widget>[
                     Text(
                       "${item.totalPriceAfterDiscount} VND",
-                      style: const TextStyle(fontSize: 17),
+                      style: const TextStyle(
+                          fontSize: 17, fontFamily: "QuicksandMedium"),
                     ),
                     const SizedBox(
                       height: 7,
@@ -476,6 +487,9 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                           color: item.status.toString() == "Đã nhận hàng"
                               ? Colors.green
                               : Colors.red,
+                        ),
+                        const SizedBox(
+                          width: 5,
                         ),
                         Text(item.status.toString(),
                             style: Theme.of(context)

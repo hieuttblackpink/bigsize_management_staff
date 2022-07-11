@@ -38,6 +38,11 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
   int colorIndex = 0;
   int sizeIndex = 0;
 
+  bool isSearching = false;
+  bool isGettingColour = false;
+  bool isGettingSize = false;
+  bool isGettingQuantity = false;
+
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }

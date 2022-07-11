@@ -12,6 +12,7 @@ class OrderStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxHeight: 100),
+      alignment: Alignment.center,
       width: double.infinity,
       //color: const Color.fromARGB(255, 224, 244, 253),
       child: ListView(

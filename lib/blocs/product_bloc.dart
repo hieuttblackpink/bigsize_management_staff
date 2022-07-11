@@ -15,7 +15,7 @@ class ProductBloc {
   Future<ProductList> getListProduct(String token) async {
     final response = await http.get(
       Uri.parse(_baseUrl +
-          "products?PageNumber=1&PageSize=10"), //products/store?PageNumber=1&PageSize=10
+          "products?PageNumber=1&PageSize=10&Status=true"), //products/store?PageNumber=1&PageSize=10
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
         //'Authorization': "Bearer $token",
@@ -37,7 +37,7 @@ class ProductBloc {
 
   Future<ProductSearch> searchProductByName(String searchKey) async {
     final response = await http.get(
-      Uri.parse(_baseUrl + "products?ProductName=$searchKey"),
+      Uri.parse(_baseUrl + "products?ProductName=$searchKey&Status=true"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
         //'Authorization': "Bearer $token",

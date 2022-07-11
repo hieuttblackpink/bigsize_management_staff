@@ -1,4 +1,5 @@
 import 'package:bigsize_management_staff/models/user/user_work.dart';
+import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +31,7 @@ class LineGraph extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15, bottom: 0, left: 5, right: 0),
       //height: 200,
       decoration: BoxDecoration(
+          boxShadow: StyleManager.shadow,
           color: Theme.of(context).colorScheme.onSecondary,
           borderRadius: const BorderRadius.all(Radius.circular(20))),
       child: AspectRatio(
@@ -99,8 +101,8 @@ class LineGraph extends StatelessWidget {
             getTitlesWidget: (val, _) => Container(
               margin: const EdgeInsets.only(top: 10),
               child: Text(
-                DateFormat("dd/MM").format(
-                    DateTime(date.year, date.month, date.day - val.toInt())),
+                DateFormat("dd/MM").format(DateTime(
+                    date.year, date.month, date.day - (6 - val.toInt()))),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Theme.of(context)

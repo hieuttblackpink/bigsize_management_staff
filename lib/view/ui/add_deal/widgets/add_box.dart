@@ -35,6 +35,7 @@ class addBox extends State<AddBox> {
   List<ProductDetailSpecific>? listOrderProduct = [];
 
   bool isHaveProduct = false;
+  bool isSearching = false;
 
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
@@ -44,9 +45,13 @@ class addBox extends State<AddBox> {
       String searchKey) async {
     productSearch.ProductSearch search =
         await _productBloc.searchProductByName(searchKey);
-    setState(() {
-      searchProductList = search;
-    });
+    if (mounted && isSearching) {
+      setState(() {
+        searchProductList = search;
+        isSearching = false;
+      });
+    }
+
     return search;
   }
 
@@ -126,6 +131,7 @@ class addBox extends State<AddBox> {
   @override
   void initState() {
     super.initState();
+    isSearching = true;
     searchProductByName(_searchText);
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
 import 'package:bigsize_management_staff/models/order/order_list.dart';
+import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:flutter/material.dart';
@@ -44,13 +45,6 @@ class _OrderLayout extends State<OrderLayout> {
   Future<OrderList?> getListOrder(String token, String date) async {
     //print(date);
     OrderList? result = await _orderBloc.getListOrder(token, date);
-    if (mounted) {
-      setState(() {
-        orderList = result;
-        isChange = false;
-      });
-    }
-    //return await _orderBloc.getListOrder(token, date);
     return result;
   }
 
@@ -80,7 +74,17 @@ class _OrderLayout extends State<OrderLayout> {
                 future: getToken(),
                 builder: (context, token) {
                   if (token.hasData) {
-                    getListOrder(token.data.toString(), orderDate);
+                    if (isChange) {
+                      getListOrder(token.data.toString(), orderDate)
+                          .then((value) {
+                        orderList = value;
+                        isChange = false;
+                        if (mounted) {
+                          setState(() {});
+                        }
+                      });
+                    }
+
                     //updateMyUI();
                     return Column(
                       children: <Widget>[
@@ -174,8 +178,18 @@ class _OrderLayout extends State<OrderLayout> {
                                   dateController.text = bd;
                                   orderDate = dateController.text;
                                   isChange = true;
-                                  getListOrder(token.data.toString(),
-                                      dateController.text.toString());
+
+                                  if (isChange) {
+                                    getListOrder(token.data.toString(),
+                                            dateController.text.toString())
+                                        .then((value) {
+                                      orderList = value;
+                                      isChange = false;
+                                      if (mounted) {
+                                        setState(() {});
+                                      }
+                                    });
+                                  }
                                 },
                                 currentTime: DateTime.now(),
                                 locale: LocaleType.vi,
@@ -403,7 +417,11 @@ class _OrderLayout extends State<OrderLayout> {
           String token) =>
       Container(
           //height: 70,
-          color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: StyleManager.shadow,
+          ),
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -449,8 +467,10 @@ class _OrderLayout extends State<OrderLayout> {
                             userToken: token,
                           )))
             },
-            subtitle:
-                Text("${item.totalQuantity} sản phẩm"), //ngay tao + so san pham
+            subtitle: Text(
+              "${item.totalQuantity} sản phẩm",
+              style: const TextStyle(fontFamily: "QuicksandMedium"),
+            ), //ngay tao + so san pham
             trailing: FittedBox(
               fit: BoxFit.fill,
               child: Tooltip(
@@ -462,7 +482,8 @@ class _OrderLayout extends State<OrderLayout> {
                   children: <Widget>[
                     Text(
                       "${item.totalPriceAfterDiscount} VND",
-                      style: const TextStyle(fontSize: 17),
+                      style: const TextStyle(
+                          fontSize: 17, fontFamily: "QuicksandMedium"),
                     ),
                     const SizedBox(
                       height: 7,
@@ -477,6 +498,9 @@ class _OrderLayout extends State<OrderLayout> {
                           color: item.status.toString() == "Đã nhận hàng"
                               ? Colors.green
                               : Colors.red,
+                        ),
+                        const SizedBox(
+                          width: 5,
                         ),
                         Text(item.status.toString(),
                             style: Theme.of(context)

@@ -6,7 +6,10 @@ import 'package:bigsize_management_staff/view_model/app_provider.dart';
 import '../../../../../resources/routes_manger.dart';
 
 class MoneyCard extends StatelessWidget {
-  const MoneyCard({Key? key}) : super(key: key);
+  final double revenue;
+  final int orders;
+  const MoneyCard({Key? key, required this.revenue, required this.orders})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class MoneyCard extends StatelessWidget {
       child: Column(
         children: [
           upperBox(context),
-          lowerBox(context),
+          //lowerBox(context),
         ],
       ),
     );
@@ -43,20 +46,14 @@ class MoneyCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 divider(),
-                Selector<AppProvider, int>(
-                  selector: (_, val) => val.moneyInBox,
-                  builder: (context, val, _) => Text(
-                    val == -1 ? '1000000' : "$val",
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
+                Text(
+                  revenue.toString(),
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 divider(),
-                Selector<AppProvider, int>(
-                  selector: (_, val) => val.revenue,
-                  builder: (context, val, _) => Text(
-                    "VND",
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
+                Text(
+                  "VND",
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],
             ),
@@ -66,12 +63,9 @@ class MoneyCard extends StatelessWidget {
                 Text("Tổng đơn hàng",
                     style: Theme.of(context).textTheme.subtitle1),
                 divider(),
-                Selector<AppProvider, int>(
-                  selector: (_, val) => val.orders,
-                  builder: (context, val, _) => Text(
-                    val == -1 ? '100' : val.toString(),
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
+                Text(
+                  orders.toString(),
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ],
             ),

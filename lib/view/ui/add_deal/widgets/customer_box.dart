@@ -1,5 +1,6 @@
 import 'package:bigsize_management_staff/blocs/order_bloc.dart';
 import 'package:bigsize_management_staff/models/customer/customer.dart';
+import 'package:bigsize_management_staff/resources/form_error.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/add_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
@@ -35,6 +36,40 @@ class _CustomerBox extends State<CustomerBox> {
     return await _orderBloc.getCustomer(cusPhone);
   }
 
+  bool _phoneNumberValidator(String value) {
+    Pattern pattern = r'/^(?:[+0]9)?[0-9]{10}$/';
+    RegExp regex = RegExp(pattern.toString());
+    if (!regex.hasMatch(value)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  final List<String?> errors = [];
+
+  void addError({String? error}) {
+    if (!errors.contains(error)) {
+      setState(() {
+        errors.add(error);
+      });
+    }
+  }
+
+  void removeError({String? error}) {
+    if (errors.contains(error)) {
+      setState(() {
+        errors.remove(error);
+      });
+    }
+  }
+
+  void removeAllError() {
+    setState(() {
+      errors.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -63,10 +98,19 @@ class _CustomerBox extends State<CustomerBox> {
                       title: 'SĐT',
                       keyboardType: TextInputType.phone,
                       maxLenght: 10,
+                      onTap: () => {removeAllError()},
                       onChange: (value) {
                         //phoneCus.text = value;
                       },
                       onFieldSubmitted: (value) async {
+                        if (!_phoneNumberValidator(phoneCus.text.toString())) {
+                          addError(error: "Đây không phải là số điện thoại");
+                          setState(() {
+                            isHaveCusPhone = false;
+                          });
+                          return;
+                        }
+                        removeAllError();
                         customer = await _orderBloc
                             .getCustomer(phoneCus.text.toString());
                         if (customer!.isSuccess!) {
@@ -98,6 +142,8 @@ class _CustomerBox extends State<CustomerBox> {
                     ),
                   ),
                   const SizedBox(height: 10),
+                  FormError(errors: errors),
+                  const SizedBox(height: 10),
                 ],
               ))
           : Container(
@@ -122,10 +168,19 @@ class _CustomerBox extends State<CustomerBox> {
                       title: 'SĐT',
                       keyboardType: TextInputType.phone,
                       maxLenght: 10,
+                      onTap: () => {removeAllError()},
                       onChange: (value) {
                         //phoneCus.text = value;
                       },
                       onFieldSubmitted: (value) async {
+                        if (!_phoneNumberValidator(phoneCus.text.toString())) {
+                          addError(error: "Đây không phải là số điện thoại");
+                          setState(() {
+                            isHaveCusPhone = false;
+                          });
+                          return;
+                        }
+                        removeAllError();
                         customer = await _orderBloc
                             .getCustomer(phoneCus.text.toString());
                         if (customer!.isSuccess!) {

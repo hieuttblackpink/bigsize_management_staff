@@ -47,10 +47,21 @@ class _OrderDetail extends State<OrderDetail> {
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       children: [
-                        Text(
-                            "Ngày đặt hàng: " +
-                                order.data!.content!.createDate.toString(),
-                            style: Theme.of(context).textTheme.headline4),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  style: BorderStyle.solid,
+                                  color: Colors.black,
+                                  width: 0.5)),
+                          height: 50,
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(
+                              "Ngày đặt hàng: " +
+                                  order.data!.content!.createDate.toString(),
+                              style: Theme.of(context).textTheme.headline4),
+                        ),
                         const SizedBox(height: 10),
                         OrderStatus(
                           orderContent: order.data!.content!,
@@ -65,14 +76,14 @@ class _OrderDetail extends State<OrderDetail> {
                         ),
                         divider(),
                         ...List.generate(2, (index) => divider()),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         Text("Hình thức thanh toán",
                             style: Theme.of(context).textTheme.headline4),
                         divider(),
                         OrderPayment(order: order.data),
                         divider(),
                         ...List.generate(2, (index) => divider()),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 15),
                         Text("Danh sách sản phẩm",
                             style: Theme.of(context).textTheme.headline4),
                         divider(),
@@ -124,7 +135,11 @@ class _OrderDetail extends State<OrderDetail> {
                   );
                 }
 
-                return const CircularProgressIndicator();
+                return Container(
+                  child: const Align(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator()),
+                );
               })
         ]),
       ),
@@ -203,7 +218,7 @@ class _OrderDetail extends State<OrderDetail> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 180,
+                  //width: 180,
                   //color: Colors.white,
                   child: const Text(
                     "Đơn giá",
@@ -214,9 +229,10 @@ class _OrderDetail extends State<OrderDetail> {
                     ),
                   ),
                 ),
+                const Spacer(),
                 Container(
                   alignment: Alignment.centerRight,
-                  width: 170,
+                  //width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
                     totalPrice,
@@ -235,7 +251,7 @@ class _OrderDetail extends State<OrderDetail> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 180,
+                  //width: 180,
                   //color: Colors.white,
                   child: const Text(
                     "Giảm giá",
@@ -246,9 +262,10 @@ class _OrderDetail extends State<OrderDetail> {
                     ),
                   ),
                 ),
+                const Spacer(),
                 Container(
                   alignment: Alignment.centerRight,
-                  width: 170,
+                  //width: 170,
                   //color: Colors.pinkAccent,
                   child: const Text(
                     "0",
@@ -267,7 +284,7 @@ class _OrderDetail extends State<OrderDetail> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  width: 180,
+                  //width: 180,
                   //color: Colors.white,
                   child: const Text(
                     "Khách hàng phải trả",
@@ -278,9 +295,10 @@ class _OrderDetail extends State<OrderDetail> {
                     ),
                   ),
                 ),
+                const Spacer(),
                 Container(
                   alignment: Alignment.centerRight,
-                  width: 170,
+                  //width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
                     pricePromotion,

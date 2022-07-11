@@ -37,6 +37,9 @@ class _HomeLayout extends State<HomeLayout> {
   List<double> revenue7Days = [];
   List<double> order7Days = [];
 
+  double revenueToday = 0;
+  int ordersToday = 0;
+
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }
@@ -51,11 +54,13 @@ class _HomeLayout extends State<HomeLayout> {
 
   Future<StaffWorking?> getStaffWork(String token) async {
     StaffWorking result = await _staffBloc.getStaffWork(token);
+    revenueToday = result.content!.first.value!.toDouble();
     return result;
   }
 
   Future<StaffWorkingOrder?> getStaffWorkOrder(String token) async {
     StaffWorkingOrder result = await _staffBloc.getStaffWorkOrder(token);
+    ordersToday = result.content!.first.quantityOfOrders!.toInt();
     return result;
   }
 
@@ -301,7 +306,38 @@ class _HomeLayout extends State<HomeLayout> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  const MoneyCard(),
+                                  FutureBuilder(
+                                      future: Future.wait(
+                                          [_staffWorking, _staffWorkingOrder]),
+                                      builder: (context,
+                                          AsyncSnapshot<List<dynamic>>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          StaffWorking sW = snapshot.data![0];
+                                          StaffWorkingOrder sWO =
+                                              snapshot.data![1];
+                                          return MoneyCard(
+                                              revenue: sW.content!.first.value!
+                                                  .toDouble(),
+                                              orders: sWO.content!.first
+                                                  .quantityOfOrders!
+                                                  .toInt());
+                                        }
+
+                                        return Shimmer.fromColors(
+                                          child: Container(
+                                            height: 120,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          baseColor: const Color.fromARGB(
+                                              255, 230, 230, 230),
+                                          highlightColor: Colors.white,
+                                        );
+                                      }),
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -323,11 +359,25 @@ class _HomeLayout extends State<HomeLayout> {
                                                   revenue.value!.toDouble());
                                             }
                                           }
-                                          print(revenue7Days);
+                                          revenue7Days =
+                                              revenue7Days.reversed.toList();
+                                          //print(revenue7Days);
                                           return LineGraph(revenue7Days);
                                         }
 
-                                        return Container();
+                                        return Shimmer.fromColors(
+                                          child: Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          baseColor: const Color.fromARGB(
+                                              255, 230, 230, 230),
+                                          highlightColor: Colors.white,
+                                        );
                                       }),
                                   /*
                                   revenue7Days.isNotEmpty &&
@@ -356,11 +406,25 @@ class _HomeLayout extends State<HomeLayout> {
                                                   .toDouble());
                                             }
                                           }
-                                          print(order7Days);
+                                          order7Days =
+                                              order7Days.reversed.toList();
+                                          //print(order7Days);
                                           return LineGraph(order7Days);
                                         }
 
-                                        return Container();
+                                        return Shimmer.fromColors(
+                                          child: Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          baseColor: const Color.fromARGB(
+                                              255, 230, 230, 230),
+                                          highlightColor: Colors.white,
+                                        );
                                       }),
                                   /*
                                   order7Days.isNotEmpty

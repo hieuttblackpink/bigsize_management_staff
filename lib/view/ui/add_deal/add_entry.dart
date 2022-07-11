@@ -8,6 +8,7 @@ import 'package:bigsize_management_staff/models/order/new_order.dart';
 import 'package:bigsize_management_staff/models/order/order_return.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/widgets/customer_box.dart';
+import 'package:bigsize_management_staff/view/ui/add_deal/widgets/payment_method.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ class AddOrderView extends State<AddDealView> {
   List<ProductInNewOrder> listProduct = [];
 
   bool isCreating = false;
+  bool isHavePayment = false;
 
   void onCusPhoneChange(String phone, bool isNewCusChange) {
     setState(() {
@@ -77,6 +79,7 @@ class AddOrderView extends State<AddDealView> {
   void onPaymentChange(String pay) {
     setState(() {
       payment = pay;
+      isHavePayment = true;
     });
   }
 
@@ -260,7 +263,7 @@ class AddOrderView extends State<AddDealView> {
                                   if (newCus.isSuccess!) {
                                     NewOrder newOrder = NewOrder(
                                         customerPhoneNumber: cusPhone,
-                                        paymentMethod: "Cash",
+                                        paymentMethod: payment,
                                         listProduct: listProduct);
                                     NewOrderReturn orderReturn =
                                         await createOrder(
@@ -299,7 +302,7 @@ class AddOrderView extends State<AddDealView> {
                                 } else {
                                   NewOrder newOrder = NewOrder(
                                       customerPhoneNumber: cusPhone,
-                                      paymentMethod: "Cash",
+                                      paymentMethod: payment,
                                       listProduct: listProduct);
                                   NewOrderReturn orderReturn =
                                       await createOrder(
@@ -401,10 +404,21 @@ class AddOrderView extends State<AddDealView> {
                           borderRadius: StyleManager.border),
                       height: 45,
                       child: GestureDetector(
-                        onTap: () => {},
-                        child: const Text(
-                          "Chọn phương thức thanh toán",
-                          style: TextStyle(
+                        onTap: () async {
+                          String? paymentMethod = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const PaymentMethodLayout()));
+                          if (paymentMethod != null &&
+                              paymentMethod.isNotEmpty) {
+                            onPaymentChange(paymentMethod);
+                          }
+                        },
+                        child: Text(
+                          !isHavePayment
+                              ? "Chọn phương thức thanh toán"
+                              : payment,
+                          style: const TextStyle(
                             fontFamily: "QuicksandMedium",
                             fontSize: 20,
                             color: Colors.lightBlue,
