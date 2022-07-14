@@ -86,10 +86,10 @@ class AppInfo extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: 20),
-                    width: 180,
+                    //width: 180,
                     //color: Colors.white,
                     child: const Text(
-                      "PHIÊN BẢN ỨNG DỤNG",
+                      "PHIÊN BẢN",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandMedium",
@@ -97,12 +97,13 @@ class AppInfo extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const Spacer(),
                   Container(
                     alignment: Alignment.centerRight,
-                    width: 170,
+                    //width: 170,
                     //color: Colors.pinkAccent,
                     child: const Text(
-                      "6.0.9",
+                      "8.2.7",
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: "QuickSandBold",
@@ -123,7 +124,7 @@ class AppInfo extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: 20),
-                    width: 180,
+                    //width: 180,
                     //color: Colors.white,
                     child: const Text(
                       "HỆ ĐIỀU HÀNH",
@@ -134,9 +135,10 @@ class AppInfo extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const Spacer(),
                   Container(
                     alignment: Alignment.centerRight,
-                    width: 170,
+                    //width: 170,
                     //color: Colors.pinkAccent,
                     child: Text(
                       info2['osVer'].toString(),
@@ -160,7 +162,7 @@ class AppInfo extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(left: 20),
-                    width: 180,
+                    //width: 180,
                     //color: Colors.white,
                     child: const Text(
                       "THIẾT BỊ",
@@ -171,9 +173,10 @@ class AppInfo extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const Spacer(),
                   Container(
                     alignment: Alignment.centerRight,
-                    width: 170,
+                    //width: 170,
                     //color: Colors.pinkAccent,
                     child: Text(
                       info2['manuInfo'].toString().toUpperCase() +

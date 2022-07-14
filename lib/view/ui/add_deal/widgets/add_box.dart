@@ -11,6 +11,7 @@ import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/add_entry.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/widgets/product_search_to_add.dart';
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 import '../../../resources/styles_manager.dart';
 
@@ -253,7 +254,16 @@ class addBox extends State<AddBox> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("${item.content!.price} VND"),
+                Text(
+                  MoneyFormatter(amount: item.content!.price!.toDouble())
+                          .output
+                          .nonSymbol
+                          .toString() +
+                      " VND",
+                  style: const TextStyle(
+                    fontFamily: "QuicksandMedium",
+                  ),
+                ),
                 Row(
                   children: <Widget>[
                     IconButton(

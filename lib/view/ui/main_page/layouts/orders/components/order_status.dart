@@ -71,11 +71,15 @@ class OrderStatus extends StatelessWidget {
               height: 30,
               color: orderContent.approvalDate != null
                   ? Colors.blue
-                  : Colors.orange,
+                  : orderContent.rejectedDate != null
+                      ? Colors.red
+                      : Colors.orange,
               iconStyle: IconStyle(
                   iconData: orderContent.approvalDate != null
                       ? Icons.check
-                      : Icons.info_outlined,
+                      : orderContent.rejectedDate != null
+                          ? Icons.cancel
+                          : Icons.info_outlined,
                   color: Colors.white),
             ),
             beforeLineStyle: LineStyle(
@@ -107,7 +111,9 @@ class OrderStatus extends StatelessWidget {
                     ? orderContent.approvalDate!.substring(0, 5) +
                         "\n" +
                         orderContent.approvalDate!.substring(6, 10)
-                    : "",
+                    : orderContent.rejectedDate != null
+                        ? "Đã từ chối"
+                        : "",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.black,

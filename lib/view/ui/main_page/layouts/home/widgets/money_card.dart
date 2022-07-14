@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/view_model/app_provider.dart';
@@ -47,7 +48,7 @@ class MoneyCard extends StatelessWidget {
                 ),
                 divider(),
                 Text(
-                  revenue.toString(),
+                  MoneyFormatter(amount: revenue).output.nonSymbol.toString(),
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 divider(),

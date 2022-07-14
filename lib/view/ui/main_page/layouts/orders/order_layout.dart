@@ -8,6 +8,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/compon
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OrderLayout extends StatefulWidget {
@@ -257,6 +258,9 @@ class _OrderLayout extends State<OrderLayout> {
                                       )
                                     ],
                                   ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
                                 ],
                               )
                             : orderList != null && orderList!.content!.isEmpty
@@ -332,9 +336,12 @@ class _OrderLayout extends State<OrderLayout> {
                             baseColor: const Color.fromARGB(255, 225, 225, 225),
                             highlightColor: Colors.white,
                             child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
                               height: 30,
                               width: 70,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(
@@ -346,7 +353,10 @@ class _OrderLayout extends State<OrderLayout> {
                             child: Container(
                               height: 30,
                               width: 150,
-                              color: Colors.white,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -362,7 +372,10 @@ class _OrderLayout extends State<OrderLayout> {
                         child: Container(
                           height: 20,
                           width: 50,
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
                         ),
                       ), //ngay tao + so san pham
                       trailing: FittedBox(
@@ -382,7 +395,10 @@ class _OrderLayout extends State<OrderLayout> {
                                 child: Container(
                                   height: 25,
                                   width: 100,
-                                  color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -395,7 +411,10 @@ class _OrderLayout extends State<OrderLayout> {
                                 child: Container(
                                   height: 25,
                                   width: 100,
-                                  color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -481,7 +500,13 @@ class _OrderLayout extends State<OrderLayout> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "${item.totalPriceAfterDiscount} VND",
+                      MoneyFormatter(
+                                  amount:
+                                      item.totalPriceAfterDiscount!.toDouble())
+                              .output
+                              .nonSymbol
+                              .toString() +
+                          " VND",
                       style: const TextStyle(
                           fontSize: 17, fontFamily: "QuicksandMedium"),
                     ),
@@ -493,11 +518,15 @@ class _OrderLayout extends State<OrderLayout> {
                         Icon(
                           item.status.toString() == "Đã nhận hàng"
                               ? Icons.check
-                              : Icons.cancel,
+                              : item.status.toString() == "Từ chối"
+                                  ? Icons.cancel
+                                  : Icons.info_rounded,
                           size: 20,
                           color: item.status.toString() == "Đã nhận hàng"
                               ? Colors.green
-                              : Colors.red,
+                              : item.status.toString() == "Từ chối"
+                                  ? Colors.red
+                                  : Colors.orange,
                         ),
                         const SizedBox(
                           width: 5,
@@ -510,7 +539,9 @@ class _OrderLayout extends State<OrderLayout> {
                                   color:
                                       item.status.toString() == "Đã nhận hàng"
                                           ? Colors.green
-                                          : Colors.red,
+                                          : item.status.toString() == "Từ chối"
+                                              ? Colors.red
+                                              : Colors.orange,
                                 ))
                       ],
                     ),

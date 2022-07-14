@@ -3,6 +3,7 @@ import 'package:bigsize_management_staff/models/product/product.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../resources/styles_manager.dart';
@@ -283,15 +284,24 @@ class _ProductLayout extends State<ProductLayout> {
                               height: 5,
                             ),
                             Tooltip(
-                              message: "Real price ${item.price} VND",
+                              message: "Real price" +
+                                  MoneyFormatter(amount: item.price!.toDouble())
+                                      .output
+                                      .nonSymbol
+                                      .toString() +
+                                  " VND",
                               child: Text(
-                                "${item.price} VND",
+                                MoneyFormatter(amount: item.price!.toDouble())
+                                        .output
+                                        .nonSymbol
+                                        .toString() +
+                                    " VND",
                                 style: Theme.of(context).textTheme.caption,
                               ),
                             ),
                             Text(
                               item.promotionValue.toString() == "null"
-                                  ? "Giảm giá: Khong"
+                                  ? "Giảm giá: Không"
                                   : "Giảm giá: " +
                                       item.promotionValue.toString(),
                               style: Theme.of(context).textTheme.headline4,

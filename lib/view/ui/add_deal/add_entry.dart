@@ -133,9 +133,25 @@ class AddOrderView extends State<AddDealView> {
                             willLeave = true;
                             Navigator.of(context).pop();
                           },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
+                              textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "QuicksandMedium")),
                           child: const Text('Thoát')),
-                      TextButton(
+                      ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 20),
+                              textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "QuicksandMedium")),
                           child: const Text('Ở lại'))
                     ],
                   ));
@@ -147,6 +163,7 @@ class AddOrderView extends State<AddDealView> {
               appBar: AppBar(
                 title: Text(
                     "${widget.deal == null ? "Tạo" : "Edit"} ${widget.isEntry ? "entry" : "đơn hàng"}"),
+                /*
                 actions: [
                   IconButton(
                       onPressed: () {
@@ -154,7 +171,7 @@ class AddOrderView extends State<AddDealView> {
                             context: context, initial: DateTime.now());
                       },
                       icon: const Icon(Icons.calendar_today))
-                ],
+                ],*/
               ),
               bottomNavigationBar: BottomAppBar(
                   color: Colors.white.withOpacity(0),
@@ -229,6 +246,16 @@ class AddOrderView extends State<AddDealView> {
                                   print("Cus phone empty");
                                   showAlertDialog(context,
                                       "Bạn chưa nhập số điện thoại khách hàng.");
+                                  return;
+                                }
+
+                                if (payment.isEmpty) {
+                                  setState(() {
+                                    isCreating = false;
+                                  });
+                                  print("Payment empty");
+                                  showAlertDialog(context,
+                                      "Bạn chưa chọn phương thức thanh toán.");
                                   return;
                                 }
 

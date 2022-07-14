@@ -8,6 +8,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/order_assign/
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class OrderAssignLayout extends StatefulWidget {
@@ -36,7 +37,7 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
 
   Future<OrderList?> getListOrderAssign(String token, String date) async {
     //print(date);
-    OrderList? result = await _orderBloc.getListOrderAssign(token);
+    OrderList? result = await _orderBloc.getListOrderAssign(token, date);
     //return await _orderBloc.getListOrder(token, date);
     return result;
   }
@@ -323,7 +324,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                             child: Container(
                               height: 30,
                               width: 70,
-                              color: Colors.white,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -335,7 +339,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                             child: Container(
                               height: 30,
                               width: 150,
-                              color: Colors.white,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           const SizedBox(
@@ -351,7 +358,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                         child: Container(
                           height: 20,
                           width: 50,
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
                         ),
                       ), //ngay tao + so san pham
                       trailing: FittedBox(
@@ -371,7 +381,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                 child: Container(
                                   height: 25,
                                   width: 100,
-                                  color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -384,7 +397,10 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                 child: Container(
                                   height: 25,
                                   width: 100,
-                                  color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
@@ -470,7 +486,13 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      "${item.totalPriceAfterDiscount} VND",
+                      MoneyFormatter(
+                                  amount:
+                                      item.totalPriceAfterDiscount!.toDouble())
+                              .output
+                              .nonSymbol
+                              .toString() +
+                          " VND",
                       style: const TextStyle(
                           fontSize: 17, fontFamily: "QuicksandMedium"),
                     ),
@@ -482,11 +504,11 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                         Icon(
                           item.status.toString() == "Đã nhận hàng"
                               ? Icons.check
-                              : Icons.cancel,
+                              : Icons.info_outline,
                           size: 20,
                           color: item.status.toString() == "Đã nhận hàng"
                               ? Colors.green
-                              : Colors.red,
+                              : Colors.orange,
                         ),
                         const SizedBox(
                           width: 5,
@@ -499,7 +521,7 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                   color:
                                       item.status.toString() == "Đã nhận hàng"
                                           ? Colors.green
-                                          : Colors.red,
+                                          : Colors.orange,
                                 ))
                       ],
                     ),

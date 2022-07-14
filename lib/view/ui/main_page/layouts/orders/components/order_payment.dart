@@ -38,8 +38,8 @@ class OrderPayment extends StatelessWidget {
                 ),
                 Text(
                     order!.content!.paymentMethod == null
-                        ? "Chua thanh toan"
-                        : "Da thanh toan",
+                        ? "Chưa thanh toán"
+                        : "Đã thanh toán",
                     style: Theme.of(context).textTheme.subtitle1!.copyWith(
                           color: order!.content!.paymentMethod == null
                               ? Colors.red

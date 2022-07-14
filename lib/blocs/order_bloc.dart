@@ -61,9 +61,9 @@ class OrderBloc {
     return NewOrderReturn.fromJson(jsonDecode(response.body));
   }
 
-  Future<OrderList?> getListOrderAssign(String token /*, String date*/) async {
+  Future<OrderList?> getListOrderAssign(String token, String date) async {
     final response = await http.get(
-      Uri.parse(_baseUrl + "orders/assigned-order"),
+      Uri.parse(_baseUrl + "orders/assigned-order?CreateDate=$date"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': "Bearer $token",

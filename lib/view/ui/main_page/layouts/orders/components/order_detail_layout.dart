@@ -77,10 +77,14 @@ class _OrderDetail extends State<OrderDetail> {
                         divider(),
                         ...List.generate(2, (index) => divider()),
                         const SizedBox(height: 15),
-                        Text("Hình thức thanh toán",
-                            style: Theme.of(context).textTheme.headline4),
+                        order.data!.content!.rejectedDate == null
+                            ? Text("Hình thức thanh toán",
+                                style: Theme.of(context).textTheme.headline4)
+                            : Container(),
                         divider(),
-                        OrderPayment(order: order.data),
+                        order.data!.content!.rejectedDate == null
+                            ? OrderPayment(order: order.data)
+                            : Container(),
                         divider(),
                         ...List.generate(2, (index) => divider()),
                         const SizedBox(height: 15),
@@ -99,6 +103,7 @@ class _OrderDetail extends State<OrderDetail> {
                         const SizedBox(
                           height: 50,
                         ),
+                        /*
                         order.data!.content!.approvalDate == null
                             ? ElevatedButton(
                                 style: ButtonStyle(
@@ -126,7 +131,7 @@ class _OrderDetail extends State<OrderDetail> {
                                     ),
                                   ),
                                 ))
-                            : Container(),
+                            : Container(),*/
                         const SizedBox(
                           height: 30,
                         ),
@@ -359,6 +364,7 @@ class _OrderDetail extends State<OrderDetail> {
           trailing: Column(children: <Widget>[
             Text(
               product.price.toString(),
+              style: const TextStyle(fontFamily: "QuicksandMedium"),
             ),
           ]),
         ),

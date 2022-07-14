@@ -8,6 +8,7 @@ import 'package:bigsize_management_staff/models/product/product_size.dart';
 import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail_quantity.dart';
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -161,8 +162,14 @@ class _ProductDetail extends State<ProductDetail> {
                                                 ),
                                               ),
                                               Text(
-                                                detail.data!.price.toString() +
-                                                    " đ",
+                                                MoneyFormatter(
+                                                            amount: detail
+                                                                .data!.price!
+                                                                .toDouble())
+                                                        .output
+                                                        .nonSymbol
+                                                        .toString() +
+                                                    " D",
                                                 style: const TextStyle(
                                                   fontFamily: "QuicksandMedium",
                                                   fontSize: 25,

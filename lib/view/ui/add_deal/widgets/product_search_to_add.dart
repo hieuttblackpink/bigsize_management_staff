@@ -16,6 +16,7 @@ import 'package:bigsize_management_staff/view/shared/widgets/text_field_search.d
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class SearchProductToAdd extends StatefulWidget {
   const SearchProductToAdd({Key? key}) : super(key: key);
@@ -176,7 +177,9 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                                           context: context,
                                           builder: (context) {
                                             return Container(
-                                              height: 500,
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 20),
+                                              //height: 500,
                                               color: Colors.white,
                                               child: dialogContent(
                                                   context,
@@ -230,20 +233,59 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                                                             .productName
                                                             .toString(),
                                                         style: const TextStyle(
+                                                            fontFamily:
+                                                                "QuicksandMedium",
                                                             fontSize: 16,
                                                             color:
                                                                 Colors.black)),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                        '${productSearch!.content![index].price}',
+                                                        MoneyFormatter(
+                                                                amount: productSearch!
+                                                                    .content![
+                                                                        index]
+                                                                    .price!
+                                                                    .toDouble())
+                                                            .output
+                                                            .nonSymbol
+                                                            .toString(),
                                                         style: const TextStyle(
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough,
+                                                            fontFamily:
+                                                                "Quicksand",
                                                             fontSize: 16,
                                                             color:
                                                                 Colors.black)),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                        '${productSearch!.content![index].promotionPrice}',
+                                                        productSearch!
+                                                                    .content![
+                                                                        index]
+                                                                    .promotionPrice !=
+                                                                null
+                                                            ? MoneyFormatter(
+                                                                    amount: productSearch!
+                                                                        .content![
+                                                                            index]
+                                                                        .promotionPrice!
+                                                                        .toDouble())
+                                                                .output
+                                                                .nonSymbol
+                                                                .toString()
+                                                            : MoneyFormatter(
+                                                                    amount: productSearch!
+                                                                        .content![
+                                                                            index]
+                                                                        .price!
+                                                                        .toDouble())
+                                                                .output
+                                                                .nonSymbol
+                                                                .toString(),
                                                         style: const TextStyle(
+                                                            fontFamily:
+                                                                "QuicksandMedium",
                                                             fontSize: 14,
                                                             color: Colors
                                                                 .black54)),
@@ -296,7 +338,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
     AlertDialog alert = AlertDialog(
       title: const Text("Thông báo"),
       content: const Text(
-          "Không thể thêm sản phẩm này\nSản phẩm này chưa có màu sắc và kích cỡ."),
+          "Không thể thêm sản phẩm này\nSản phẩm này chưa có\nmàu sắc và kích cỡ."),
       actions: [
         okButton,
       ],
@@ -314,109 +356,155 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
   dialogContent(BuildContext context,
       List<productDetail.ProductDetailList>? productDetailList, int productID) {
     return StatefulBuilder(builder: (context, setState) {
-      return Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            alignment: Alignment.topRight,
-            child: const Icon(
-              Icons.close,
-              color: Colors.grey,
-              size: 20.0,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-            color: Colors.white,
-            child: const Text(
-              "Chọn màu sắc và kích cỡ",
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Flexible(
-            child: ListView.separated(
-              separatorBuilder: (context, index) => const Divider(
-                color: Colors.grey,
-              ),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: productDetailList!.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  //highlightColor: Colors.red,
-                  //splashColor: Colors.blueAccent,
-                  onTap: () {
-                    setState(() {
-                      for (var element in productDetailList) {
-                        element.selected = false;
-                      }
-                      productDetailList[index].selected = true;
-                    });
-                    this.setState(() {
-                      productDetailID =
-                          productDetailList[index].productDetailId.toString();
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 8.0, right: 8.0, top: 3.0, bottom: 3.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          productDetailList[index]
-                                  .colour!
-                                  .colourName
-                                  .toString() +
-                              " - " +
-                              productDetailList[index]
-                                  .size!
-                                  .sizeName
-                                  .toString(),
-                        ),
-                        productDetailList[index].selected == true
-                            ? const Icon(
-                                Icons.radio_button_checked,
-                                color: Colors.amber,
-                              )
-                            : const Icon(Icons.radio_button_unchecked),
-                      ],
-                    ),
+      return Scaffold(
+          backgroundColor: Colors.white,
+          bottomNavigationBar: BottomAppBar(
+            child: Container(
+              margin: const EdgeInsets.only(
+                  left: 25, right: 25, bottom: 30, top: 30),
+              height: 50,
+              width: double.infinity,
+              child: FlatButton(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20.0),
                   ),
-                );
-              },
-            ),
-          ), //Custom ListView
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            height: 50,
-            width: double.infinity,
-            child: FlatButton(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20.0),
+                ),
+                onPressed: () async {
+                  ProductChosenData chosenProductData = ProductChosenData(
+                      chosenProductID: productID.toString(),
+                      chosenProductDetailID: productDetailID);
+                  Navigator.pop(context);
+                  Navigator.pop(context, chosenProductData);
+                },
+                color: Colors.blue,
+                textColor: Colors.white,
+                child: const Text(
+                  "Thêm sản phẩm",
                 ),
               ),
-              onPressed: () async {
-                ProductChosenData chosenProductData = ProductChosenData(
-                    chosenProductID: productID.toString(),
-                    chosenProductDetailID: productDetailID);
-                Navigator.pop(context);
-                Navigator.pop(context, chosenProductData);
-              },
-              color: Colors.blue,
-              textColor: Colors.white,
-              child: const Text(
-                "Thêm sản phẩm",
-              ),
             ),
           ),
-        ],
-      );
+          body: Column(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () => {Navigator.pop(context)},
+                child: Container(
+                  margin: const EdgeInsets.all(10.0),
+                  alignment: Alignment.topRight,
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.grey,
+                    size: 30.0,
+                  ),
+                ),
+              ),
+
+              Container(
+                margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+                color: Colors.white,
+                child: const Text(
+                  "Chọn màu sắc và kích cỡ",
+                  style: TextStyle(fontFamily: "QuicksandMedium", fontSize: 20),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Flexible(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const Divider(
+                    color: Colors.white,
+                  ),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: productDetailList!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      //highlightColor: Colors.red,
+                      //splashColor: Colors.blueAccent,
+                      onTap: () {
+                        setState(() {
+                          for (var element in productDetailList) {
+                            element.selected = false;
+                          }
+                          productDetailList[index].selected = true;
+                        });
+                        this.setState(() {
+                          productDetailID = productDetailList[index]
+                              .productDetailId
+                              .toString();
+                        });
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 25, right: 25, bottom: 10),
+                        height: 75,
+                        padding: const EdgeInsets.only(
+                            left: 10.0, right: 10.0, top: 3.0, bottom: 3.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              productDetailList[index]
+                                      .colour!
+                                      .colourName
+                                      .toString() +
+                                  " - " +
+                                  productDetailList[index]
+                                      .size!
+                                      .sizeName
+                                      .toString(),
+                              style: const TextStyle(
+                                  fontFamily: "QuicksandMedium", fontSize: 25),
+                            ),
+                            productDetailList[index].selected == true
+                                ? const Icon(
+                                    Icons.radio_button_checked,
+                                    color: Colors.amber,
+                                  )
+                                : const Icon(Icons.radio_button_unchecked),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ), //Custom ListView
+              const SizedBox(
+                height: 40,
+              ),
+              /*
+              Container(
+                margin: const EdgeInsets.only(left: 25, right: 25),
+                height: 50,
+                width: double.infinity,
+                child: FlatButton(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20.0),
+                    ),
+                  ),
+                  onPressed: () async {
+                    ProductChosenData chosenProductData = ProductChosenData(
+                        chosenProductID: productID.toString(),
+                        chosenProductDetailID: productDetailID);
+                    Navigator.pop(context);
+                    Navigator.pop(context, chosenProductData);
+                  },
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: const Text(
+                    "Thêm sản phẩm",
+                  ),
+                ),
+              ),*/
+            ],
+          ));
     });
   }
 }
