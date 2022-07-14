@@ -4,6 +4,7 @@ import 'package:bigsize_management_staff/blocs/staff_bloc.dart';
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/models/user/user.dart';
 import 'package:bigsize_management_staff/resources/form_error.dart';
+import 'package:bigsize_management_staff/services/firebase_messaging.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
 import 'package:bigsize_management_staff/view/ui/forgot_password/forgot_password.dart';
@@ -128,12 +129,14 @@ class _SignFormState extends State<SignForm> {
                         "UserToken", _staffLogin.content!.token.toString());
                     _storageService.writeSecureData(_storageItemUser);
                     _storageService.writeSecureData(_storageItemToken);
+                    await HandleMessagingFirebase.receiveMessagingFromServer(
+                        username.toString());
                     _formKey.currentState!.save();
                     removeError(
                         error: "Sai thông tin tài khoản hoặc mật khẩu.");
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => MainView()),
+                        MaterialPageRoute(builder: (_) => const MainView()),
                         ((route) => false));
                   } else {
                     addError(error: "" + _staffLogin.error!.message.toString());
@@ -146,12 +149,14 @@ class _SignFormState extends State<SignForm> {
                     _storageItemToken = StorageItem(
                         "UserToken", _staffLogin.content!.token.toString());
                     _storageService.writeSecureData(_storageItemToken);
+                    await HandleMessagingFirebase.receiveMessagingFromServer(
+                        username.toString());
                     _formKey.currentState!.save();
                     removeError(
                         error: "Sai thông tin tài khoản hoặc mật khẩu.");
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => MainView()),
+                        MaterialPageRoute(builder: (_) => const MainView()),
                         ((route) => false));
                   } else {
                     addError(error: "" + _staffLogin.error!.message.toString());

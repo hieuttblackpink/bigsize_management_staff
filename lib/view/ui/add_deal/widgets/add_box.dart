@@ -38,14 +38,16 @@ class addBox extends State<AddBox> {
   bool isHaveProduct = false;
   bool isSearching = false;
 
+  int page = 1;
+
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }
 
   Future<productSearch.ProductSearch> searchProductByName(
-      String searchKey) async {
+      String searchKey, int page) async {
     productSearch.ProductSearch search =
-        await _productBloc.searchProductByName(searchKey);
+        await _productBloc.searchProductByName(searchKey, page);
     if (mounted && isSearching) {
       setState(() {
         searchProductList = search;
@@ -133,7 +135,7 @@ class addBox extends State<AddBox> {
   void initState() {
     super.initState();
     isSearching = true;
-    searchProductByName(_searchText);
+    searchProductByName(_searchText, page);
   }
 
   @override

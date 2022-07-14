@@ -35,9 +35,10 @@ class ProductBloc {
     return ProductDetail.fromJson(jsonDecode(response.body));
   }
 
-  Future<ProductSearch> searchProductByName(String searchKey) async {
+  Future<ProductSearch> searchProductByName(String searchKey, int page) async {
     final response = await http.get(
-      Uri.parse(_baseUrl + "products?ProductName=$searchKey&Status=true"),
+      Uri.parse(_baseUrl +
+          "products?ProductName=$searchKey&Status=true&PageNumber=$page&PageSize=10"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
         //'Authorization': "Bearer $token",

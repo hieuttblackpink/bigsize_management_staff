@@ -244,13 +244,13 @@ class _ProductLayout extends State<ProductLayout> {
               },
           child: Container(
             margin: const EdgeInsets.all(5.0),
-            height: 300,
+            height: 350,
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onSecondary,
                 borderRadius: StyleManager.border,
                 boxShadow: StyleManager.shadow),
             child: LayoutBuilder(
-              builder: (context, constraints) => Stack(
+              builder: (context, constraints) => /*Stack*/ Column(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,9 +270,9 @@ class _ProductLayout extends State<ProductLayout> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.productName.toString().length <= 12
+                              item.productName.toString().length <= 20
                                   ? item.productName.toString()
-                                  : item.productName!.substring(0, 12) + "...",
+                                  : item.productName!.substring(0, 20) + "...",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

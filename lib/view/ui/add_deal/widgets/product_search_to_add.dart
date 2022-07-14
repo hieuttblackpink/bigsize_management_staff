@@ -28,6 +28,7 @@ class SearchProductToAdd extends StatefulWidget {
 class _SearchProductToAdd extends State<SearchProductToAdd> {
   final StorageService _storageService = StorageService();
   final ProductBloc _productBloc = ProductBloc();
+  final ScrollController _controller = ScrollController();
   ProductSearch? productSearch;
   TextEditingController searchController = TextEditingController();
   String _searchText = "";
@@ -38,21 +39,31 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
 
   int colorIndex = 0;
   int sizeIndex = 0;
+  int page = 1;
 
   bool isSearching = false;
   bool isGettingColour = false;
   bool isGettingSize = false;
   bool isGettingQuantity = false;
 
+  bool isFirstLoad = true;
+  bool isLoadMoreRunning = false;
+  bool hasNextPage = false;
+
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }
 
-  Future<ProductSearch> searchProductByName(String searchKey) async {
-    ProductSearch search = await _productBloc.searchProductByName(searchKey);
-    setState(() {
-      productSearch = search;
-    });
+  Future<ProductSearch> searchProductByName(String searchKey, int page) async {
+    ProductSearch search =
+        await _productBloc.searchProductByName(searchKey, page);
+    if (mounted && isFirstLoad) {
+      setState(() {
+        productSearch = search;
+        isFirstLoad = false;
+        hasNextPage = search.hasNext!;
+      });
+    }
     return search;
   }
 
@@ -97,7 +108,49 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
   @override
   void initState() {
     super.initState();
-    searchProductByName(_searchText);
+    searchProductByName(_searchText, page);
+    _controller.addListener(_loadMore);
+  }
+
+  void _loadMore() async {
+    //print("Loadmore " + _controller.position.extentAfter.toString());
+    if (hasNextPage == true &&
+        isFirstLoad == false &&
+        isLoadMoreRunning == false &&
+        isSearching == false &&
+        _controller.position.extentAfter < 300) {
+      setState(() {
+        isLoadMoreRunning = true; // Display a progress indicator at the bottom
+      });
+      page += 1; // Increase _page by 1
+      try {
+        ProductSearch searchMore = await searchProductByName(_searchText, page);
+
+        if (searchMore.content!.isNotEmpty) {
+          setState(() {
+            productSearch!.content!.addAll(searchMore.content!.toList());
+            hasNextPage = searchMore.hasNext!;
+            print(productSearch!.content!.length);
+          });
+        } else {
+          setState(() {
+            hasNextPage = false;
+          });
+        }
+      } catch (err) {
+        print('Something went wrong!');
+      }
+
+      setState(() {
+        isLoadMoreRunning = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_loadMore);
+    super.dispose();
   }
 
   @override
@@ -107,6 +160,7 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
         title: const Text("Tìm kiếm sản phẩm"),
       ),
       body: SingleChildScrollView(
+        controller: _controller,
         child: Column(
           children: <Widget>[
             FutureBuilder<String?>(
@@ -132,14 +186,21 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                             prefix: Icons.search,
                             onChange: (value) async {
                               searchController.text = value;
-                              _searchText = searchController.text;
-                              ProductSearch search =
-                                  await searchProductByName(_searchText);
                               setState(() {
-                                productSearch = search;
                                 searchController.selection =
                                     TextSelection.fromPosition(TextPosition(
                                         offset: searchController.text.length));
+                                _searchText = searchController.text;
+                                isSearching = true;
+                              });
+                              //_searchText = searchController.text;
+                              ProductSearch search =
+                                  await searchProductByName(_searchText, 1);
+                              setState(() {
+                                productSearch = search;
+                                page = 1;
+                                isSearching = false;
+                                hasNextPage = search.hasNext!;
                               });
                             },
                           ),
@@ -313,6 +374,13 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                             );
                           },
                         ),
+                        if (isLoadMoreRunning == true)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 40),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                       ],
                     );
                   }
@@ -321,6 +389,14 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                 })
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.arrow_upward_rounded,
+          color: Colors.blue,
+          size: 50,
+        ),
+        onPressed: scrollUp,
       ),
     );
   }
@@ -506,5 +582,13 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
             ],
           ));
     });
+  }
+
+  void scrollUp() {
+    const double start = 0;
+
+    //_controller.jumpTo(start);
+    _controller.animateTo(start,
+        duration: const Duration(seconds: 1), curve: Curves.easeIn);
   }
 }

@@ -30,6 +30,7 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
 
   TextEditingController dateController = TextEditingController();
   String orderAssignDate = "";
+  DateTime currentDateAssign = DateTime.now();
 
   Future<String?> getToken() async {
     return _storageService.readSecureData("UserToken");
@@ -171,10 +172,21 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                   dateController.text = bd;
                                   orderAssignDate = dateController.text;
                                   isChange = true;
-                                  getListOrderAssign(token.data.toString(),
-                                      dateController.text.toString());
+                                  if (isChange) {
+                                    getListOrderAssign(token.data.toString(),
+                                            dateController.text.toString())
+                                        .then((value) {
+                                      orderAssignList = value;
+                                      isChange = false;
+                                      if (mounted) {
+                                        setState(() {
+                                          currentDateAssign = date;
+                                        });
+                                      }
+                                    });
+                                  }
                                 },
-                                currentTime: DateTime.now(),
+                                currentTime: currentDateAssign,
                                 locale: LocaleType.vi,
                               );
                             },
@@ -248,7 +260,8 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
                                 ],
                               )
                             : orderAssignList != null &&
-                                    orderAssignList!.content!.isEmpty
+                                    orderAssignList!.content!.isEmpty &&
+                                    !isChange
                                 ? Container(
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.only(top: 20),

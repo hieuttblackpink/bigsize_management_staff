@@ -21,23 +21,79 @@ class _SearchProductLayout extends State<SearchProductLayout> {
   ProductSearch? productSearch;
   TextEditingController searchController = TextEditingController();
   String _searchText = "";
+  final ScrollController _controller = ScrollController();
+
+  int page = 1;
+  bool isFirstLoad = true;
+  bool isLoadMoreRunning = false;
+  bool hasNextPage = false;
+  bool isSearching = false;
 
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }
 
-  Future<ProductSearch> searchProductByName(String searchKey) async {
-    ProductSearch search = await _productBloc.searchProductByName(searchKey);
-    setState(() {
-      productSearch = search;
-    });
+  Future<ProductSearch> searchProductByName(String searchKey, int page) async {
+    ProductSearch search =
+        await _productBloc.searchProductByName(searchKey, page);
+    if (mounted && isFirstLoad) {
+      setState(() {
+        productSearch = search;
+        isFirstLoad = false;
+        hasNextPage = search.hasNext!;
+        //_controller.addListener(_loadMore);
+        print(hasNextPage.toString());
+      });
+    }
     return search;
   }
 
   @override
   void initState() {
     super.initState();
-    searchProductByName(_searchText);
+    searchProductByName(_searchText, page);
+    _controller.addListener(_loadMore);
+  }
+
+  void _loadMore() async {
+    //print("Loadmore " + _controller.position.extentAfter.toString());
+    if (hasNextPage == true &&
+        isFirstLoad == false &&
+        isLoadMoreRunning == false &&
+        isSearching == false &&
+        _controller.position.extentAfter < 300) {
+      setState(() {
+        isLoadMoreRunning = true; // Display a progress indicator at the bottom
+      });
+      page += 1; // Increase _page by 1
+      try {
+        ProductSearch searchMore = await searchProductByName(_searchText, page);
+
+        if (searchMore.content!.isNotEmpty) {
+          setState(() {
+            productSearch!.content!.addAll(searchMore.content!.toList());
+            hasNextPage = searchMore.hasNext!;
+            print(productSearch!.content!.length);
+          });
+        } else {
+          setState(() {
+            hasNextPage = false;
+          });
+        }
+      } catch (err) {
+        print('Something went wrong!');
+      }
+
+      setState(() {
+        isLoadMoreRunning = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_loadMore);
+    super.dispose();
   }
 
   @override
@@ -47,6 +103,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
         title: const Text("Tìm kiếm sản phẩm"),
       ),
       body: SingleChildScrollView(
+        controller: _controller,
         child: Column(
           children: <Widget>[
             FutureBuilder<String?>(
@@ -76,12 +133,17 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                 searchController.selection =
                                     TextSelection.fromPosition(TextPosition(
                                         offset: searchController.text.length));
+                                _searchText = searchController.text;
+                                isSearching = true;
                               });
-                              _searchText = searchController.text;
+
                               ProductSearch search =
-                                  await searchProductByName(_searchText);
+                                  await searchProductByName(_searchText, 1);
                               setState(() {
                                 productSearch = search;
+                                page = 1;
+                                isSearching = false;
+                                hasNextPage = search.hasNext!;
                               });
                             },
                           ),
@@ -90,6 +152,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                           height: 20,
                         ),
                         ListView.builder(
+                          //controller: _controller,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: productSearch == null
@@ -97,7 +160,8 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                               : productSearch!.content!.length,
                           itemBuilder: (context, index) {
                             if (productSearch != null &&
-                                productSearch!.content!.isNotEmpty) {
+                                productSearch!.content!.isNotEmpty &&
+                                !isFirstLoad) {
                               return GestureDetector(
                                   onTap: () => {
                                         Navigator.push(
@@ -202,7 +266,8 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                         ])*/
                                           ]))));
                             } else if (productSearch != null &&
-                                productSearch!.content!.isEmpty) {
+                                productSearch!.content!.isEmpty &&
+                                !isFirstLoad) {
                               return Container(
                                 alignment: Alignment.center,
                                 child: const Text(
@@ -221,6 +286,13 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                             );
                           },
                         ),
+                        if (isLoadMoreRunning == true)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 10, bottom: 40),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                       ],
                     );
                   }
@@ -230,6 +302,22 @@ class _SearchProductLayout extends State<SearchProductLayout> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.arrow_upward_rounded,
+          color: Colors.blue,
+          size: 50,
+        ),
+        onPressed: scrollUp,
+      ),
     );
+  }
+
+  void scrollUp() {
+    const double start = 0;
+
+    //_controller.jumpTo(start);
+    _controller.animateTo(start,
+        duration: const Duration(seconds: 1), curve: Curves.easeIn);
   }
 }

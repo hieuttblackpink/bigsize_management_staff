@@ -5,6 +5,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/compon
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_payment.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_status.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class OrderDetail extends StatefulWidget {
@@ -140,11 +141,7 @@ class _OrderDetail extends State<OrderDetail> {
                   );
                 }
 
-                return Container(
-                  child: const Align(
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator()),
-                );
+                return loadingWidget(context);
               })
         ]),
       ),
@@ -367,6 +364,158 @@ class _OrderDetail extends State<OrderDetail> {
               style: const TextStyle(fontFamily: "QuicksandMedium"),
             ),
           ]),
+        ),
+      );
+
+  Widget loadingWidget(BuildContext context) => Container(
+        alignment: Alignment.center,
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      style: BorderStyle.solid,
+                      color: Colors.black,
+                      width: 0.5)),
+              height: 50,
+              padding: const EdgeInsets.only(left: 15),
+              child: Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 225, 225, 225),
+                highlightColor: Colors.white,
+                child: const Text("Ngày đặt hàng: ",
+                    style: TextStyle(
+                        fontFamily: "QuicksandMedium",
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...List.generate(2, (index) => divider()),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Thông tin đơn hàng",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            divider(),
+            ...List.generate(2, (index) => divider()),
+            const SizedBox(height: 15),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Hình thức thanh toán",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            divider(),
+            ...List.generate(2, (index) => divider()),
+            const SizedBox(height: 15),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Danh sách sản phẩm",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            /*
+                        order.data!.content!.approvalDate == null
+                            ? ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.white),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            side: BorderSide(
+                                                color: Colors.red)))),
+                                onPressed: () => {},
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 60,
+                                  width: 200,
+                                  child: const Text(
+                                    "Hủy đơn hàng",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontFamily: "QuicksandMedium",
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ))
+                            : Container(),*/
+            const SizedBox(
+              height: 30,
+            ),
+          ],
         ),
       );
 }

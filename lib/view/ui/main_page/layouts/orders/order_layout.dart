@@ -38,6 +38,7 @@ class _OrderLayout extends State<OrderLayout> {
 
   TextEditingController dateController = TextEditingController();
   String orderDate = "";
+  DateTime currentDate = DateTime.now();
 
   Future<String?> getToken() async {
     return _storageService.readSecureData("UserToken");
@@ -187,12 +188,14 @@ class _OrderLayout extends State<OrderLayout> {
                                       orderList = value;
                                       isChange = false;
                                       if (mounted) {
-                                        setState(() {});
+                                        setState(() {
+                                          currentDate = date;
+                                        });
                                       }
                                     });
                                   }
                                 },
-                                currentTime: DateTime.now(),
+                                currentTime: currentDate,
                                 locale: LocaleType.vi,
                               );
                             },

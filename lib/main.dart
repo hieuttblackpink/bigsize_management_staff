@@ -88,6 +88,10 @@ Future<void> main() async {
 
   _storageItem = await _storageService.readAllSecureData();
 
+  if (_storageItem.length == 1) {
+    await _storageService.deleteAllSecureData();
+  }
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LayoutProvider()),
@@ -110,7 +114,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     HttpOverrides.global = MyHttpOverrides();
     // ignore: prefer_is_empty
-    if (storageItem.length >= 1) {
+    if (storageItem.length > 1) {
       loadScreen = Routes.homeRoute;
     }
     return MaterialApp(
