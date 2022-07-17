@@ -2,11 +2,10 @@ import 'dart:collection';
 
 import 'package:bigsize_management_staff/model/module/storage_item.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
-import 'package:bigsize_management_staff/view/resources/routes_manger.dart';
-import 'package:bigsize_management_staff/view/resources/vaultCard.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/about_app/about_app_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/change_password/change_password.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/profile/userprofile/userprofile_screen.dart';
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/in_setting_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/setting/components/setting_menu.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -104,7 +103,7 @@ class _SettingLayout extends State<SettingLayout> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const ChangePassword()))
+                              builder: (_) => const InSettingLayout()))
                     }),
             const SizedBox(
               height: 0.5,

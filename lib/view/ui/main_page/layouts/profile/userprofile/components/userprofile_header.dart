@@ -38,6 +38,7 @@ class _UserProfileHeader extends State<UserProfileHeader> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Container(
+                  //margin: const EdgeInsets.only(left: 10, right: 10),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     boxShadow: StyleManager.shadow,
@@ -45,7 +46,7 @@ class _UserProfileHeader extends State<UserProfileHeader> {
                     color: Colors.white,
                   ),
                   //color: Colors.white,
-                  width: 400,
+                  width: MediaQuery.of(context).size.width - 40,
                   height: 50,
                   child: Text(
                     snapshot.data!.content!.fullname.toString(),

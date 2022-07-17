@@ -61,231 +61,254 @@ class _OrderAssignLayout extends State<OrderAssignLayout> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            FutureBuilder<String?>(
-                future: getToken(),
-                builder: (context, token) {
-                  if (token.hasData) {
-                    if (isChange) {
-                      getListOrderAssign(token.data.toString(), orderAssignDate)
-                          .then((value) {
-                        setState(() {
-                          orderAssignList = value;
-                          isChange = false;
-                        });
-                      });
-                    }
+        padding: const EdgeInsets.all(10.0),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              isChange = true;
+            });
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                FutureBuilder<String?>(
+                    future: getToken(),
+                    builder: (context, token) {
+                      if (token.hasData) {
+                        if (isChange) {
+                          getListOrderAssign(
+                                  token.data.toString(), orderAssignDate)
+                              .then((value) {
+                            setState(() {
+                              orderAssignList = value;
+                              isChange = false;
+                            });
+                          });
+                        }
 
-                    //updateMyUI();
-                    return Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(left: 20, right: 20),
-                          height: 80,
-                          //width: 150,
-                          child: TextField(
-                            controller: dateController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: myinputborder(),
-                              enabledBorder: myinputborder(),
-                              focusedBorder: myfocusborder(),
-                              contentPadding: const EdgeInsets.only(
-                                  top: 0, left: 20, bottom: 0, right: 10),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: "QuicksandMedium",
-                              fontSize: 20,
-                            ),
-                            //enabled: false,
-                            readOnly: true,
-                            focusNode: FocusNode(),
-                            enableInteractiveSelection: false,
-                            onTap: () {
-                              DatePicker.showDatePicker(
-                                context,
-                                showTitleActions: true,
-                                minTime: DateTime(1950, 1, 1),
-                                maxTime: DateTime.now(), //(2022, 12, 31),
-                                theme: const DatePickerTheme(
-                                  headerColor: Color(0x1000ADFF),
-                                  backgroundColor: Color(0xFFFFFFFF),
-                                  itemStyle: TextStyle(
-                                    color: Color(0xFF00ADFF),
-                                    fontFamily: "QuickSandBold",
-                                    fontSize: 20,
-                                  ),
-                                  doneStyle: TextStyle(
-                                    color: Color(0xFF0085C3),
-                                    fontSize: 20,
-                                    fontFamily: "QuickSandBold",
-                                  ),
-                                  cancelStyle: TextStyle(
-                                    color: Colors.deepOrangeAccent,
-                                    fontSize: 20,
-                                    fontFamily: "QuickSandBold",
-                                  ),
+                        //updateMyUI();
+                        return Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.center,
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              height: 80,
+                              //width: 150,
+                              child: TextField(
+                                controller: dateController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: myinputborder(),
+                                  enabledBorder: myinputborder(),
+                                  focusedBorder: myfocusborder(),
+                                  contentPadding: const EdgeInsets.only(
+                                      top: 0, left: 20, bottom: 0, right: 10),
                                 ),
-                                onChanged: (date) {
-                                  print('change $date in time zone ' +
-                                      date.timeZoneOffset.inHours.toString());
-                                },
-                                onConfirm: (date) async {
-                                  print('confirm $date');
-                                  String bd = "";
-                                  if ((date.day >= 10) && (date.month >= 10)) {
-                                    bd = date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day < 10) && (date.month >= 10)) {
-                                    bd = "0" +
-                                        date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day >= 10) && (date.month < 10)) {
-                                    bd = date.day.toString() +
-                                        "/0" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day < 10) && (date.month < 10)) {
-                                    bd = "0" +
-                                        date.day.toString() +
-                                        "/0" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  //print("Here: " + bd);
-                                  dateController.text = bd;
-                                  orderAssignDate = dateController.text;
-                                  isChange = true;
-                                  if (isChange) {
-                                    getListOrderAssign(token.data.toString(),
-                                            dateController.text.toString())
-                                        .then((value) {
-                                      orderAssignList = value;
-                                      isChange = false;
-                                      if (mounted) {
-                                        setState(() {
-                                          currentDateAssign = date;
+                                style: const TextStyle(
+                                  fontFamily: "QuicksandMedium",
+                                  fontSize: 20,
+                                ),
+                                //enabled: false,
+                                readOnly: true,
+                                focusNode: FocusNode(),
+                                enableInteractiveSelection: false,
+                                onTap: () {
+                                  DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(1950, 1, 1),
+                                    maxTime: DateTime.now(), //(2022, 12, 31),
+                                    theme: const DatePickerTheme(
+                                      headerColor: Color(0x1000ADFF),
+                                      backgroundColor: Color(0xFFFFFFFF),
+                                      itemStyle: TextStyle(
+                                        color: Color(0xFF00ADFF),
+                                        fontFamily: "QuickSandBold",
+                                        fontSize: 20,
+                                      ),
+                                      doneStyle: TextStyle(
+                                        color: Color(0xFF0085C3),
+                                        fontSize: 20,
+                                        fontFamily: "QuickSandBold",
+                                      ),
+                                      cancelStyle: TextStyle(
+                                        color: Colors.deepOrangeAccent,
+                                        fontSize: 20,
+                                        fontFamily: "QuickSandBold",
+                                      ),
+                                    ),
+                                    onChanged: (date) {
+                                      print('change $date in time zone ' +
+                                          date.timeZoneOffset.inHours
+                                              .toString());
+                                    },
+                                    onConfirm: (date) async {
+                                      print('confirm $date');
+                                      String bd = "";
+                                      if ((date.day >= 10) &&
+                                          (date.month >= 10)) {
+                                        bd = date.day.toString() +
+                                            "/" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day < 10) &&
+                                          (date.month >= 10)) {
+                                        bd = "0" +
+                                            date.day.toString() +
+                                            "/" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day >= 10) &&
+                                          (date.month < 10)) {
+                                        bd = date.day.toString() +
+                                            "/0" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day < 10) &&
+                                          (date.month < 10)) {
+                                        bd = "0" +
+                                            date.day.toString() +
+                                            "/0" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      //print("Here: " + bd);
+                                      dateController.text = bd;
+                                      orderAssignDate = dateController.text;
+                                      isChange = true;
+                                      if (isChange) {
+                                        getListOrderAssign(
+                                                token.data.toString(),
+                                                dateController.text.toString())
+                                            .then((value) {
+                                          orderAssignList = value;
+                                          isChange = false;
+                                          if (mounted) {
+                                            setState(() {
+                                              currentDateAssign = date;
+                                            });
+                                          }
                                         });
                                       }
-                                    });
-                                  }
+                                    },
+                                    currentTime: currentDateAssign,
+                                    locale: LocaleType.vi,
+                                  );
                                 },
-                                currentTime: currentDateAssign,
-                                locale: LocaleType.vi,
-                              );
-                            },
-                          ),
-                        ),
-                        orderAssignList != null &&
-                                orderAssignList!.content!.isNotEmpty &&
-                                !isChange
-                            ? Column(
-                                children: <Widget>[
-                                  ListView(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                              "Tổng đơn hàng online ${orderAssignList!.content!.length}",
-                                              style: const TextStyle(
-                                                fontFamily: "QuicksandBold",
-                                                fontSize: 15,
-                                              )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Divider(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onBackground,
-                                              // thickness: 10,
-                                              height: 10,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Divider(
-                                        height: 10,
-                                        thickness: 0,
-                                      ),
-                                      ListView.separated(
+                              ),
+                            ),
+                            orderAssignList != null &&
+                                    orderAssignList!.content!.isNotEmpty &&
+                                    !isChange
+                                ? Column(
+                                    children: <Widget>[
+                                      ListView(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
-                                        itemBuilder: (context, index) =>
-                                            index ==
-                                                    orderAssignList!
-                                                        .content!.length
-                                                ? listItem(
-                                                    context,
-                                                    orderAssignList!
-                                                        .content!.last,
-                                                    index,
-                                                    token.toString())
-                                                : listItem(
-                                                    context,
-                                                    orderAssignList!
-                                                        .content![index],
-                                                    index,
-                                                    token.toString()),
-                                        separatorBuilder: (_, __) =>
-                                            const SizedBox(
-                                          height: 10,
-                                        ),
-                                        itemCount:
-                                            orderAssignList!.content!.length,
-                                      )
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                  "Tổng đơn hàng online ${orderAssignList!.content!.length}",
+                                                  style: const TextStyle(
+                                                    fontFamily: "QuicksandBold",
+                                                    fontSize: 15,
+                                                  )),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: Divider(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onBackground,
+                                                  // thickness: 10,
+                                                  height: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Divider(
+                                            height: 10,
+                                            thickness: 0,
+                                          ),
+                                          ListView.separated(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) =>
+                                                index ==
+                                                        orderAssignList!
+                                                            .content!.length
+                                                    ? listItem(
+                                                        context,
+                                                        orderAssignList!
+                                                            .content!.last,
+                                                        index,
+                                                        token.toString())
+                                                    : listItem(
+                                                        context,
+                                                        orderAssignList!
+                                                            .content![index],
+                                                        index,
+                                                        token.toString()),
+                                            separatorBuilder: (_, __) =>
+                                                const SizedBox(
+                                              height: 10,
+                                            ),
+                                            itemCount: orderAssignList!
+                                                .content!.length,
+                                          )
+                                        ],
+                                      ),
                                     ],
-                                  ),
-                                ],
-                              )
-                            : orderAssignList != null &&
-                                    orderAssignList!.content!.isEmpty &&
-                                    !isChange
-                                ? Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(top: 20),
-                                    child: const Text(
-                                      "Tuyệt vời!\nBạn đã xử lí toàn bộ đơn hàng online",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontFamily: "QuicksandMedium",
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blue,
-                                          fontSize: 15),
-                                    ),
                                   )
-                                : loadListOrder(context)
-                      ],
-                    );
-                  }
+                                : orderAssignList != null &&
+                                        orderAssignList!.content!.isEmpty &&
+                                        !isChange
+                                    ? Column(
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.center,
+                                            margin:
+                                                const EdgeInsets.only(top: 20),
+                                            child: const Text(
+                                              "Tuyệt vời!\nBạn đã xử lí toàn bộ đơn hàng online",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontFamily: "QuicksandMedium",
+                                                  fontStyle: FontStyle.italic,
+                                                  color: Colors.blue,
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 550,
+                                          ),
+                                        ],
+                                      )
+                                    : loadListOrder(context)
+                          ],
+                        );
+                      }
 
-                  return const CircularProgressIndicator();
-                }),
-          ],
-        ),
-      ),
-    );
+                      return const CircularProgressIndicator();
+                    }),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget loadListOrder(BuildContext context) => Column(

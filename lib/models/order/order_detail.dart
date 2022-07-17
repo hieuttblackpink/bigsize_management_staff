@@ -67,6 +67,7 @@ class ContentOrderDetail {
   List<ProductList>? _productList;
   double? _totalPrice;
   double? _totalPriceAfterDiscount;
+  double? _shippingFee;
   String? _paymentMethod;
   String? _orderType;
   String? _approvalDate;
@@ -88,6 +89,7 @@ class ContentOrderDetail {
       List<ProductList>? productList,
       double? totalPrice,
       double? totalPriceAfterDiscount,
+      double? shippingFee,
       String? paymentMethod,
       String? orderType,
       String? approvalDate,
@@ -128,6 +130,9 @@ class ContentOrderDetail {
     }
     if (totalPriceAfterDiscount != null) {
       _totalPriceAfterDiscount = totalPriceAfterDiscount;
+    }
+    if (shippingFee != null) {
+      _shippingFee = shippingFee;
     }
     if (paymentMethod != null) {
       _paymentMethod = paymentMethod;
@@ -179,6 +184,8 @@ class ContentOrderDetail {
   double? get totalPriceAfterDiscount => _totalPriceAfterDiscount;
   set totalPriceAfterDiscount(double? totalPriceAfterDiscount) =>
       _totalPriceAfterDiscount = totalPriceAfterDiscount;
+  double? get shippingFee => _shippingFee;
+  set shippingFee(double? shippingFee) => _shippingFee = shippingFee;
   String? get paymentMethod => _paymentMethod;
   set paymentMethod(String? paymentMethod) => _paymentMethod = paymentMethod;
   String? get orderType => _orderType;
@@ -215,6 +222,7 @@ class ContentOrderDetail {
     }
     _totalPrice = json['total_price'];
     _totalPriceAfterDiscount = json['total_price_after_discount'];
+    _shippingFee = json['shipping_fee'];
     _paymentMethod = json['payment_method'];
     _orderType = json['order_type'];
     _approvalDate = json['approval_date'];
@@ -244,6 +252,7 @@ class ContentOrderDetail {
     }
     data['total_price'] = _totalPrice;
     data['total_price_after_discount'] = _totalPriceAfterDiscount;
+    data['shipping_fee'] = _shippingFee;
     data['payment_method'] = _paymentMethod;
     data['order_type'] = _orderType;
     data['approval_date'] = _approvalDate;
@@ -319,20 +328,38 @@ class DeliveryAddress {
 
 class Store {
   int? _storeId;
+  String? _managerName;
+  String? _storeName;
   String? _storeAddress;
   String? _storePhone;
+  bool? _isMainWarehouse;
   bool? _status;
 
   Store(
-      {int? storeId, String? storeAddress, String? storePhone, bool? status}) {
+      {int? storeId,
+      String? managerName,
+      String? storeName,
+      String? storeAddress,
+      String? storePhone,
+      bool? isMainWarehouse,
+      bool? status}) {
     if (storeId != null) {
       _storeId = storeId;
+    }
+    if (managerName != null) {
+      _managerName = managerName;
+    }
+    if (storeName != null) {
+      _storeName = storeName;
     }
     if (storeAddress != null) {
       _storeAddress = storeAddress;
     }
     if (storePhone != null) {
       _storePhone = storePhone;
+    }
+    if (isMainWarehouse != null) {
+      _isMainWarehouse = isMainWarehouse;
     }
     if (status != null) {
       _status = status;
@@ -341,25 +368,38 @@ class Store {
 
   int? get storeId => _storeId;
   set storeId(int? storeId) => _storeId = storeId;
+  String? get managerName => _managerName;
+  set managerName(String? managerName) => _managerName = managerName;
+  String? get storeName => _storeName;
+  set storeName(String? storeName) => _storeName = storeName;
   String? get storeAddress => _storeAddress;
   set storeAddress(String? storeAddress) => _storeAddress = storeAddress;
   String? get storePhone => _storePhone;
   set storePhone(String? storePhone) => _storePhone = storePhone;
+  bool? get isMainWarehouse => _isMainWarehouse;
+  set isMainWarehouse(bool? isMainWarehouse) =>
+      _isMainWarehouse = isMainWarehouse;
   bool? get status => _status;
   set status(bool? status) => _status = status;
 
   Store.fromJson(Map<String, dynamic> json) {
     _storeId = json['store_id'];
+    _managerName = json['manager_name'];
+    _storeName = json['store_name'];
     _storeAddress = json['store_address'];
     _storePhone = json['store_phone'];
+    _isMainWarehouse = json['is_main_warehouse'];
     _status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['store_id'] = _storeId;
+    data['manager_name'] = _managerName;
+    data['store_name'] = _storeName;
     data['store_address'] = _storeAddress;
     data['store_phone'] = _storePhone;
+    data['is_main_warehouse'] = _isMainWarehouse;
     data['status'] = _status;
     return data;
   }
@@ -374,8 +414,8 @@ class ProductList {
   String? _productImageUrl;
   double? _pricePerOne;
   double? _price;
-  Null? _discountPricePerOne;
-  Null? _discountPrice;
+  double? _discountPricePerOne;
+  double? _discountPrice;
   int? _quantity;
 
   ProductList(
@@ -387,8 +427,8 @@ class ProductList {
       String? productImageUrl,
       double? pricePerOne,
       double? price,
-      Null? discountPricePerOne,
-      Null? discountPrice,
+      double? discountPricePerOne,
+      double? discountPrice,
       int? quantity}) {
     if (productDetailId != null) {
       _productDetailId = productDetailId;
@@ -443,11 +483,11 @@ class ProductList {
   set pricePerOne(double? pricePerOne) => _pricePerOne = pricePerOne;
   double? get price => _price;
   set price(double? price) => _price = price;
-  Null? get discountPricePerOne => _discountPricePerOne;
-  set discountPricePerOne(Null? discountPricePerOne) =>
+  double? get discountPricePerOne => _discountPricePerOne;
+  set discountPricePerOne(double? discountPricePerOne) =>
       _discountPricePerOne = discountPricePerOne;
-  Null? get discountPrice => _discountPrice;
-  set discountPrice(Null? discountPrice) => _discountPrice = discountPrice;
+  double? get discountPrice => _discountPrice;
+  set discountPrice(double? discountPrice) => _discountPrice = discountPrice;
   int? get quantity => _quantity;
   set quantity(int? quantity) => _quantity = quantity;
 

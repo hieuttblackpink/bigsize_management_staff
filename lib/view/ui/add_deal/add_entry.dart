@@ -126,7 +126,11 @@ class AddOrderView extends State<AddDealView> {
               context: context,
               builder: (_) => AlertDialog(
                     title: const Text(
-                        'Bạn có muốn thoát không?\nDữ liệu đơn hàng này sẽ bị xóa.'),
+                      'Bạn có muốn thoát không?\nDữ liệu đơn hàng này sẽ bị xóa.',
+                      style: TextStyle(
+                        fontFamily: "QuicksandMedium",
+                      ),
+                    ),
                     actions: [
                       ElevatedButton(
                           onPressed: () {

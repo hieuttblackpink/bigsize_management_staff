@@ -42,7 +42,7 @@ class _UserProfileInfo extends State<UserProfileInfo> {
                     return Container(
                       alignment: Alignment.center,
                       height: 500.0,
-                      width: 450,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         color: ColorManager.backGroundBlue,
@@ -226,7 +226,6 @@ class RowUP extends Row {
           ),
         ),
         Container(
-          width: 280,
           margin: const EdgeInsets.only(top: 0, left: 10),
           //color: Colors.red,
           child: Text(
@@ -240,8 +239,8 @@ class RowUP extends Row {
             textAlign: TextAlign.left,
           ),
         ),
+        const Spacer(),
         Container(
-          width: 30,
           margin: const EdgeInsets.only(top: 0, left: 0),
           //color: Colors.red,
           child: IconButton(
@@ -251,6 +250,9 @@ class RowUP extends Row {
             ),
             onPressed: press,
           ),
+        ),
+        const SizedBox(
+          width: 10,
         ),
       ],
     );

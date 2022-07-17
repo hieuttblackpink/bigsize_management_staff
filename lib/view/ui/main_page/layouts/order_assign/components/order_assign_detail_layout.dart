@@ -148,7 +148,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                                   )));
                                     } else {
                                       showAlertDialog(context,
-                                          "Co loi khi cap nhat trang thai don hang nay");
+                                          "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
                                     }
                                   }
 
@@ -168,20 +168,23 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                                   )));
                                     } else {
                                       showAlertDialog(context,
-                                          "Co loi khi cap nhat trang thai don hang nay");
+                                          "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
                                     }
                                   }
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
-                                  height: 60,
+                                  height:
+                                      order.data!.content!.deliveryDate == null
+                                          ? 60
+                                          : 1,
                                   width: 200,
                                   child: Text(
                                     order.data!.content!.packagedDate == null
-                                        ? "Da dong goi"
+                                        ? "Đã đóng gói"
                                         : order.data!.content!.deliveryDate ==
                                                 null
-                                            ? "Da giao"
+                                            ? "Đã giao"
                                             : "",
                                     style: const TextStyle(
                                       color: Colors.blue,

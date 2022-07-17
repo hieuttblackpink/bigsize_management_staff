@@ -23,6 +23,7 @@ class _OrderLayout extends State<OrderLayout> {
   final OrderBloc _orderBloc = OrderBloc();
   late Future<OrderList?> orderListGet;
   OrderList? orderList;
+  String userToken = "";
   //late OrderList orderListStream;
 
   /*
@@ -68,228 +69,258 @@ class _OrderLayout extends State<OrderLayout> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            FutureBuilder<String?>(
-                future: getToken(),
-                builder: (context, token) {
-                  if (token.hasData) {
-                    if (isChange) {
-                      getListOrder(token.data.toString(), orderDate)
-                          .then((value) {
-                        orderList = value;
-                        isChange = false;
-                        if (mounted) {
-                          setState(() {});
+        padding: const EdgeInsets.all(10.0),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              isChange = true;
+            });
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                FutureBuilder<String?>(
+                    future: getToken(),
+                    builder: (context, token) {
+                      if (token.hasData) {
+                        if (isChange) {
+                          getListOrder(token.data.toString(), orderDate)
+                              .then((value) {
+                            orderList = value;
+                            isChange = false;
+                            if (mounted) {
+                              setState(() {
+                                userToken = token.data.toString();
+                              });
+                            }
+                          });
                         }
-                      });
-                    }
 
-                    //updateMyUI();
-                    return Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(left: 20, right: 20),
-                          height: 80,
-                          //width: 150,
-                          child: TextField(
-                            controller: dateController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: myinputborder(),
-                              enabledBorder: myinputborder(),
-                              focusedBorder: myfocusborder(),
-                              contentPadding: const EdgeInsets.only(
-                                  top: 0, left: 20, bottom: 0, right: 10),
-                            ),
-                            style: const TextStyle(
-                              fontFamily: "QuicksandMedium",
-                              fontSize: 20,
-                            ),
-                            //enabled: false,
-                            readOnly: true,
-                            focusNode: FocusNode(),
-                            enableInteractiveSelection: false,
-                            onTap: () {
-                              DatePicker.showDatePicker(
-                                context,
-                                showTitleActions: true,
-                                minTime: DateTime(1950, 1, 1),
-                                maxTime: DateTime.now(), //(2022, 12, 31),
-                                theme: const DatePickerTheme(
-                                  headerColor: Color(0x1000ADFF),
-                                  backgroundColor: Color(0xFFFFFFFF),
-                                  itemStyle: TextStyle(
-                                    color: Color(0xFF00ADFF),
-                                    fontFamily: "QuickSandBold",
-                                    fontSize: 20,
-                                  ),
-                                  doneStyle: TextStyle(
-                                    color: Color(0xFF0085C3),
-                                    fontSize: 20,
-                                    fontFamily: "QuickSandBold",
-                                  ),
-                                  cancelStyle: TextStyle(
-                                    color: Colors.deepOrangeAccent,
-                                    fontSize: 20,
-                                    fontFamily: "QuickSandBold",
-                                  ),
+                        //updateMyUI();
+                        return Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.center,
+                              margin:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              height: 80,
+                              //width: 150,
+                              child: TextField(
+                                controller: dateController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: myinputborder(),
+                                  enabledBorder: myinputborder(),
+                                  focusedBorder: myfocusborder(),
+                                  contentPadding: const EdgeInsets.only(
+                                      top: 0, left: 20, bottom: 0, right: 10),
                                 ),
-                                onChanged: (date) {
-                                  print('change $date in time zone ' +
-                                      date.timeZoneOffset.inHours.toString());
-                                },
-                                onConfirm: (date) async {
-                                  print('confirm $date');
-                                  String bd = "";
-                                  if ((date.day >= 10) && (date.month >= 10)) {
-                                    bd = date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day < 10) && (date.month >= 10)) {
-                                    bd = "0" +
-                                        date.day.toString() +
-                                        "/" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day >= 10) && (date.month < 10)) {
-                                    bd = date.day.toString() +
-                                        "/0" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  if ((date.day < 10) && (date.month < 10)) {
-                                    bd = "0" +
-                                        date.day.toString() +
-                                        "/0" +
-                                        date.month.toString() +
-                                        "/" +
-                                        date.year.toString();
-                                  }
-                                  print("Here: " + bd);
-                                  dateController.text = bd;
-                                  orderDate = dateController.text;
-                                  isChange = true;
+                                style: const TextStyle(
+                                  fontFamily: "QuicksandMedium",
+                                  fontSize: 20,
+                                ),
+                                //enabled: false,
+                                readOnly: true,
+                                focusNode: FocusNode(),
+                                enableInteractiveSelection: false,
+                                onTap: () {
+                                  DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions: true,
+                                    minTime: DateTime(1950, 1, 1),
+                                    maxTime: DateTime.now(), //(2022, 12, 31),
+                                    theme: const DatePickerTheme(
+                                      headerColor: Color(0x1000ADFF),
+                                      backgroundColor: Color(0xFFFFFFFF),
+                                      itemStyle: TextStyle(
+                                        color: Color(0xFF00ADFF),
+                                        fontFamily: "QuickSandBold",
+                                        fontSize: 20,
+                                      ),
+                                      doneStyle: TextStyle(
+                                        color: Color(0xFF0085C3),
+                                        fontSize: 20,
+                                        fontFamily: "QuickSandBold",
+                                      ),
+                                      cancelStyle: TextStyle(
+                                        color: Colors.deepOrangeAccent,
+                                        fontSize: 20,
+                                        fontFamily: "QuickSandBold",
+                                      ),
+                                    ),
+                                    onChanged: (date) {
+                                      print('change $date in time zone ' +
+                                          date.timeZoneOffset.inHours
+                                              .toString());
+                                    },
+                                    onConfirm: (date) async {
+                                      print('confirm $date');
+                                      String bd = "";
+                                      if ((date.day >= 10) &&
+                                          (date.month >= 10)) {
+                                        bd = date.day.toString() +
+                                            "/" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day < 10) &&
+                                          (date.month >= 10)) {
+                                        bd = "0" +
+                                            date.day.toString() +
+                                            "/" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day >= 10) &&
+                                          (date.month < 10)) {
+                                        bd = date.day.toString() +
+                                            "/0" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      if ((date.day < 10) &&
+                                          (date.month < 10)) {
+                                        bd = "0" +
+                                            date.day.toString() +
+                                            "/0" +
+                                            date.month.toString() +
+                                            "/" +
+                                            date.year.toString();
+                                      }
+                                      print("Here: " + bd);
+                                      dateController.text = bd;
+                                      orderDate = dateController.text;
+                                      isChange = true;
 
-                                  if (isChange) {
-                                    getListOrder(token.data.toString(),
-                                            dateController.text.toString())
-                                        .then((value) {
-                                      orderList = value;
-                                      isChange = false;
-                                      if (mounted) {
-                                        setState(() {
-                                          currentDate = date;
+                                      if (isChange) {
+                                        getListOrder(token.data.toString(),
+                                                dateController.text.toString())
+                                            .then((value) {
+                                          orderList = value;
+                                          isChange = false;
+                                          if (mounted) {
+                                            setState(() {
+                                              currentDate = date;
+                                            });
+                                          }
                                         });
                                       }
-                                    });
-                                  }
+                                    },
+                                    currentTime: currentDate,
+                                    locale: LocaleType.vi,
+                                  );
                                 },
-                                currentTime: currentDate,
-                                locale: LocaleType.vi,
-                              );
-                            },
-                          ),
-                        ),
-                        orderList != null &&
-                                orderList!.content!.isNotEmpty &&
-                                !isChange
-                            ? Column(
-                                children: <Widget>[
-                                  ListView(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                              "Tổng đơn hàng ${orderList!.content!.length}",
-                                              style: const TextStyle(
-                                                fontFamily: "QuicksandBold",
-                                                fontSize: 15,
-                                              )),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: Divider(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onBackground,
-                                              // thickness: 10,
-                                              height: 10,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Divider(
-                                        height: 10,
-                                        thickness: 0,
-                                      ),
-                                      ListView.separated(
+                              ),
+                            ),
+                            orderList != null &&
+                                    orderList!.content!.isNotEmpty &&
+                                    !isChange
+                                ? Column(
+                                    children: <Widget>[
+                                      ListView(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
-                                        itemBuilder: (context, index) =>
-                                            index == orderList!.content!.length
-                                                ? listItem(
-                                                    context,
-                                                    orderList!.content!.last,
-                                                    index,
-                                                    token.toString())
-                                                : listItem(
-                                                    context,
-                                                    orderList!.content![index],
-                                                    index,
-                                                    token.toString()),
-                                        separatorBuilder: (_, __) =>
-                                            const SizedBox(
-                                          height: 10,
-                                        ),
-                                        itemCount: orderList!.content!.length,
-                                      )
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                  "Tổng đơn hàng ${orderList!.content!.length}",
+                                                  style: const TextStyle(
+                                                    fontFamily: "QuicksandBold",
+                                                    fontSize: 15,
+                                                  )),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: Divider(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .onBackground,
+                                                  // thickness: 10,
+                                                  height: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Divider(
+                                            height: 10,
+                                            thickness: 0,
+                                          ),
+                                          ListView.separated(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) =>
+                                                index ==
+                                                        orderList!
+                                                            .content!.length
+                                                    ? listItem(
+                                                        context,
+                                                        orderList!
+                                                            .content!.last,
+                                                        index,
+                                                        token.toString())
+                                                    : listItem(
+                                                        context,
+                                                        orderList!
+                                                            .content![index],
+                                                        index,
+                                                        token.toString()),
+                                            separatorBuilder: (_, __) =>
+                                                const SizedBox(
+                                              height: 10,
+                                            ),
+                                            itemCount:
+                                                orderList!.content!.length,
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
                                     ],
-                                  ),
-                                  const SizedBox(
-                                    height: 50,
-                                  ),
-                                ],
-                              )
-                            : orderList != null && orderList!.content!.isEmpty
-                                ? Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(top: 20),
-                                    child: const Text(
-                                      "Bạn không có đơn hàng nào vào ngày này",
-                                      style: TextStyle(
-                                          fontFamily: "QuicksandMedium",
-                                          fontStyle: FontStyle.italic,
-                                          color: Colors.blue,
-                                          fontSize: 15),
-                                    ),
                                   )
-                                : loadListOrder(context)
-                      ],
-                    );
-                  }
+                                : orderList != null &&
+                                        orderList!.content!.isEmpty &&
+                                        !isChange
+                                    ? Column(
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.center,
+                                            margin:
+                                                const EdgeInsets.only(top: 20),
+                                            child: const Text(
+                                              "Bạn không có đơn hàng nào vào ngày này",
+                                              style: TextStyle(
+                                                  fontFamily: "QuicksandMedium",
+                                                  fontStyle: FontStyle.italic,
+                                                  color: Colors.blue,
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 550,
+                                          ),
+                                        ],
+                                      )
+                                    : loadListOrder(context)
+                          ],
+                        );
+                      }
 
-                  return const CircularProgressIndicator();
-                }),
-          ],
-        ),
-      ),
-    );
+                      return const CircularProgressIndicator();
+                    }),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget loadListOrder(BuildContext context) => Column(

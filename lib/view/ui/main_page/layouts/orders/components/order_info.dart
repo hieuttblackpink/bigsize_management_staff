@@ -37,7 +37,7 @@ class OrderInfo extends StatelessWidget {
                   ? "Địa chỉ nhận hàng: " +
                       orderInfo.store!.storeAddress.toString()
                   : "Địa chỉ nhận hàng: " +
-                      orderInfo.deliveryAddress.toString(),
+                      orderInfo.deliveryAddress!.receiveAddress.toString(),
               softWrap: true,
               textAlign: TextAlign.left,
               style: const TextStyle(

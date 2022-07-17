@@ -1,6 +1,7 @@
 import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:bigsize_management_staff/view/ui/add_deal/add_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PaymentMethodLayout extends StatefulWidget {
   const PaymentMethodLayout({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _PaymentMethodLayout extends State<PaymentMethodLayout> {
                 Navigator.pop(context, "Tiền mặt");
                 break;
               default:
-                Navigator.pop(context, "Thẻ");
+                Navigator.pop(context, "ZaloPay");
                 break;
             }
           },
@@ -118,13 +119,15 @@ class _PaymentMethodLayout extends State<PaymentMethodLayout> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Image.asset("assets/images/icons8-zalo-100.png"),
+                    /*
                     Icon(
                       Icons.account_balance_rounded,
                       size: 100,
                       color: choose == 1 ? Colors.lightBlue : Colors.black,
-                    ),
+                    ),*/
                     Text(
-                      "Thẻ",
+                      "ZaloPay",
                       style: TextStyle(
                         fontFamily: "QuicksandBold",
                         fontSize: 40,

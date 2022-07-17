@@ -57,7 +57,7 @@ class _MainView extends State<MainView> {
   }
 
   List<Widget> getRightAction(int activeLayout, BuildContext context) {
-    if (activeLayout > 0 && activeLayout < 4) {
+    if (activeLayout >= 0 && activeLayout < 4) {
       return [
         IconButton(
             onPressed: () {
@@ -80,6 +80,9 @@ class _MainView extends State<MainView> {
         IconButton(
             onPressed: () {
               switch (activeLayout) {
+                case 0:
+                  Navigator.pushNamed(context, Routes.notificationRoute);
+                  break;
                 case 1:
                   Navigator.pushNamed(context, Routes.addOrderRoute);
                   break;
@@ -96,7 +99,13 @@ class _MainView extends State<MainView> {
                     Icons.add,
                     size: 35,
                   )
-                : const Icon(null)),
+                : activeLayout == 0
+                    ? const Icon(
+                        Icons.notifications_rounded,
+                        size: 35,
+                        color: Colors.blue,
+                      )
+                    : const Icon(null)),
         const SizedBox(
           width: 5,
         ),

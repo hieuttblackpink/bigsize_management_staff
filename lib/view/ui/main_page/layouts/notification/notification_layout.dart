@@ -1,57 +1,57 @@
-import 'package:bigsize_management_staff/blocs/product_bloc.dart';
-import 'package:bigsize_management_staff/models/product/product_search.dart';
+import 'package:bigsize_management_staff/blocs/notification_bloc.dart';
+import 'package:bigsize_management_staff/models/notification/notification.dart';
 import 'package:bigsize_management_staff/services/storage_service.dart';
 import 'package:bigsize_management_staff/view/resources/styles_manager.dart';
-import 'package:bigsize_management_staff/view/shared/widgets/form_field.dart';
-import 'package:bigsize_management_staff/view/shared/widgets/text_field_search.dart';
-import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SearchProductLayout extends StatefulWidget {
-  const SearchProductLayout({Key? key}) : super(key: key);
+class NotificationLayout extends StatefulWidget {
+  const NotificationLayout({Key? key}) : super(key: key);
 
   @override
-  _SearchProductLayout createState() => _SearchProductLayout();
+  _NotificationLayout createState() => _NotificationLayout();
 }
 
-class _SearchProductLayout extends State<SearchProductLayout> {
+class _NotificationLayout extends State<NotificationLayout> {
   final StorageService _storageService = StorageService();
-  final ProductBloc _productBloc = ProductBloc();
-  ProductSearch? productSearch;
-  TextEditingController searchController = TextEditingController();
-  String _searchText = "";
+  final NotificationBloc _notificationBloc = NotificationBloc();
+  NotificationModel? notification;
+  //TextEditingController searchController = TextEditingController();
+  //String _searchText = "";
   final ScrollController _controller = ScrollController();
+  String tokenUser = "";
 
   int page = 1;
   bool isFirstLoad = true;
   bool isLoadMoreRunning = false;
   bool hasNextPage = false;
-  bool isSearching = false;
+  //bool isSearching = false;
+  bool hasToken = false;
 
   Future<String?> getUserToken() async {
     return await _storageService.readSecureData("UserToken");
   }
 
-  Future<ProductSearch> searchProductByName(String searchKey, int page) async {
-    ProductSearch search =
-        await _productBloc.searchProductByName(searchKey, page);
-    if (mounted && isFirstLoad) {
+  Future<NotificationModel> getNotification(String token, int page) async {
+    NotificationModel notify =
+        await _notificationBloc.getNotification(token, page);
+    if (mounted && isFirstLoad && !hasToken) {
       setState(() {
-        productSearch = search;
+        notification = notify;
         isFirstLoad = false;
-        hasNextPage = search.hasNext!;
+        hasNextPage = notify.hasNext!;
+        tokenUser = token;
+        hasToken = true;
         //_controller.addListener(_loadMore);
         print(hasNextPage.toString());
+        print(notify.content!.toList());
       });
     }
-    return search;
+    return notify;
   }
 
   @override
   void initState() {
     super.initState();
-    searchProductByName(_searchText, page);
     _controller.addListener(_loadMore);
   }
 
@@ -60,20 +60,22 @@ class _SearchProductLayout extends State<SearchProductLayout> {
     if (hasNextPage == true &&
         isFirstLoad == false &&
         isLoadMoreRunning == false &&
-        isSearching == false &&
+        hasToken == true &&
+        //isSearching == false &&
         _controller.position.extentAfter < 300) {
       setState(() {
         isLoadMoreRunning = true; // Display a progress indicator at the bottom
       });
       page += 1; // Increase _page by 1
       try {
-        ProductSearch searchMore = await searchProductByName(_searchText, page);
+        NotificationModel getMoreNotify =
+            await getNotification(tokenUser, page);
 
-        if (searchMore.content!.isNotEmpty) {
+        if (getMoreNotify.content!.isNotEmpty) {
           setState(() {
-            productSearch!.content!.addAll(searchMore.content!.toList());
-            hasNextPage = searchMore.hasNext!;
-            print(productSearch!.content!.length);
+            notification!.content!.addAll(getMoreNotify.content!.toList());
+            hasNextPage = getMoreNotify.hasNext!;
+            print(notification!.content!.length);
           });
         } else {
           setState(() {
@@ -100,7 +102,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tìm kiếm sản phẩm"),
+        title: const Text("Thông báo"),
       ),
       body: SingleChildScrollView(
         controller: _controller,
@@ -110,11 +112,10 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                 future: getUserToken(),
                 builder: (context, token) {
                   if (token.hasData) {
+                    getNotification(token.data.toString(), page);
                     return Column(
                       children: <Widget>[
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        /*
                         Container(
                           height: 50,
                           padding: const EdgeInsets.only(left: 20, right: 20),
@@ -138,16 +139,16 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                               });
 
                               ProductSearch search =
-                                  await searchProductByName(_searchText, 1);
+                                  await getNotification(_searchText, 1);
                               setState(() {
-                                productSearch = search;
+                                notification = search;
                                 page = 1;
                                 isSearching = false;
                                 hasNextPage = search.hasNext!;
                               });
                             },
                           ),
-                        ),
+                        ),*/
                         const SizedBox(
                           height: 20,
                         ),
@@ -155,25 +156,27 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                           //controller: _controller,
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: productSearch == null
+                          itemCount: notification == null
                               ? 0
-                              : productSearch!.content!.length,
+                              : notification!.content!.length,
                           itemBuilder: (context, index) {
-                            if (productSearch != null &&
-                                productSearch!.content!.isNotEmpty &&
+                            if (notification != null &&
+                                notification!.content!.isNotEmpty &&
                                 !isFirstLoad) {
                               return GestureDetector(
                                   onTap: () => {
+                                        /*
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) => ProductDetail(
                                                       userToken:
                                                           token.data.toString(),
-                                                      productID: productSearch!
+                                                      productID: notification!
                                                           .content![index]
                                                           .productId,
                                                     )))
+                                                    */
                                       },
                                   child: Card(
                                       shadowColor: Colors.grey,
@@ -181,19 +184,20 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                           padding: const EdgeInsets.all(5),
                                           child: Column(children: [
                                             Row(children: <Widget>[
+                                              /*
                                               Container(
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20)),
                                                   child: Image.network(
-                                                    productSearch!
+                                                    notification!
                                                         .content![index]
                                                         .imageUrl
                                                         .toString(),
                                                     width: 100,
                                                     height: 100,
-                                                  )),
+                                                  )),*/
                                               const SizedBox(width: 10),
                                               Expanded(
                                                   child: Column(
@@ -202,9 +206,9 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                               .start,
                                                       children: [
                                                     Text(
-                                                        productSearch!
+                                                        notification!
                                                             .content![index]
-                                                            .productName
+                                                            .title
                                                             .toString(),
                                                         style: const TextStyle(
                                                             fontSize: 15,
@@ -214,7 +218,7 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                                 Colors.black)),
                                                     const SizedBox(height: 5),
                                                     Text(
-                                                        '${productSearch!.content![index].price}',
+                                                        '${notification!.content![index].message}',
                                                         style: const TextStyle(
                                                             fontSize: 16,
                                                             fontFamily:
@@ -223,69 +227,15 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                                 Colors.black)),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                        '${productSearch!.content![index].promotionPrice}',
+                                                        '${notification!.content![index].createDate}',
                                                         style: const TextStyle(
                                                             fontSize: 14,
                                                             color: Colors
                                                                 .black54)),
                                                   ])),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                child: const Icon(
-                                                    Icons
-                                                        .arrow_forward_ios_outlined,
-                                                    size: 25,
-                                                    color: Colors.blue),
-                                              ),
                                             ]),
                                             const SizedBox(height: 8),
-                                            /*
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          InkWell(
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                              child: CircleAvatar(
-                                                  backgroundColor: Colors.blue
-                                                      .withOpacity(0.1),
-                                                  radius: 15,
-                                                  child: const Text('-',
-                                                      style: const TextStyle(
-                                                          color: Colors.blue))),
-                                              onTap: () =>
-                                                  controller.quantityMinus(e)),
-                                          const SizedBox(width: 5),
-                                          Text('${e.quantity.value}'),
-                                          const SizedBox(width: 5),
-                                          InkWell(
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                              child: CircleAvatar(
-                                                  backgroundColor: Colors.blue
-                                                      .withOpacity(0.1),
-                                                  radius: 15,
-                                                  child: const Text('+',
-                                                      style: const TextStyle(
-                                                          color: Colors.blue))),
-                                              onTap: () =>
-                                                  controller.quantityAdd(e))
-                                        ])*/
                                           ]))));
-                            } else if (productSearch != null &&
-                                productSearch!.content!.isEmpty &&
-                                !isFirstLoad) {
-                              return Container(
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  "Không có kết quả tìm kiếm",
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              );
                             }
 
                             return Container(

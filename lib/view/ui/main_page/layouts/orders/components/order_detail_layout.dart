@@ -269,9 +269,9 @@ class _OrderDetail extends State<OrderDetail> {
                   alignment: Alignment.centerRight,
                   //width: 170,
                   //color: Colors.pinkAccent,
-                  child: const Text(
-                    "0",
-                    style: TextStyle(
+                  child: Text(
+                    "",
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandMedium",
                     ),

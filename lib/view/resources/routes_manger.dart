@@ -1,3 +1,4 @@
+import 'package:bigsize_management_staff/view/ui/main_page/layouts/notification/notification_layout.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_detail_layout.dart';
 import 'package:bigsize_management_staff/view/ui/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class Routes {
   static const String addEntryRoute = "/Entry";
   static const String addOrderRoute = "/Order";
   //static const String OrderDetailRoute = "/OrderDetail";
+  static const String notificationRoute = "/Notification";
 }
 
 class RouteGenerator {
@@ -30,7 +32,7 @@ class RouteGenerator {
       case Routes.loginRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case Routes.homeRoute:
-        return MaterialPageRoute(builder: (_) => MainView());
+        return MaterialPageRoute(builder: (_) => const MainView());
       case Routes.moneyRoute:
         return MaterialPageRoute(builder: (_) => MoneyDetailsView());
       case Routes.addProductRoute:
@@ -44,6 +46,8 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) =>
                 AddDealView(false, deal: settings.arguments as OrderModel?));
+      case Routes.notificationRoute:
+        return MaterialPageRoute(builder: (_) => const NotificationLayout());
       //case Routes.OrderDetailRoute:
       //return MaterialPageRoute(builder: (_) => const OrderDetail());
       default:

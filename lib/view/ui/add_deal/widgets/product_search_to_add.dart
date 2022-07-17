@@ -351,6 +351,19 @@ class _SearchProductToAdd extends State<SearchProductToAdd> {
                                                             color: Colors
                                                                 .black54)),
                                                   ])),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                padding: const EdgeInsets.only(
+                                                    top: 20),
+                                                child: const Text(
+                                                  "Thêm sản phẩm",
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 12,
+                                                      fontFamily:
+                                                          "QuicksandMedium"),
+                                                ),
+                                              ),
                                             ]),
                                             const SizedBox(height: 8),
                                           ]))));

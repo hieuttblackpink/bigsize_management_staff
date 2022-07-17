@@ -21,7 +21,8 @@ class OrderAssignInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Khách hàng: " + orderInfo.customerName.toString(),
+              "Khách hàng: " +
+                  orderInfo.deliveryAddress!.receiverName.toString(),
               textAlign: TextAlign.left,
               style: const TextStyle(
                   color: Colors.black,
@@ -32,7 +33,8 @@ class OrderAssignInfo extends StatelessWidget {
               height: 7,
             ),
             Text(
-              "Địa chỉ nhận hàng: " + orderInfo.deliveryAddress.toString(),
+              "Địa chỉ nhận hàng: " +
+                  orderInfo.deliveryAddress!.receiveAddress.toString(),
               softWrap: true,
               textAlign: TextAlign.left,
               style: const TextStyle(
@@ -43,9 +45,9 @@ class OrderAssignInfo extends StatelessWidget {
             const SizedBox(
               height: 7,
             ),
-            const Text(
-              "SĐT: ",
-              style: TextStyle(
+            Text(
+              "SĐT: " + orderInfo.deliveryAddress!.receiverPhone.toString(),
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
               ),

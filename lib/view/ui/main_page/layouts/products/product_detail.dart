@@ -26,7 +26,7 @@ class _ProductDetail extends State<ProductDetail> {
   final String userToken;
   final int? productID;
   final ProductBloc _productBloc = ProductBloc();
-  int activePage = 0;
+  int activePage = 1;
 
   _ProductDetail(this.userToken, this.productID);
 
