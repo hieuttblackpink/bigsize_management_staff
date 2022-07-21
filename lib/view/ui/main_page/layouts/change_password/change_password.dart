@@ -143,7 +143,11 @@ class _ChangePassword extends State<ChangePassword> {
               ),
             ),
             SizedBox(height: size.height * 0.02),
-            FormError(errors: errors),
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(left: 20, top: 5, bottom: 10),
+              child: FormError(errors: errors),
+            ),
             SizedBox(height: size.height * 0.05),
             Container(
               alignment: Alignment.center,

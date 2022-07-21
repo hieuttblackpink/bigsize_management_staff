@@ -14,6 +14,7 @@ import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:bigsize_management_staff/model/module/deals.dart';
 import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:money_formatter/money_formatter.dart';
 
 import '../../../model/repository/dates_repository.dart';
@@ -303,6 +304,15 @@ class AddOrderView extends State<AddDealView> {
                                       setState(() {
                                         isCreating = false;
                                       });
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Tạo đơn hàng thành công", // message
+                                          toastLength:
+                                              Toast.LENGTH_SHORT, // length
+                                          gravity:
+                                              ToastGravity.BOTTOM, // location
+                                          timeInSecForIosWeb: 1 // duration
+                                          );
                                       Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
@@ -342,6 +352,15 @@ class AddOrderView extends State<AddDealView> {
                                     setState(() {
                                       isCreating = false;
                                     });
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Tạo đơn hàng thành công", // message
+                                        toastLength:
+                                            Toast.LENGTH_LONG, // length
+                                        gravity:
+                                            ToastGravity.BOTTOM, // location
+                                        timeInSecForIosWeb: 1 // duration
+                                        );
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -499,7 +518,8 @@ class AddOrderView extends State<AddDealView> {
             verticalLine(context),
             Column(
               children: [
-                Text("Sản phẩm", style: Theme.of(context).textTheme.subtitle1),
+                Text("Số sản phẩm",
+                    style: Theme.of(context).textTheme.subtitle1),
                 divider(),
                 Text(totalProduct.toString(),
                     style: Theme.of(context).textTheme.subtitle1),

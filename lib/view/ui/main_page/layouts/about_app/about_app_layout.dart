@@ -50,25 +50,28 @@ class AppInfo extends StatelessWidget {
             const SizedBox(
               height: 100,
             ),
-/*
-                Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(left: 20, right: 20),
-                  //padding: EdgeInsets.all(20),
-                  //color: Colors.blue,
-                  height: 200,
-                  child: Image.asset(
-                    "assets/images/main.png",
-                  ),
-                ),
-*/
+            Container(
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              //padding: EdgeInsets.all(20),
+              //color: Colors.blue,
+              height: 200,
+              child: Image.asset(
+                "assets/images/logo-bigsize.png",
+                width: 100,
+                height: 100,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
                 alignment: Alignment.center,
                 //margin: const EdgeInsets.only(left: 20, right: 20),
                 //padding: EdgeInsets.all(20),
                 //color: Colors.blue,
                 child: const Text(
-                  "BIGSIZE SHOP FOR STAFF",
+                  "MYBIGSIZE FOR STAFF",
                   style: TextStyle(
                     fontFamily: "QuicksandBold",
                     fontSize: 35,

@@ -9,6 +9,8 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/compon
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_payment.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_status.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class OrderAssignDetail extends StatefulWidget {
@@ -158,6 +160,15 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                         await updateToExported(widget.userToken,
                                             int.parse(widget.id));
                                     if (isPackaged.isSuccess!) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Cập nhật trạng thái đơn hàng thành công", // message
+                                          toastLength:
+                                              Toast.LENGTH_SHORT, // length
+                                          gravity:
+                                              ToastGravity.CENTER, // location
+                                          timeInSecForIosWeb: 1 // duration
+                                          );
                                       Navigator.pop(context);
                                       Navigator.push(
                                           context,
@@ -177,7 +188,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                   height:
                                       order.data!.content!.deliveryDate == null
                                           ? 60
-                                          : 1,
+                                          : 0,
                                   width: 200,
                                   child: Text(
                                     order.data!.content!.packagedDate == null
@@ -201,7 +212,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                   );
                 }
 
-                return const CircularProgressIndicator();
+                return loadingWidget(context);
               })
         ]),
       ),
@@ -449,4 +460,124 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
       },
     );
   }
+
+  Widget loadingWidget(BuildContext context) => Container(
+        alignment: Alignment.center,
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      style: BorderStyle.solid,
+                      color: Colors.black,
+                      width: 0.5)),
+              height: 50,
+              padding: const EdgeInsets.only(left: 15),
+              child: Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 225, 225, 225),
+                highlightColor: Colors.white,
+                child: const Text("Ngày đặt hàng: ",
+                    style: TextStyle(
+                        fontFamily: "QuicksandMedium",
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...List.generate(2, (index) => divider()),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Thông tin đơn hàng",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            divider(),
+            ...List.generate(2, (index) => divider()),
+            const SizedBox(height: 15),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Hình thức thanh toán",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            divider(),
+            ...List.generate(2, (index) => divider()),
+            const SizedBox(height: 15),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Text("Danh sách sản phẩm",
+                  style: Theme.of(context).textTheme.headline4),
+            ),
+            divider(),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 225, 225, 225),
+              highlightColor: Colors.white,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+          ],
+        ),
+      );
 }

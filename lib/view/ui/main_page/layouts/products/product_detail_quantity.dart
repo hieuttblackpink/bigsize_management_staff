@@ -2,7 +2,9 @@ import 'package:bigsize_management_staff/blocs/product_bloc.dart';
 import 'package:bigsize_management_staff/models/product/product_colour.dart';
 import 'package:bigsize_management_staff/models/product/product_quantity_store.dart';
 import 'package:bigsize_management_staff/models/product/product_size.dart';
+import 'package:bigsize_management_staff/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductDetailQuantity extends StatefulWidget {
   final String userToken;
@@ -24,19 +26,35 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
   int colorIndex = 0;
   int sizeIndex = 0;
 
+  bool isGetColour = true;
+  bool isGetSize = true;
+  bool isGetQuantity = true;
+
   Future<ProductColour> getProductColour(String token, int idP) async {
     ProductColour pC = await _productBloc.getProductColour(token, idP);
-    setState(() {
-      listProductColour = pC.content;
-    });
+    if (mounted && isGetColour) {
+      setState(() {
+        listProductColour = pC.content;
+        isGetColour = false;
+      });
+    }
     return pC;
   }
 
   Future<ProductSize> getProductSize(String token, int idP, int idC) async {
     ProductSize pS = await _productBloc.getProductSize(token, idP, idC);
-    if (mounted) {
+    if (mounted && isGetSize) {
       setState(() {
         listProductSize = pS.content;
+        if (listProductSize != null && isGetQuantity) {
+          print("a");
+          getProductQuantity(
+              widget.userToken,
+              widget.productID!.toInt(),
+              listProductColour![colorIndex].colourId!.toInt(),
+              listProductSize![sizeIndex].sizeId!.toInt());
+        }
+        isGetSize = false;
       });
     }
     return pS;
@@ -46,11 +64,13 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
       String token, int idP, int idC, int idS) async {
     ProductQuantityStore pQS =
         await _productBloc.getProductQuantityStore(token, idP, idC, idS);
-    if (mounted) {
+    if (mounted && isGetQuantity) {
       setState(() {
         productQuantityStoreContent = pQS.content;
+        isGetQuantity = false;
       });
     }
+    print("b");
     return pQS;
   }
 
@@ -62,10 +82,13 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
 
   @override
   Widget build(BuildContext context) {
-    if (listProductColour != null && listProductColour!.isNotEmpty) {
+    if (listProductColour != null &&
+        listProductColour!.isNotEmpty &&
+        isGetSize) {
       getProductSize(widget.userToken, widget.productID!.toInt(),
           listProductColour![colorIndex].colourId!.toInt());
-      if (listProductSize != null) {
+      if (listProductSize != null && isGetQuantity) {
+        print("a");
         getProductQuantity(
             widget.userToken,
             widget.productID!.toInt(),
@@ -75,8 +98,15 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
     }
     return Container(
       alignment: Alignment.center,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: StyleManager.shadow,
+          borderRadius: StyleManager.border),
       child: Column(children: <Widget>[
-        listProductColour != null && listProductColour!.isNotEmpty
+        listProductColour != null &&
+                listProductColour!.isNotEmpty &&
+                !isGetColour
             ? GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 60,
@@ -91,6 +121,10 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                       setState(() {
                         colorIndex = index;
                         sizeIndex = 0;
+                        setState(() {
+                          isGetSize = true;
+                          isGetQuantity = true;
+                        });
                         getProductSize(
                             widget.userToken,
                             widget.productID!.toInt(),
@@ -116,7 +150,7 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                         shape: BoxShape.circle,
                         border: index == colorIndex
                             ? Border.all(width: 1, color: Colors.black)
-                            : Border.all(width: 0, color: Colors.white),
+                            : Border.all(width: 1, color: Colors.grey),
                       ),
                       child: index == colorIndex
                           ? Container(
@@ -130,11 +164,39 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                     ),
                   );
                 })
-            : Container(),
+            : Container(
+                alignment: Alignment.centerLeft,
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 60,
+                            childAspectRatio: 1 / 1,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () async {},
+                          child: Shimmer.fromColors(
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            baseColor: const Color.fromARGB(255, 225, 225, 225),
+                            highlightColor: Colors.white,
+                          ));
+                    }),
+              ),
         const SizedBox(
           height: 20,
         ),
-        listProductSize != null
+        listProductSize != null && !isGetSize
             ? GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 75,
@@ -148,6 +210,9 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                     onTap: () async {
                       setState(() {
                         sizeIndex = index;
+                        setState(() {
+                          isGetQuantity = true;
+                        });
                         getProductQuantity(
                             widget.userToken,
                             widget.productID!.toInt(),
@@ -187,11 +252,39 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                     ),
                   );
                 })
-            : Container(),
+            : Container(
+                alignment: Alignment.centerLeft,
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 75,
+                            childAspectRatio: 1 / 1,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 20),
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () async {},
+                          child: Shimmer.fromColors(
+                            child: Container(
+                              width: 100,
+                              height: 50,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            baseColor: const Color.fromARGB(255, 225, 225, 225),
+                            highlightColor: Colors.white,
+                          ));
+                    }),
+              ),
         const SizedBox(
           height: 25,
         ),
-        productQuantityStoreContent != null
+        productQuantityStoreContent != null && !isGetQuantity
             ? Row(
                 children: <Widget>[
                   const Text(
@@ -209,7 +302,21 @@ class _ProductDetailQuantity extends State<ProductDetailQuantity> {
                   ),
                 ],
               )
-            : Container(),
+            : Container(
+                alignment: Alignment.centerLeft,
+                child: Shimmer.fromColors(
+                  child: const Text(
+                    "Sản phẩm trong kho còn: ",
+                    style:
+                        TextStyle(fontFamily: "QuicksandMedium", fontSize: 15),
+                  ),
+                  baseColor: const Color.fromARGB(255, 225, 225, 225),
+                  highlightColor: Colors.white,
+                ),
+              ),
+        const SizedBox(
+          height: 20,
+        ),
       ]),
     );
   }

@@ -223,7 +223,14 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                                 Colors.black)),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                        '${productSearch!.content![index].promotionPrice}',
+                                                        productSearch!
+                                                                    .content![
+                                                                        index]
+                                                                    .promotionPrice
+                                                                    .toString() !=
+                                                                "null"
+                                                            ? '${productSearch!.content![index].promotionPrice}'
+                                                            : '${productSearch!.content![index].price}',
                                                         style: const TextStyle(
                                                             fontSize: 14,
                                                             color: Colors
