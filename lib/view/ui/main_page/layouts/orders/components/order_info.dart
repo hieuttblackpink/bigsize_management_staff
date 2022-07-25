@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class OrderInfo extends StatelessWidget {
   final ContentOrderDetail orderInfo;
-  const OrderInfo({Key? key, required this.orderInfo}) : super(key: key);
+  final String cusPhone;
+  const OrderInfo({Key? key, required this.orderInfo, required this.cusPhone})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +50,12 @@ class OrderInfo extends StatelessWidget {
             const SizedBox(
               height: 7,
             ),
-            const Text(
-              "SĐT: ",
-              style: TextStyle(
+            Text(
+              orderInfo.deliveryAddress.toString() != "null"
+                  ? "SĐT: " +
+                      orderInfo.deliveryAddress!.receiverPhone.toString()
+                  : "SĐT: " + cusPhone,
+              style: const TextStyle(
                 color: Colors.black,
                 fontFamily: "QuicksandMedium",
               ),

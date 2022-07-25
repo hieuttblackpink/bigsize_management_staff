@@ -5,4 +5,9 @@ class HandleMessagingFirebase {
     await FirebaseMessaging.instance.subscribeToTopic(username);
     print('subscribeToTopic ' + username);
   }
+
+  static Future<void> unReceiveMessagingFromServer(String username) async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(username);
+    print('unSubscribeFromTopic ' + username);
+  }
 }

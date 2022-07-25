@@ -115,6 +115,7 @@ class OrderList {
 class ContentOrderList {
   int? _orderId;
   String? _customerName;
+  String? _customerPhone;
   int? _totalQuantity;
   double? _totalPrice;
   double? _totalPriceAfterDiscount;
@@ -124,6 +125,7 @@ class ContentOrderList {
   ContentOrderList(
       {int? orderId,
       String? customerName,
+      String? customerPhone,
       int? totalQuantity,
       double? totalPrice,
       double? totalPriceAfterDiscount,
@@ -134,6 +136,9 @@ class ContentOrderList {
     }
     if (customerName != null) {
       _customerName = customerName;
+    }
+    if (customerPhone != null) {
+      _customerPhone = customerPhone;
     }
     if (totalQuantity != null) {
       _totalQuantity = totalQuantity;
@@ -156,6 +161,8 @@ class ContentOrderList {
   set orderId(int? orderId) => _orderId = orderId;
   String? get customerName => _customerName;
   set customerName(String? customerName) => _customerName = customerName;
+  String? get customerPhone => _customerPhone;
+  set customerPhone(String? customerPhone) => _customerPhone = customerPhone;
   int? get totalQuantity => _totalQuantity;
   set totalQuantity(int? totalQuantity) => _totalQuantity = totalQuantity;
   double? get totalPrice => _totalPrice;
@@ -171,6 +178,7 @@ class ContentOrderList {
   ContentOrderList.fromJson(Map<String, dynamic> json) {
     _orderId = json['order_id'];
     _customerName = json['customer_name'];
+    _customerPhone = json['customer_phone'];
     _totalQuantity = json['total_quantity'];
     _totalPrice = json['total_price'];
     _totalPriceAfterDiscount = json['total_price_after_discount'];
@@ -182,6 +190,7 @@ class ContentOrderList {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['order_id'] = _orderId;
     data['customer_name'] = _customerName;
+    data['customer_phone'] = _customerPhone;
     data['total_quantity'] = _totalQuantity;
     data['total_price'] = _totalPrice;
     data['total_price_after_discount'] = _totalPriceAfterDiscount;

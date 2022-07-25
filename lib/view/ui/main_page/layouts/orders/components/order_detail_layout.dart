@@ -11,8 +11,13 @@ import 'package:shimmer/shimmer.dart';
 class OrderDetail extends StatefulWidget {
   final String userToken;
   final String id;
+  final String cusPhone;
 
-  const OrderDetail({Key? key, required this.id, required this.userToken})
+  const OrderDetail(
+      {Key? key,
+      required this.id,
+      required this.userToken,
+      required this.cusPhone})
       : super(key: key);
 
   @override
@@ -74,6 +79,7 @@ class _OrderDetail extends State<OrderDetail> {
                         divider(),
                         OrderInfo(
                           orderInfo: order.data!.content!,
+                          cusPhone: widget.cusPhone,
                         ),
                         divider(),
                         ...List.generate(2, (index) => divider()),

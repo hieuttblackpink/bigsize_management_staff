@@ -152,9 +152,8 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                       showAlertDialog(context,
                                           "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
                                     }
-                                  }
-
-                                  if (order.data!.content!.deliveryDate ==
+                                  } else if (order
+                                          .data!.content!.deliveryDate ==
                                       null) {
                                     OrderExported isPackaged =
                                         await updateToExported(widget.userToken,

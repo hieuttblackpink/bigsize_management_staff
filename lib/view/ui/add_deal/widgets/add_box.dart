@@ -92,21 +92,28 @@ class addBox extends State<AddBox> {
                       .toString() ==
                   chosenProductData.chosenProductDetailID.toString());
 
-          AddOrderView.of(context)!.onProductDetailChange(ProductInNewOrder(
-              productDetailId: isExistProduct
-                  .first.content!.productDetailList!.first.productDetailId,
-              quantity: listOrderProduct![index.toInt()].quantityInNewOrder =
+          if (listOrderProduct![index.toInt()].quantityInNewOrder == 100) {
+            showAlertDialog(context,
+                "Không thể thêm sản phẩm này.\nQuá số lượng cho phép (<= 100)");
+          } else {
+            AddOrderView.of(context)!.onProductDetailChange(ProductInNewOrder(
+                productDetailId: isExistProduct
+                    .first.content!.productDetailList!.first.productDetailId,
+                quantity: listOrderProduct![index.toInt()].quantityInNewOrder =
+                    listOrderProduct![index.toInt()]
+                            .quantityInNewOrder!
+                            .toInt() +
+                        1));
+
+            AddOrderView.of(context)!.onProductChange(
+                isExistProduct.first.content!.price!.toDouble(), 0);
+
+            setState(() {
+              listOrderProduct![index.toInt()].quantityInNewOrder =
                   listOrderProduct![index.toInt()].quantityInNewOrder!.toInt() +
-                      1));
-
-          AddOrderView.of(context)!.onProductChange(
-              isExistProduct.first.content!.price!.toDouble(), 0);
-
-          setState(() {
-            listOrderProduct![index.toInt()].quantityInNewOrder =
-                listOrderProduct![index.toInt()].quantityInNewOrder!.toInt() +
-                    0;
-          });
+                      0;
+            });
+          }
         } else {
           ProductDetailSpecific chosenProduct = await getProductDetail(
               int.parse(chosenProductData.chosenProductID.toString()),
@@ -296,19 +303,27 @@ class addBox extends State<AddBox> {
                         )),
                     Text(item.quantityInNewOrder.toString()),
                     IconButton(
-                        onPressed: () async {
-                          setState(() {
-                            item.quantityInNewOrder =
-                                item.quantityInNewOrder!.toInt() + 1;
-                          });
-                          AddOrderView.of(context)!.onProductDetailChange(
-                              ProductInNewOrder(
-                                  productDetailId: item.content!
-                                      .productDetailList!.first.productDetailId,
-                                  quantity: item.quantityInNewOrder));
-                          AddOrderView.of(context)!.onProductChange(
-                              item.content!.price!.toDouble(), 0);
-                        },
+                        onPressed: item.quantityInNewOrder == 100
+                            ? () => {
+                                  showAlertDialog(context,
+                                      "Không thể tăng thêm.\nQuá số lượng cho phép (<= 100)"),
+                                }
+                            : () async {
+                                setState(() {
+                                  item.quantityInNewOrder =
+                                      item.quantityInNewOrder!.toInt() + 1;
+                                });
+                                AddOrderView.of(context)!.onProductDetailChange(
+                                    ProductInNewOrder(
+                                        productDetailId: item
+                                            .content!
+                                            .productDetailList!
+                                            .first
+                                            .productDetailId,
+                                        quantity: item.quantityInNewOrder));
+                                AddOrderView.of(context)!.onProductChange(
+                                    item.content!.price!.toDouble(), 0);
+                              },
                         icon: const Icon(
                           Icons.add,
                           size: 20,

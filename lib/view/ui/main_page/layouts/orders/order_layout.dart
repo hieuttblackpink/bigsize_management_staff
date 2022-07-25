@@ -518,6 +518,7 @@ class _OrderLayout extends State<OrderLayout> {
                       builder: (_) => OrderDetail(
                             id: item.orderId.toString(),
                             userToken: token,
+                            cusPhone: item.customerPhone.toString(),
                           )))
             },
             subtitle: Text(

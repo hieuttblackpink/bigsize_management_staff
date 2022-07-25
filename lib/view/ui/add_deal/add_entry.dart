@@ -321,6 +321,9 @@ class AddOrderView extends State<AddDealView> {
                                                         .content!.orderId
                                                         .toString(),
                                                     userToken: token.toString(),
+                                                    cusPhone: newOrder
+                                                        .customerPhoneNumber
+                                                        .toString(),
                                                   )));
                                     } else {
                                       setState(() {
@@ -369,6 +372,9 @@ class AddOrderView extends State<AddDealView> {
                                                       .content!.orderId
                                                       .toString(),
                                                   userToken: token.toString(),
+                                                  cusPhone: newOrder
+                                                      .customerPhoneNumber
+                                                      .toString(),
                                                 )));
                                   } else {
                                     setState(() {
