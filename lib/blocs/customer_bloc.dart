@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bigsize_management_staff/models/customer/customer.dart';
 import 'package:bigsize_management_staff/models/customer/new_customer.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:http/http.dart' as http;
 
 class CustomerBloc {
@@ -14,7 +15,24 @@ class CustomerBloc {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    return Customer.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return Customer.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return Customer.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<Customer> createCustomer(String token, NewCustomer newCustomer) async {
@@ -26,6 +44,23 @@ class CustomerBloc {
       },
       body: jsonEncode(newCustomer.toJson()),
     );
-    return Customer.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return Customer.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return Customer.fromJson(jsonDecode(response.body));
+    }
   }
 }

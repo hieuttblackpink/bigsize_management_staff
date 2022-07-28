@@ -217,10 +217,13 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                         '${productSearch!.content![index].price}',
                                                         style: const TextStyle(
                                                             fontSize: 16,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough,
                                                             fontFamily:
                                                                 "QuicksandMedium",
-                                                            color:
-                                                                Colors.black)),
+                                                            color: Colors
+                                                                .black54)),
                                                     const SizedBox(height: 3),
                                                     Text(
                                                         productSearch!
@@ -232,9 +235,9 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                             ? '${productSearch!.content![index].promotionPrice}'
                                                             : '${productSearch!.content![index].price}',
                                                         style: const TextStyle(
-                                                            fontSize: 14,
-                                                            color: Colors
-                                                                .black54)),
+                                                            fontSize: 17,
+                                                            color:
+                                                                Colors.black)),
                                                   ])),
                                               Container(
                                                 alignment: Alignment.center,

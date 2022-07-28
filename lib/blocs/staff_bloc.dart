@@ -7,6 +7,7 @@ import 'package:bigsize_management_staff/models/user/user_password.dart';
 import 'package:bigsize_management_staff/models/user/user_profile.dart';
 import 'package:bigsize_management_staff/models/user/user_work.dart';
 import 'package:bigsize_management_staff/models/user/user_work_order.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:http/http.dart' as http;
 
 class StaffBloc {
@@ -22,7 +23,24 @@ class StaffBloc {
       body: jsonEncode(<String, String>{'username': uid, 'password': password}),
     );
     //print("SB_GetLogin: " + response.body.toString());
-    return StaffLogin.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return StaffLogin.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return StaffLogin.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return StaffLogin.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return StaffLogin.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<StaffProfile> getProfile(String token) async {
@@ -35,7 +53,24 @@ class StaffBloc {
       },
     );
     //print("SB_GetProfile: " + response.body.toString());
-    return StaffProfile.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return StaffProfile.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return StaffProfile.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return StaffProfile.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return StaffProfile.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<bool> updateProfile(String token, StaffProfile profile) async {
@@ -53,7 +88,28 @@ class StaffBloc {
       }),
     );
     //print("SB_UpdateProfile: " + response.body.toString());
-    return StaffProfile.fromJson(jsonDecode(response.body)).isSuccess as bool;
+    switch (response.statusCode) {
+      case 200:
+        return StaffProfile.fromJson(jsonDecode(response.body)).isSuccess
+            as bool;
+      case 400:
+        BadRequestException(response.body.toString());
+        return StaffProfile.fromJson(jsonDecode(response.body)).isSuccess
+            as bool;
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return StaffProfile.fromJson(jsonDecode(response.body)).isSuccess
+            as bool;
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return StaffProfile.fromJson(jsonDecode(response.body)).isSuccess
+            as bool;
+    }
   }
 
   Future<UserPassword> changePassword(
@@ -70,8 +126,25 @@ class StaffBloc {
         'confirm_new_password': cP
       }),
     );
-    print("SB_CP: " + response.body.toString());
-    return UserPassword.fromJson(jsonDecode(response.body));
+    //print("SB_CP: " + response.body.toString());
+    switch (response.statusCode) {
+      case 200:
+        return UserPassword.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return UserPassword.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return UserPassword.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return UserPassword.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<StaffWorking> getStaffWork(String token) async {
@@ -83,7 +156,24 @@ class StaffBloc {
       },
     );
     //print("SB_SW: " + response.body.toString());
-    return StaffWorking.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return StaffWorking.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return StaffWorking.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return StaffWorking.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return StaffWorking.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<StaffWorkingOrder> getStaffWorkOrder(String token) async {
@@ -95,6 +185,23 @@ class StaffBloc {
       },
     );
     //print("SB_SW: " + response.body.toString());
-    return StaffWorkingOrder.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return StaffWorkingOrder.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return StaffWorkingOrder.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return StaffWorkingOrder.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return StaffWorkingOrder.fromJson(jsonDecode(response.body));
+    }
   }
 }

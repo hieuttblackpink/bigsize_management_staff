@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bigsize_management_staff/models/avatar/avatar.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,7 +17,25 @@ class AvatarBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return Avatar.fromJson(jsonDecode(response.body));
+
+    switch (response.statusCode) {
+      case 200:
+        return Avatar.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return Avatar.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return Avatar.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return Avatar.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<Avatar> uploadAvatar(String token, File image) async {

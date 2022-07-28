@@ -7,6 +7,7 @@ import 'package:bigsize_management_staff/models/order/order_exported.dart';
 import 'package:bigsize_management_staff/models/order/order_list.dart';
 import 'package:bigsize_management_staff/models/order/order_packaged.dart';
 import 'package:bigsize_management_staff/models/order/order_return.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:http/http.dart' as http;
 
 class OrderBloc {
@@ -19,7 +20,24 @@ class OrderBloc {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    return Customer.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return Customer.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return Customer.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return Customer.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<OrderList?> getListOrder(String token, String date) async {
@@ -32,7 +50,24 @@ class OrderBloc {
       },
     );
     try {
-      return OrderList.fromJson(jsonDecode(response.body));
+      switch (response.statusCode) {
+        case 200:
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 400:
+          BadRequestException(response.body.toString());
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 401:
+
+        case 403:
+          UnauthorisedException(response.body.toString());
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 500:
+
+        default:
+          FetchDataException(
+              'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+          return OrderList.fromJson(jsonDecode(response.body));
+      }
     } catch (e) {
       return null;
     }
@@ -46,7 +81,24 @@ class OrderBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return OrderDetailModel.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return OrderDetailModel.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return OrderDetailModel.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return OrderDetailModel.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return OrderDetailModel.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<NewOrderReturn> createOrder(String token, NewOrder newOrder) async {
@@ -58,7 +110,24 @@ class OrderBloc {
       },
       body: jsonEncode(newOrder.toJson()),
     );
-    return NewOrderReturn.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return NewOrderReturn.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return NewOrderReturn.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return NewOrderReturn.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return NewOrderReturn.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<OrderList?> getListOrderAssign(String token, String date) async {
@@ -70,7 +139,24 @@ class OrderBloc {
       },
     );
     try {
-      return OrderList.fromJson(jsonDecode(response.body));
+      switch (response.statusCode) {
+        case 200:
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 400:
+          BadRequestException(response.body.toString());
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 401:
+
+        case 403:
+          UnauthorisedException(response.body.toString());
+          return OrderList.fromJson(jsonDecode(response.body));
+        case 500:
+
+        default:
+          FetchDataException(
+              'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+          return OrderList.fromJson(jsonDecode(response.body));
+      }
     } catch (e) {
       return null;
     }
@@ -84,7 +170,24 @@ class OrderBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return OrderPackaged.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return OrderPackaged.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return OrderPackaged.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return OrderPackaged.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return OrderPackaged.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<OrderExported> updateOrderToExported(String token, int id) async {
@@ -95,6 +198,23 @@ class OrderBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return OrderExported.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return OrderExported.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return OrderExported.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return OrderExported.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return OrderExported.fromJson(jsonDecode(response.body));
+    }
   }
 }

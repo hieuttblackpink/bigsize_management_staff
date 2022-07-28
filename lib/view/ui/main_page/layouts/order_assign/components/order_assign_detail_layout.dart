@@ -10,6 +10,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/compon
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_status.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
@@ -126,83 +127,108 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                     ),
                                   ),
                                 ))
-                            : ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.white),
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)), side: BorderSide(color: Colors.blue)))),
-                                onPressed: () async {
-                                  if (order.data!.content!.packagedDate ==
-                                      null) {
-                                    OrderPackaged isPackaged =
-                                        await updateToPackage(widget.userToken,
-                                            int.parse(widget.id));
-                                    if (isPackaged.isSuccess!) {
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => OrderAssignDetail(
-                                                    id: widget.id,
-                                                    userToken: widget.userToken,
-                                                  )));
-                                    } else {
-                                      showAlertDialog(context,
-                                          "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
-                                    }
-                                  } else if (order
-                                          .data!.content!.deliveryDate ==
-                                      null) {
-                                    OrderExported isPackaged =
-                                        await updateToExported(widget.userToken,
-                                            int.parse(widget.id));
-                                    if (isPackaged.isSuccess!) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Cập nhật trạng thái đơn hàng thành công", // message
-                                          toastLength:
-                                              Toast.LENGTH_SHORT, // length
-                                          gravity:
-                                              ToastGravity.CENTER, // location
-                                          timeInSecForIosWeb: 1 // duration
-                                          );
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => OrderAssignDetail(
-                                                    id: widget.id,
-                                                    userToken: widget.userToken,
-                                                  )));
-                                    } else {
-                                      showAlertDialog(context,
-                                          "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
-                                    }
-                                  }
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height:
-                                      order.data!.content!.deliveryDate == null
-                                          ? 60
-                                          : 0,
-                                  width: 200,
-                                  child: Text(
-                                    order.data!.content!.packagedDate == null
-                                        ? "Đã đóng gói"
-                                        : order.data!.content!.deliveryDate ==
+                            : order.data!.content!.deliveryDate != null
+                                ? Container()
+                                : ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                Colors.white),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)), side: BorderSide(color: Colors.blue)))),
+                                    onPressed: () async {
+                                      showLoading(context);
+                                      if (order.data!.content!.packagedDate ==
+                                          null) {
+                                        OrderPackaged isPackaged =
+                                            await updateToPackage(
+                                                widget.userToken,
+                                                int.parse(widget.id));
+                                        if (isPackaged.isSuccess!) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Cập nhật trạng thái đơn hàng thành công", // message
+                                              toastLength:
+                                                  Toast.LENGTH_SHORT, // length
+                                              gravity: ToastGravity
+                                                  .BOTTOM, // location
+                                              timeInSecForIosWeb: 1 // duration
+                                              );
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      OrderAssignDetail(
+                                                        id: widget.id,
+                                                        userToken:
+                                                            widget.userToken,
+                                                      )));
+                                        } else {
+                                          Navigator.pop(context);
+                                          showAlertDialog(context,
+                                              "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
+                                        }
+                                      } else if (order
+                                              .data!.content!.deliveryDate ==
+                                          null) {
+                                        OrderExported isPackaged =
+                                            await updateToExported(
+                                                widget.userToken,
+                                                int.parse(widget.id));
+                                        if (isPackaged.isSuccess!) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Cập nhật trạng thái đơn hàng thành công", // message
+                                              toastLength:
+                                                  Toast.LENGTH_SHORT, // length
+                                              gravity: ToastGravity
+                                                  .BOTTOM, // location
+                                              timeInSecForIosWeb: 1 // duration
+                                              );
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      OrderAssignDetail(
+                                                        id: widget.id,
+                                                        userToken:
+                                                            widget.userToken,
+                                                      )));
+                                        } else {
+                                          Navigator.pop(context);
+                                          showAlertDialog(context,
+                                              "Có lỗi xảy ra khi cập nhật trạng thái đơn hàng này");
+                                        }
+                                      }
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height:
+                                          order.data!.content!.deliveryDate ==
+                                                  null
+                                              ? 60
+                                              : 0,
+                                      width: 250,
+                                      child: Text(
+                                        order.data!.content!.packagedDate ==
                                                 null
-                                            ? "Đã giao"
-                                            : "",
-                                    style: const TextStyle(
-                                      color: Colors.blue,
-                                      fontFamily: "QuicksandMedium",
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                )),
+                                            ? "Đã đóng gói"
+                                            : order.data!.content!
+                                                        .deliveryDate ==
+                                                    null
+                                                ? "Đăng ký cho bên vận chuyển"
+                                                : "",
+                                        style: const TextStyle(
+                                          color: Colors.blue,
+                                          fontFamily: "QuicksandMedium",
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    )),
                         const SizedBox(
                           height: 30,
                         ),
@@ -233,7 +259,12 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
             Column(
               children: [
                 Text(
-                  totalPrice,
+                  MoneyFormatter(
+                          amount: double.parse(
+                              num.parse(totalPrice).toStringAsFixed(0)))
+                      .output
+                      .nonSymbol
+                      .toString(),
                   style: const TextStyle(
                     color: Colors.blue,
                     fontFamily: "QuicksandBold",
@@ -306,7 +337,12 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                   width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
-                    totalPrice,
+                    MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(totalPrice).toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandMedium",
@@ -337,9 +373,16 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                   alignment: Alignment.centerRight,
                   width: 170,
                   //color: Colors.pinkAccent,
-                  child: const Text(
-                    "0",
-                    style: TextStyle(
+                  child: Text(
+                    MoneyFormatter(
+                            amount: double.parse(
+                                    num.parse(totalPrice).toStringAsFixed(0)) -
+                                double.parse(num.parse(pricePromotion)
+                                    .toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandMedium",
                     ),
@@ -370,7 +413,12 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                   width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
-                    pricePromotion,
+                    MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(pricePromotion).toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandBold",
@@ -418,7 +466,14 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                     product.size.toString(),
               ),
               Text(
-                product.pricePerOne.toString() + " d/cái",
+                MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(product.pricePerOne.toString())
+                                    .toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString() +
+                    " d/cái",
               ),
               Text(
                 "Số lượng: " + product.quantity.toString() + " cái",
@@ -427,7 +482,13 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
           ),
           trailing: Column(children: <Widget>[
             Text(
-              product.price.toString(),
+              MoneyFormatter(
+                      amount: double.parse(num.parse(product.price.toString())
+                          .toStringAsFixed(0)))
+                  .output
+                  .nonSymbol
+                  .toString(),
+              style: const TextStyle(fontFamily: "QuicksandMedium"),
             ),
           ]),
         ),
@@ -458,6 +519,37 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
         return alert;
       },
     );
+  }
+
+  showLoading(context) {
+    showDialog(
+        // The user CANNOT close this dialog  by pressing outsite it
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  // The loading indicator
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Some text
+                  Text(
+                    "Đang xử lí",
+                    style: TextStyle(fontFamily: "QuicksandMedium"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Widget loadingWidget(BuildContext context) => Container(

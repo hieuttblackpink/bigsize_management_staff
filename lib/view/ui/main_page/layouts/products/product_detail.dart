@@ -161,18 +161,29 @@ class _ProductDetail extends State<ProductDetail> {
                                                   ),
                                                 ),
                                               ),
-                                              Text(
-                                                MoneyFormatter(
-                                                            amount: detail
-                                                                .data!.price!
-                                                                .toDouble())
-                                                        .output
-                                                        .nonSymbol
-                                                        .toString() +
-                                                    " D",
-                                                style: const TextStyle(
-                                                  fontFamily: "QuicksandMedium",
-                                                  fontSize: 25,
+                                              const Spacer(),
+                                              Container(
+                                                decoration: const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255)),
+                                                child: Text(
+                                                  MoneyFormatter(
+                                                              amount: double
+                                                                  .parse(detail
+                                                                      .data!
+                                                                      .price!
+                                                                      .toStringAsFixed(
+                                                                          0)))
+                                                          .output
+                                                          .nonSymbol
+                                                          .toString() +
+                                                      " \nVND",
+                                                  textAlign: TextAlign.right,
+                                                  style: const TextStyle(
+                                                    fontFamily:
+                                                        "QuicksandMedium",
+                                                    fontSize: 25,
+                                                  ),
                                                 ),
                                               ),
                                             ],

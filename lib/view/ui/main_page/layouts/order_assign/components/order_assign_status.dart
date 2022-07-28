@@ -207,7 +207,7 @@ class OrderAssignStatus extends StatelessWidget {
               height: 30,
               width: wTL,
               child: const Text(
-                "Xuất kho",
+                "Giao hàng",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,

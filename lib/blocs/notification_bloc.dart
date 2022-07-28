@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bigsize_management_staff/models/notification/notification.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationBloc {
@@ -14,6 +15,23 @@ class NotificationBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return NotificationModel.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return NotificationModel.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return NotificationModel.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return NotificationModel.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return NotificationModel.fromJson(jsonDecode(response.body));
+    }
   }
 }

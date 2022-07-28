@@ -29,6 +29,7 @@ class _CustomerBox extends State<CustomerBox> {
 
   bool isHaveCusPhone = false;
   bool isCustomer = false;
+  bool gender = true;
 
   Customer? customer;
 
@@ -103,11 +104,13 @@ class _CustomerBox extends State<CustomerBox> {
                         //phoneCus.text = value;
                       },
                       onFieldSubmitted: (value) async {
+                        showLoading(context);
                         if (!_phoneNumberValidator(phoneCus.text.toString())) {
                           addError(error: "Đây không phải là số điện thoại");
                           setState(() {
                             isHaveCusPhone = false;
                           });
+                          Navigator.pop(context);
                           return;
                         }
                         removeAllError();
@@ -125,6 +128,7 @@ class _CustomerBox extends State<CustomerBox> {
                             isHaveCusPhone = true;
                             isCustomer = true;
                           });
+                          Navigator.pop(context);
                         } else {
                           nameCus.text = "";
                           isHaveCusPhone = true;
@@ -137,6 +141,7 @@ class _CustomerBox extends State<CustomerBox> {
                             isHaveCusPhone = true;
                             isCustomer = false;
                           });
+                          Navigator.pop(context);
                         }
                       },
                     ),
@@ -173,11 +178,13 @@ class _CustomerBox extends State<CustomerBox> {
                         //phoneCus.text = value;
                       },
                       onFieldSubmitted: (value) async {
+                        showLoading(context);
                         if (!_phoneNumberValidator(phoneCus.text.toString())) {
                           addError(error: "Đây không phải là số điện thoại");
                           setState(() {
                             isHaveCusPhone = false;
                           });
+                          Navigator.pop(context);
                           return;
                         }
                         removeAllError();
@@ -193,6 +200,7 @@ class _CustomerBox extends State<CustomerBox> {
                             isHaveCusPhone = true;
                             isCustomer = true;
                           });
+                          Navigator.pop(context);
                         } else {
                           nameCus.text = "";
                           isHaveCusPhone = true;
@@ -203,6 +211,7 @@ class _CustomerBox extends State<CustomerBox> {
                             isHaveCusPhone = true;
                             isCustomer = false;
                           });
+                          Navigator.pop(context);
                         }
                       },
                     ),
@@ -314,5 +323,36 @@ class _CustomerBox extends State<CustomerBox> {
                 ],
               )),
     );
+  }
+
+  showLoading(context) {
+    showDialog(
+        // The user CANNOT close this dialog  by pressing outsite it
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  // The loading indicator
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Some text
+                  Text(
+                    "Đang lấy thông tin khách hàng...",
+                    style: TextStyle(fontFamily: "QuicksandMedium"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

@@ -5,6 +5,7 @@ import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/compon
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_payment.dart';
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/orders/components/order_status.dart';
 import 'package:flutter/material.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
@@ -108,6 +109,15 @@ class _OrderDetail extends State<OrderDetail> {
                             order.data!.content!.totalPriceAfterDiscount
                                 .toString()),
                         const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Đơn vị tính: VND",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontFamily: "QuicksandBold", fontSize: 15),
+                        ),
+                        const SizedBox(
                           height: 50,
                         ),
                         /*
@@ -169,7 +179,12 @@ class _OrderDetail extends State<OrderDetail> {
             Column(
               children: [
                 Text(
-                  totalPrice,
+                  MoneyFormatter(
+                          amount: double.parse(
+                              num.parse(totalPrice).toStringAsFixed(0)))
+                      .output
+                      .nonSymbol
+                      .toString(),
                   style: const TextStyle(
                     color: Colors.blue,
                     fontFamily: "QuicksandBold",
@@ -243,7 +258,12 @@ class _OrderDetail extends State<OrderDetail> {
                   //width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
-                    totalPrice,
+                    MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(totalPrice).toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandMedium",
@@ -276,7 +296,14 @@ class _OrderDetail extends State<OrderDetail> {
                   //width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
-                    "",
+                    MoneyFormatter(
+                            amount: double.parse(
+                                    num.parse(totalPrice).toStringAsFixed(0)) -
+                                double.parse(num.parse(pricePromotion)
+                                    .toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandMedium",
@@ -309,7 +336,12 @@ class _OrderDetail extends State<OrderDetail> {
                   //width: 170,
                   //color: Colors.pinkAccent,
                   child: Text(
-                    pricePromotion,
+                    MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(pricePromotion).toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString(),
                     style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "QuickSandBold",
@@ -357,7 +389,14 @@ class _OrderDetail extends State<OrderDetail> {
                     product.size.toString(),
               ),
               Text(
-                product.pricePerOne.toString() + " d/cái",
+                MoneyFormatter(
+                            amount: double.parse(
+                                num.parse(product.pricePerOne.toString())
+                                    .toStringAsFixed(0)))
+                        .output
+                        .nonSymbol
+                        .toString() +
+                    " d/cái",
               ),
               Text(
                 "Số lượng: " + product.quantity.toString() + " cái",
@@ -366,7 +405,12 @@ class _OrderDetail extends State<OrderDetail> {
           ),
           trailing: Column(children: <Widget>[
             Text(
-              product.price.toString(),
+              MoneyFormatter(
+                      amount: double.parse(num.parse(product.price.toString())
+                          .toStringAsFixed(0)))
+                  .output
+                  .nonSymbol
+                  .toString(),
               style: const TextStyle(fontFamily: "QuicksandMedium"),
             ),
           ]),

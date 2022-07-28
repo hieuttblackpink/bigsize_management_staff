@@ -285,7 +285,9 @@ class _ProductLayout extends State<ProductLayout> {
                             ),
                             Tooltip(
                               message: "Real price" +
-                                  MoneyFormatter(amount: item.price!.toDouble())
+                                  MoneyFormatter(
+                                          amount: double.parse(
+                                              item.price!.toStringAsFixed(0)))
                                       .output
                                       .nonSymbol
                                       .toString() +

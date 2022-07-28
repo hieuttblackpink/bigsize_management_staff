@@ -48,7 +48,11 @@ class MoneyCard extends StatelessWidget {
                 ),
                 divider(),
                 Text(
-                  MoneyFormatter(amount: revenue).output.nonSymbol.toString(),
+                  MoneyFormatter(
+                          amount: double.parse(revenue.toStringAsFixed(0)))
+                      .output
+                      .nonSymbol
+                      .toString(),
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 divider(),

@@ -7,6 +7,7 @@ import 'package:bigsize_management_staff/models/product/product_detail_specific.
 import 'package:bigsize_management_staff/models/product/product_quantity_store.dart';
 import 'package:bigsize_management_staff/models/product/product_search.dart';
 import 'package:bigsize_management_staff/models/product/product_size.dart';
+import 'package:bigsize_management_staff/services/exception.dart';
 import 'package:http/http.dart' as http;
 
 class ProductBloc {
@@ -21,7 +22,24 @@ class ProductBloc {
         //'Authorization': "Bearer $token",
       },
     );
-    return ProductList.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductList.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductList.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductList.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductList.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductDetail> getProductDetail(String token, int id) async {
@@ -32,7 +50,24 @@ class ProductBloc {
         //'Authorization': "Bearer $token",
       },
     );
-    return ProductDetail.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductDetail.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductDetail.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductDetail.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductDetail.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductSearch> searchProductByName(String searchKey, int page) async {
@@ -44,7 +79,24 @@ class ProductBloc {
         //'Authorization': "Bearer $token",
       },
     );
-    return ProductSearch.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductSearch.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductSearch.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductSearch.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductSearch.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductColour> getProductColour(String token, int id) async {
@@ -55,7 +107,24 @@ class ProductBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return ProductColour.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductColour.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductColour.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductColour.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductColour.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductSize> getProductSize(String token, int idP, int idC) async {
@@ -66,7 +135,24 @@ class ProductBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return ProductSize.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductSize.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductSize.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductSize.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductSize.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductQuantityStore> getProductQuantityStore(
@@ -79,7 +165,24 @@ class ProductBloc {
         'Authorization': "Bearer $token",
       },
     );
-    return ProductQuantityStore.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductQuantityStore.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductQuantityStore.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductQuantityStore.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductQuantityStore.fromJson(jsonDecode(response.body));
+    }
   }
 
   Future<ProductDetailSpecific> getProductSpecificDetail(
@@ -92,6 +195,23 @@ class ProductBloc {
         //'Authorization': "Bearer $token",
       },
     );
-    return ProductDetailSpecific.fromJson(jsonDecode(response.body));
+    switch (response.statusCode) {
+      case 200:
+        return ProductDetailSpecific.fromJson(jsonDecode(response.body));
+      case 400:
+        BadRequestException(response.body.toString());
+        return ProductDetailSpecific.fromJson(jsonDecode(response.body));
+      case 401:
+
+      case 403:
+        UnauthorisedException(response.body.toString());
+        return ProductDetailSpecific.fromJson(jsonDecode(response.body));
+      case 500:
+
+      default:
+        FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        return ProductDetailSpecific.fromJson(jsonDecode(response.body));
+    }
   }
 }
