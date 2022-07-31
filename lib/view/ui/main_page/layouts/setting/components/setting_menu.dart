@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SettingMenu extends StatelessWidget {
-  const SettingMenu({
-    Key? key,
-    required this.text,
-    required this.icon,
-    this.press,
-  }) : super(key: key);
+  const SettingMenu(
+      {Key? key,
+      required this.text,
+      required this.icon,
+      this.press,
+      this.colors})
+      : super(key: key);
 
   final String text;
   final IconData icon;
   final VoidCallback? press;
+  final Color? colors;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class SettingMenu extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: TextButton(
         style: TextButton.styleFrom(
-          primary: Colors.black,
+          primary: colors ?? Colors.black,
           padding: const EdgeInsets.all(20),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -30,22 +32,22 @@ class SettingMenu extends StatelessWidget {
           children: <Widget>[
             Icon(
               icon,
-              color: Colors.black,
+              color: colors ?? Colors.black,
               size: 20,
             ),
             const SizedBox(width: 20),
             Expanded(
                 child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: "QuickSandMedium",
                 fontSize: 20,
-                color: Colors.black,
+                color: colors ?? Colors.black,
               ),
             )),
-            const Icon(
+            Icon(
               Icons.arrow_forward_ios,
-              color: Colors.black,
+              color: colors ?? Colors.black,
             ),
           ],
         ),

@@ -565,8 +565,8 @@ class _EditProfile extends State<EditProfileForm> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(80.0),
                   gradient: const LinearGradient(colors: [
-                    Color.fromARGB(255, 0, 0, 0),
-                    Color.fromARGB(170, 0, 0, 0)
+                    Color.fromARGB(255, 0, 150, 255),
+                    Color.fromARGB(150, 0, 170, 255)
                   ])),
               padding: const EdgeInsets.all(0),
               child: !isUpdatting

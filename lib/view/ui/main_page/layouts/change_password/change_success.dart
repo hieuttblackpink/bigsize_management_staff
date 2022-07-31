@@ -38,7 +38,7 @@ class ChangePasswordSuccess extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(80.0),
-                  color: Colors.black),
+                  color: Colors.blue.shade400),
               padding: const EdgeInsets.all(0),
               child: const Text(
                 "XÁC NHẬN",

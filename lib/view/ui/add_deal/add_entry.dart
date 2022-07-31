@@ -390,14 +390,14 @@ class AddOrderView extends State<AddDealView> {
                               style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.black),
+                                          Colors.blue.shade600),
                                   shape: MaterialStateProperty.all<
                                           RoundedRectangleBorder>(
-                                      const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(20)),
                                           side: BorderSide(
-                                              color: Colors.black)))),
+                                              color: Colors.blue.shade600)))),
                               child: isCreating
                                   ? Container(
                                       width: 220,

@@ -65,6 +65,7 @@ class _ChangePassword extends State<ChangePassword> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
+              color: Colors.white,
               child: TextField(
                 onTap: () {
                   removeAllError();
@@ -92,6 +93,7 @@ class _ChangePassword extends State<ChangePassword> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
+              color: Colors.white,
               child: TextField(
                 onTap: () {
                   removeAllError();
@@ -119,6 +121,7 @@ class _ChangePassword extends State<ChangePassword> {
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(left: 20, right: 20),
+              color: Colors.white,
               child: TextField(
                 onTap: () {
                   removeAllError();
@@ -154,8 +157,15 @@ class _ChangePassword extends State<ChangePassword> {
               margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
               child: RaisedButton(
                 onPressed: () async {
+                  showLoading(context);
+                  if (oldPass.text.isEmpty) {
+                    addError(error: "Mật khẩu cũ không được để trống");
+                    Navigator.pop(context);
+                    return;
+                  }
                   if (newPass.text.length < 8) {
                     addError(error: "Mật khẩu mới quá ngắn");
+                    Navigator.pop(context);
                   } else {
                     removeError(error: "Mật khẩu mới quá ngắn");
                     userToken =
@@ -176,14 +186,17 @@ class _ChangePassword extends State<ChangePassword> {
                                       13,
                                       _userPassword.errors!.confirmNewPassword!
                                           .first.length));
+                      Navigator.pop(context);
                     } else if (!_userPassword.isSuccess!) {
                       addError(error: "Sai mật khẩu");
+                      Navigator.pop(context);
                     } else {
                       removeError(error: "Sai mật khẩu");
                       removeError(
                           error:
                               "New password and confirmation new password do not match.");
                       print("Đổi mật khẩu thành công!");
+                      Navigator.pop(context);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -202,7 +215,7 @@ class _ChangePassword extends State<ChangePassword> {
                   width: size.width * 0.5,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(80.0),
-                      color: Colors.black),
+                      color: Colors.blue.shade400),
                   padding: const EdgeInsets.all(0),
                   child: const Text(
                     "XÁC NHẬN",
@@ -241,5 +254,36 @@ class _ChangePassword extends State<ChangePassword> {
           color: Color(0xFF00ADFF),
           width: 2,
         ));
+  }
+
+  showLoading(context) {
+    showDialog(
+        // The user CANNOT close this dialog  by pressing outsite it
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return Dialog(
+            // The background color
+            backgroundColor: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  // The loading indicator
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  // Some text
+                  Text(
+                    "Đang xử lí...",
+                    style: TextStyle(fontFamily: "QuicksandMedium"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

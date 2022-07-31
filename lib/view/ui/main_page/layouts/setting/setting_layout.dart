@@ -99,6 +99,7 @@ class _SettingLayout extends State<SettingLayout> {
       //final String fileName = path.basename(pickedImg!.path);
       File imgFile = File(pickedImg!.path);
       try {
+        showLoading(context);
         Avatar _avatar = await _avatarBloc.uploadAvatar(token, imgFile);
         if (_avatar.isSuccess!) {
           Fluttertoast.showToast(
@@ -107,16 +108,19 @@ class _SettingLayout extends State<SettingLayout> {
               gravity: ToastGravity.BOTTOM, // location
               timeInSecForIosWeb: 2 // duration
               );
+          Navigator.pop(context);
           setState(() {
             isHasAvatar = false;
           });
         } else {
+          showLoading(context);
           Fluttertoast.showToast(
               msg: "Thay ảnh đại diện thất bại!", // message
               toastLength: Toast.LENGTH_LONG, // length
               gravity: ToastGravity.BOTTOM, // location
               timeInSecForIosWeb: 2 // duration
               );
+          Navigator.pop(context);
         }
       } catch (error) {
         if (kDebugMode) {
@@ -307,8 +311,8 @@ class _SettingLayout extends State<SettingLayout> {
                 String userName =
                     _storageService.readSecureData("Username").toString();
                 if (userName.isNotEmpty) {
-                  await HandleMessagingFirebase.unReceiveMessagingFromServer(
-                      userName);
+                  //await HandleMessagingFirebase.unReceiveMessagingFromServer(
+                  //userName);
                 }
                 _storageService.deleteAllSecureData();
                 Navigator.pushAndRemoveUntil(
@@ -316,12 +320,13 @@ class _SettingLayout extends State<SettingLayout> {
                     MaterialPageRoute(builder: (_) => const SignInScreen()),
                     (route) => false);
               },
+              colors: Colors.red,
             ),
             const SizedBox(
               height: 10,
             ),
             const Text(
-              "8.2.7",
+              "10.3.6",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "QuicksandLight",

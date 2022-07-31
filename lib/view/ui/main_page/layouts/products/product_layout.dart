@@ -261,7 +261,8 @@ class _ProductLayout extends State<ProductLayout> {
                           item.imageUrl.toString(),
                           height: constraints.maxHeight * .6,
                           width: double.infinity,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
+                          alignment: Alignment.center,
                         ),
                       ),
                       Padding(
