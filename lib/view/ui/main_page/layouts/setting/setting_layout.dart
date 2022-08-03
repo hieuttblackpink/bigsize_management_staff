@@ -326,7 +326,7 @@ class _SettingLayout extends State<SettingLayout> {
               height: 10,
             ),
             const Text(
-              "10.3.6",
+              "10.7.1",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "QuicksandLight",

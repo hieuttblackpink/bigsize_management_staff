@@ -7,6 +7,7 @@ import 'package:bigsize_management_staff/view/shared/widgets/text_field_search.d
 import 'package:bigsize_management_staff/view/ui/main_page/layouts/products/product_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_formatter/money_formatter.dart';
 
 class SearchProductLayout extends StatefulWidget {
   const SearchProductLayout({Key? key}) : super(key: key);
@@ -214,7 +215,15 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                                 Colors.black)),
                                                     const SizedBox(height: 5),
                                                     Text(
-                                                        '${productSearch!.content![index].price}',
+                                                        MoneyFormatter(
+                                                                amount: productSearch!
+                                                                    .content![
+                                                                        index]
+                                                                    .price!
+                                                                    .toDouble())
+                                                            .output
+                                                            .nonSymbol
+                                                            .toString(),
                                                         style: const TextStyle(
                                                             fontSize: 16,
                                                             decoration:
@@ -232,8 +241,24 @@ class _SearchProductLayout extends State<SearchProductLayout> {
                                                                     .promotionPrice
                                                                     .toString() !=
                                                                 "null"
-                                                            ? '${productSearch!.content![index].promotionPrice}'
-                                                            : '${productSearch!.content![index].price}',
+                                                            ? MoneyFormatter(
+                                                                    amount: productSearch!
+                                                                        .content![
+                                                                            index]
+                                                                        .promotionPrice!
+                                                                        .toDouble())
+                                                                .output
+                                                                .nonSymbol
+                                                                .toString()
+                                                            : MoneyFormatter(
+                                                                    amount: productSearch!
+                                                                        .content![
+                                                                            index]
+                                                                        .price!
+                                                                        .toDouble())
+                                                                .output
+                                                                .nonSymbol
+                                                                .toString(),
                                                         style: const TextStyle(
                                                             fontSize: 17,
                                                             color:
