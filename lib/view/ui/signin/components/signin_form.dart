@@ -31,6 +31,7 @@ class _SignFormState extends State<SignForm> {
   String? password;
   bool? remember = false;
   final List<String?> errors = [];
+  bool isLoading = false;
 
   void addError({String? error}) {
     if (!errors.contains(error)) {
@@ -105,61 +106,103 @@ class _SignFormState extends State<SignForm> {
                 ),
                 color: Colors.black,
               ),
-              child: const Text(
-                "Đăng nhập",
-                style: TextStyle(
-                  fontFamily: "QuickSandBold",
-                  fontSize: 30,
-                ),
-              ),
+              child: isLoading
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Text(
+                      "Đăng nhập",
+                      style: TextStyle(
+                        fontFamily: "QuickSandBold",
+                        fontSize: 30,
+                      ),
+                    ),
             ),
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                setState(() {
+                  isLoading = true;
+                });
                 if (remember == true) {
                   _staffLogin = await _staffBloc.getLogin(
                       username.toString(), password.toString());
-                  print(_staffLogin.isSuccess.toString());
+                  //print(_staffLogin.isSuccess.toString());
                   loginSuccess = _staffLogin.isSuccess!;
-                  print("Login Success: " + loginSuccess.toString());
+                  //print("Login Success: " + loginSuccess.toString());
                   if (loginSuccess) {
-                    print("Token: " + _staffLogin.content!.token.toString());
-                    _storageItemUser =
-                        StorageItem("Username", username.toString());
-                    _storageItemToken = StorageItem(
-                        "UserToken", _staffLogin.content!.token.toString());
-                    _storageService.writeSecureData(_storageItemUser);
-                    _storageService.writeSecureData(_storageItemToken);
-                    await HandleMessagingFirebase.receiveMessagingFromServer(
-                        username.toString());
-                    _formKey.currentState!.save();
-                    removeError(
-                        error: "Sai thông tin tài khoản hoặc mật khẩu.");
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MainView()),
-                        ((route) => false));
+                    //print("Token: " + _staffLogin.content!.token.toString());
+                    if (_staffLogin.content!.role.toString() == "Staff") {
+                      _storageItemUser =
+                          StorageItem("Username", username.toString());
+                      _storageItemToken = StorageItem(
+                          "UserToken", _staffLogin.content!.token.toString());
+                      _storageService.writeSecureData(_storageItemUser);
+                      _storageService.writeSecureData(_storageItemToken);
+                      await HandleMessagingFirebase.receiveMessagingFromServer(
+                          username.toString());
+                      _formKey.currentState!.save();
+                      removeError(
+                          error: "Sai thông tin tài khoản hoặc mật khẩu.");
+                      removeError(
+                          error: "Tài khoản này không được phép vào ứng dụng!");
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MainView()),
+                          ((route) => false));
+                    } else {
+                      addError(
+                          error: "Tài khoản này không được phép vào ứng dụng!");
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   } else {
                     addError(error: "" + _staffLogin.error!.message.toString());
+                    setState(() {
+                      isLoading = false;
+                    });
                   }
                 } else {
                   _staffLogin = await _staffBloc.getLogin(
                       username.toString(), password.toString());
                   loginSuccess = _staffLogin.isSuccess!;
                   if (loginSuccess) {
-                    _storageItemToken = StorageItem(
-                        "UserToken", _staffLogin.content!.token.toString());
-                    _storageService.writeSecureData(_storageItemToken);
-                    await HandleMessagingFirebase.receiveMessagingFromServer(
-                        username.toString());
-                    _formKey.currentState!.save();
-                    removeError(
-                        error: "Sai thông tin tài khoản hoặc mật khẩu.");
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const MainView()),
-                        ((route) => false));
+                    if (_staffLogin.content!.role.toString() == "Staff") {
+                      _storageItemToken = StorageItem(
+                          "UserToken", _staffLogin.content!.token.toString());
+                      _storageService.writeSecureData(_storageItemToken);
+                      await HandleMessagingFirebase.receiveMessagingFromServer(
+                          username.toString());
+                      _formKey.currentState!.save();
+                      removeError(
+                          error: "Sai thông tin tài khoản hoặc mật khẩu.");
+                      removeError(
+                          error: "Tài khoản này không được phép vào ứng dụng!");
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MainView()),
+                          ((route) => false));
+                    } else {
+                      addError(
+                          error: "Tài khoản này không được phép vào ứng dụng!");
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   } else {
                     addError(error: "" + _staffLogin.error!.message.toString());
+                    setState(() {
+                      isLoading = false;
+                    });
                   }
                 }
               }
