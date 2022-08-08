@@ -105,11 +105,23 @@ class _CustomerBox extends State<CustomerBox> {
                       },
                       onFieldSubmitted: (value) async {
                         showLoading(context);
-                        if (!_phoneNumberValidator(phoneCus.text.toString())) {
+                        if (phoneCus.text.isEmpty) {
+                          addError(error: "Vui lòng nhập số điện thoại");
+                          setState(() {
+                            isHaveCusPhone = false;
+                          });
+                          AddOrderView.of(context)!
+                              .onCusPhoneChange(phoneCus.text.toString(), true);
+                          Navigator.pop(context);
+                          return;
+                        }
+                        if (!_phoneNumberValidator(phoneCus.text.toString()) ||
+                            phoneCus.text.length < 10) {
                           addError(error: "Đây không phải là số điện thoại");
                           setState(() {
                             isHaveCusPhone = false;
                           });
+                          AddOrderView.of(context)!.onCusPhoneChange("", true);
                           Navigator.pop(context);
                           return;
                         }
@@ -179,11 +191,23 @@ class _CustomerBox extends State<CustomerBox> {
                       },
                       onFieldSubmitted: (value) async {
                         showLoading(context);
-                        if (!_phoneNumberValidator(phoneCus.text.toString())) {
+                        if (phoneCus.text.isEmpty) {
+                          addError(error: "Vui lòng nhập số điện thoại");
+                          setState(() {
+                            isHaveCusPhone = false;
+                          });
+                          AddOrderView.of(context)!
+                              .onCusPhoneChange(phoneCus.text.toString(), true);
+                          Navigator.pop(context);
+                          return;
+                        }
+                        if (!_phoneNumberValidator(phoneCus.text.toString()) ||
+                            phoneCus.text.length < 10) {
                           addError(error: "Đây không phải là số điện thoại");
                           setState(() {
                             isHaveCusPhone = false;
                           });
+                          AddOrderView.of(context)!.onCusPhoneChange("", true);
                           Navigator.pop(context);
                           return;
                         }
