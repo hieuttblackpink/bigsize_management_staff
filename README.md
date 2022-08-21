@@ -1,12 +1,12 @@
 # MyBigSize - Mobile app for staff in BigSize Shop
-# Flutter
+# Flutter Appliction
 
-My Capstone project in FPT University - Ho Chi Minh City.
+My Capstone project in FPT University - Ho Chi Minh City.</br>
 SU22SE43 - GSU22SE42 - Manage the 'BigSize' Fashion Chain - MBC
 
 ## MYBIGSIZE
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application.</br>
 This project is a mobile app for staff in the BigSize shop.
 
 ## Features:
