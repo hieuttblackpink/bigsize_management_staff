@@ -1,5 +1,5 @@
 # MyBigSize - Mobile app for staff in BigSize Shop
-# Flutter Appliction
+# Flutter Application
 
 My Capstone project in FPT University - Ho Chi Minh City.</br>
 SU22SE43 - GSU22SE42 - Manage the 'BigSize' Fashion Chain - MBC
@@ -16,8 +16,7 @@ This project is a mobile app for staff in the BigSize shop.
 4. Update status of online orders
 
 For getting our document, view our
-[online documentation](https://1drv.ms/w/s!AhwP6vcl0-LhgfAlpHNwTk2sorP0eQ?e=eozD05) which softweare requirement,
-softweare introduction, and a full API reference.
+[online documentation](https://1drv.ms/w/s!AhwP6vcl0-LhgfAlpHNwTk2sorP0eQ?e=eozD05).
 
 ## My profile:
 
