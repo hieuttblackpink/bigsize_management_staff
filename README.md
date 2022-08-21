@@ -1,4 +1,4 @@
-# MyBigSIze - Mobile app for staff in BigSize Shop
+# MyBigSize - Mobile app for staff in BigSize Shop
 # Flutter
 
 My Capstone project in FPT University - Ho Chi Minh City.
@@ -21,5 +21,5 @@ softweare introduction, and a full API reference.
 
 ## My profile:
 
-1. [Facebook](https://www.facebook.com/trantronghieu9999)
-2. [Gmail](tronghieu6666@gmail.com)
+1. Facebook: [HieuTran](https://www.facebook.com/trantronghieu9999)
+2. Gmail: tronghieu6666@gmail.com
