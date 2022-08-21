@@ -1,4 +1,4 @@
-# MyBigSize - Mobile app for staff in BigSize Shop
+# E-Commerce - MyBigSize - Mobile app for staff in BigSize Shop
 # Flutter Application
 
 My Capstone project in FPT University - Ho Chi Minh City.</br>
