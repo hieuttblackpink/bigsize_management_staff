@@ -92,9 +92,9 @@ class addBox extends State<AddBox> {
                       .toString() ==
                   chosenProductData.chosenProductDetailID.toString());
 
-          if (listOrderProduct![index.toInt()].quantityInNewOrder == 100) {
+          if (listOrderProduct![index.toInt()].quantityInNewOrder == 20) {
             showAlertDialog(context,
-                "Không thể thêm sản phẩm này.\nQuá số lượng cho phép (<= 100)");
+                "Không thể thêm sản phẩm này.\nQuá số lượng cho phép (<= 20)");
           } else {
             AddOrderView.of(context)!.onProductDetailChange(ProductInNewOrder(
                 productDetailId: isExistProduct
@@ -303,10 +303,10 @@ class addBox extends State<AddBox> {
                         )),
                     Text(item.quantityInNewOrder.toString()),
                     IconButton(
-                        onPressed: item.quantityInNewOrder == 100
+                        onPressed: item.quantityInNewOrder == 20
                             ? () => {
                                   showAlertDialog(context,
-                                      "Không thể tăng thêm.\nQuá số lượng cho phép (<= 100)"),
+                                      "Không thể tăng thêm.\nQuá số lượng cho phép (<= 20)"),
                                 }
                             : () async {
                                 setState(() {

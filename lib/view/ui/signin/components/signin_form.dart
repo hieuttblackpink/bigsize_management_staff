@@ -72,6 +72,7 @@ class _SignFormState extends State<SignForm> {
               ),
               const Text("Nhớ đăng nhập"),
               const Spacer(),
+              /*
               GestureDetector(
                 onTap: () => {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -84,6 +85,7 @@ class _SignFormState extends State<SignForm> {
                       fontFamily: "QuicksandMedium"),
                 ),
               ),
+              */
             ],
           ),
           FormError(errors: errors),
