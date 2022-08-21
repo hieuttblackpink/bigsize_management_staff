@@ -16,7 +16,7 @@ This project is a mobile app for staff in the BigSize shop.
 4. Update status of online orders
 
 For getting our document, view our
-[online documentation](https://flutter.dev/docs), which softweare requirement,
+[online documentation](https://1drv.ms/w/s!AhwP6vcl0-LhgfAlpHNwTk2sorP0eQ?e=eozD05) which softweare requirement,
 softweare introduction, and a full API reference.
 
 ## My profile:
