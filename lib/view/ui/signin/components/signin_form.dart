@@ -49,6 +49,12 @@ class _SignFormState extends State<SignForm> {
     }
   }
 
+  void removeAllError() {
+    setState(() {
+      errors.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -124,6 +130,7 @@ class _SignFormState extends State<SignForm> {
                     ),
             ),
             onPressed: () async {
+              removeAllError();
               if (_formKey.currentState!.validate()) {
                 setState(() {
                   isLoading = true;
@@ -218,6 +225,9 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
+      onTap: () => {
+        removeAllError(),
+      },
       onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -293,6 +303,9 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildusernameFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      onTap: () => {
+        removeAllError(),
+      },
       onSaved: (newValue) => username = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {

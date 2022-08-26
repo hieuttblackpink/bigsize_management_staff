@@ -81,9 +81,9 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                         divider(),
                         ...List.generate(2, (index) => divider()),
                         const SizedBox(height: 20),
-                        Text("Hình thức thanh toán",
-                            style: Theme.of(context).textTheme.headline4),
-                        divider(),
+                        //Text("Hình thức thanh toán",
+                            //style: Theme.of(context).textTheme.headline4),
+                        //divider(),
                         //OrderPayment(order: order),
                         divider(),
                         ...List.generate(2, (index) => divider()),
@@ -102,6 +102,15 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                                 .toString()),
                         const SizedBox(
                           height: 50,
+                        ),
+                        const Text(
+                          "Đơn vị tính: VND",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontFamily: "QuicksandBold", fontSize: 15),
+                        ),
+                        const SizedBox(
+                          height: 20,
                         ),
                         order.data!.content!.approvalDate == null
                             ? ElevatedButton(
