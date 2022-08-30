@@ -82,7 +82,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                         ...List.generate(2, (index) => divider()),
                         const SizedBox(height: 20),
                         //Text("Hình thức thanh toán",
-                            //style: Theme.of(context).textTheme.headline4),
+                        //style: Theme.of(context).textTheme.headline4),
                         //divider(),
                         //OrderPayment(order: order),
                         divider(),
@@ -101,7 +101,7 @@ class _OrderAssignDetail extends State<OrderAssignDetail> {
                             order.data!.content!.totalPriceAfterDiscount
                                 .toString()),
                         const SizedBox(
-                          height: 50,
+                          height: 10,
                         ),
                         const Text(
                           "Đơn vị tính: VND",

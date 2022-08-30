@@ -22,6 +22,7 @@ class OrderPayment extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            /*
             Row(
               children: <Widget>[
                 Icon(
@@ -46,9 +47,9 @@ class OrderPayment extends StatelessWidget {
                               : Colors.green,
                         ))
               ],
-            ),
+            ),*/
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             Text(
               order!.content!.paymentMethod.toString(),
